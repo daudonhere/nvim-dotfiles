@@ -4,8 +4,11 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
+      indent = {
+        enabled = false,
+      },
       explorer = { enabled = true, replace_netrw = true },
-      notifier = { enabled = true, timeout = 3000 },
+      notifier = { enabled = true, timeout = 5000 },
       lazygit = {
         win = {
           style = "lazygit",
