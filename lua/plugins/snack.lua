@@ -4,41 +4,36 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-      explorer = {
-        enabled = true,
-        replace_netrw = true,
+      explorer = { enabled = true, replace_netrw = true },
+      notifier = { enabled = true, timeout = 3000 },
+      lazygit = {
+        win = {
+          style = "lazygit",
+          width = 0,
+          height = 0,
+        },
+      },
+      terminal = {
+        win = {
+          style = "terminal",
+          width = 0.8,
+          height = 0.2,
+        },
       },
       picker = {
         sources = {
           explorer = {
-            filtered_items = {
-              hide_dotfiles = false,
-            },
-            layout = {
-              layout = {
-                position = "left",
-                width = 30,
-              },
-            },
+            filtered_items = { hide_dotfiles = false },
+            layout = { layout = { position = "left", width = 30 } },
           },
         },
       },
     },
     keys = {
-      {
-        "<leader>e",
-        function()
-          Snacks.explorer()
-        end,
-        desc = "File Explorer",
-      },
-      {
-        "<leader>fp",
-        function()
-          Snacks.picker.files()
-        end,
-        desc = "Snacks Find Files",
-      },
+      { "<leader>e", function() Snacks.explorer() end, desc = "Explorer" },
+      { "<leader>gg", function() Snacks.lazygit() end, desc = "LazyGit" },
+      { "<c-t>", function() Snacks.terminal.toggle() end, desc = "Toggle Terminal" },
+      { "<leader>nt", function() Snacks.terminal.open() end, desc = "New Terminal" },
     },
   },
 }

@@ -1,44 +1,30 @@
 return {
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    keys = {
-      {
-        "<leader>p",
-        function()
-          require("telescope.builtin").find_files()
-        end,
-        desc = "Search files",
-      },
-      {
-        "<leader>f",
-        function()
-          require("telescope.builtin").live_grep()
-        end,
-        desc = "Find Text (Grep)",
-      },
-      {
-        "<leader>b",
-        function()
-          require("telescope.builtin").buffers()
-        end,
-        desc = "Find Buffers",
-      },
-    },
-    config = function()
-      require("telescope").setup({
-        defaults = {
-          file_ignore_patterns = { "node_modules", ".git" },
-          layout_strategy = "horizontal",
-          layout_config = {
-            prompt_position = "top",
-          },
-          sorting_strategy = "ascending",
+  "nvim-telescope/telescope.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  opts = {
+    defaults = {
+      mappings = {
+        i = {
+          ["<C-w>"] = "move_selection_previous",
+          ["<C-s>"] = "move_selection_next",
         },
-      })
-    end,
+      },
+    },
+  },
+  keys = {
+    { "<leader>f", ":Telescope current_buffer_fuzzy_find<CR>", desc = "Find in Current Buffer" },
+    { "<leader>fp", ":Telescope live_grep<CR>", desc = "Search Word in Project" },
+    { "<leader>ff", ":Telescope find_files<CR>", desc = "Find Files" },
+    { "<leader>fb", ":Telescope buffers<CR>", desc = "Find Open Buffers" },
+    {
+      "<leader>rr",
+      function()
+        local word = vim.fn.input("Change Word ")
+        if word == "" then return end
+        local replace = vim.fn.input("Replace Word ")
+        vim.cmd("%s/" .. word .. "/" .. replace .. "/g")
+      end,
+      desc = "Replace Simple (Buffer)"
+    },
   },
 }
