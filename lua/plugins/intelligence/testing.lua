@@ -53,4 +53,8 @@ return {
           end,
         }),
         require("neotest-vitest"),
-      }, }) end, }
+      },
+    }
+  )
+  end,
+}

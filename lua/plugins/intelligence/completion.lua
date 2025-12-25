@@ -31,8 +31,9 @@ return {
       keymap = {
         preset = "none",
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide" },
         ["<CR>"] = { "accept", "fallback" },
+        ["<C-w>"] = { "select_prev", "fallback" },
+        ["<C-s>"] = { "select_next", "fallback" },
         ["<Up>"] = { "select_prev", "fallback" },
         ["<Down>"] = { "select_next", "fallback" },
         ["<Tab>"] = {

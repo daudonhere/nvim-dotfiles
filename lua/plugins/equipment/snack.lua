@@ -8,6 +8,13 @@ return {
         enabled = false,
       },
       explorer = { enabled = true, replace_netrw = true },
+      styles = {
+        explorer = {
+          position = "left",
+          width = 30,
+          border = "right", 
+        }
+      },
       notifier = { enabled = true, timeout = 5000 },
       lazygit = {
         win = {
@@ -33,10 +40,9 @@ return {
       },
     },
     keys = {
-      { "<leader>e", function() Snacks.explorer() end, desc = "Explorer" },
+      { "<leader>f", function() Snacks.explorer() end, desc = "Explorer" },
       { "<leader>gg", function() Snacks.lazygit() end, desc = "LazyGit" },
       { "<c-t>", function() Snacks.terminal.toggle() end, desc = "Toggle Terminal" },
-      { "<leader>nt", function() Snacks.terminal.open() end, desc = "New Terminal" },
     },
   },
 }

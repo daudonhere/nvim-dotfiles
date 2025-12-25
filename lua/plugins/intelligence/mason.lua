@@ -12,6 +12,9 @@ return {
         "eslint_d",
         "prettier",
       },
+      ui = {
+        border = "single",
+      },
     },
     config = function(_, opts)
       require("mason").setup(opts)

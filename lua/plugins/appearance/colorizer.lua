@@ -4,6 +4,8 @@ return {
   config = function()
     require("colorizer").setup({
       user_default_options = {
+        mode = "foreground",
+        always_update = true,
         names = false,
         RGB = true,
         RRGGBB = true,
@@ -14,7 +16,6 @@ return {
         oklch = true,
         css = true,
         css_fn = true,
-        mode = "foreground",
         tailwind = true,
         sass = { enable = true, parsers = { "css" } },
       },

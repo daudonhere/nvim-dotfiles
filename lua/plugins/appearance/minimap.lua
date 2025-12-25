@@ -1,23 +1,25 @@
 return {
   {
-    "nvim_mini/mini.map",
-    version = false,
-    url = "https://github.com/nvim-mini/mini.map",
-    config = function()
-      local mini_map = require("mini.map")
-
-      mini_map.setup({
-        symbols = {
-          encode = mini_map.gen_encode_symbols.dot("4x2"),
+    "Isrothy/neominimap.nvim",
+    version = "v3.x.x",
+    lazy = false,
+    keys = {
+      { "<leader>tm", "<cmd>Neominimap Toggle<cr>", desc = "Toggle global minimap" },
+      { "<leader>mm", "<cmd>Neominimap Enable<cr>", desc = "Enable global minimap" }
+    },
+    init = function()
+      vim.opt.wrap = false
+      vim.opt.sidescrolloff = 36
+      
+      ---@type Neominimap.UserConfig
+      vim.g.neominimap = {
+        auto_enable = true,
+        layout = "float",
+        float = {
+          minimap_width = 12,
+          winblend = 100,
         },
-        window = {
-          width = 12,
-          side = "right",
-          show_integration_count = false,
-        },
-      })
-
-      vim.keymap.set("n", "<leader>mm", mini_map.toggle, { desc = "Toggle Minimap" })
+      }
     end,
-  },
+  }
 }

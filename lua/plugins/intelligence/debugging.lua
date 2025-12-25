@@ -28,5 +28,43 @@ return {
     dap.listeners.before.launch.dapui_config = function() dapui.open() end
     dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
     dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+
+    local js_pkg = require("mason-registry").get_package("js-debug-adapter")
+    local path = js_pkg:get_install_path() .. "/js-debug/src/dapDebugServer.js"
+
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = { path, "${port}" },
+      },
+    }
+
+    for _, language in ipairs({ "typescript", "javascript", "typescriptreact", "javascriptreact" }) do
+      dap.configurations[language] = {
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch Current File (TS-Node)",
+          runtimeExecutable = "ts-node",
+          runtimeArgs = { "--esm" },
+          args = { "${file}" },
+          rootPath = "${workspaceFolder}",
+          protocol = "inspector",
+          sourceMaps = true,
+          skipFiles = { "<node_internals>/**", "node_modules/**" },
+          console = "integratedTerminal",
+        },
+        {
+          type = "pwa-node",
+          request = "attach",
+          name = "Attach to Process",
+          processId = require("dap.utils").pick_process,
+          cwd = "${workspaceFolder}",
+        },
+      }
+    end
   end,
 }

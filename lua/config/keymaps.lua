@@ -1,23 +1,46 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- === WASD Navigation ===
 keymap({ "n", "v" }, "w", "k", opts)
 keymap({ "n", "v" }, "a", "h", opts)
 keymap({ "n", "v" }, "s", "j", opts)
 keymap({ "n", "v" }, "d", "l", opts)
 
--- Arrows: Navigate search results
-keymap("n", "<Up>", "Nzz", opts)
-keymap("n", "<Down>", "nzz", opts)
+keymap({ "n", "v" }, "<Up>", "Nzz", opts)
+keymap({ "n", "v" }, "<Down>", "nzz", opts)
 
--- === Window Navigation ===
+keymap({ "n", "v" }, "<C-Right>", "w", opts)
+keymap({ "n", "v" }, "<C-Left>", "b", opts)
+keymap("i", "<C-Right>", "<C-o>w", opts)
+keymap("i", "<C-Left>", "<C-o>b", opts)
+
+keymap({ "n", "v" }, "<C-Up>", "^", opts)
+keymap({ "n", "v" }, "<C-Down>", "$", opts)
+keymap("i", "<C-Up>", "<Esc>^i", opts)
+keymap("i", "<C-Down>", "<Esc>$a", opts)
+
+keymap("v", "<C-c>", '"+y', opts)
+keymap("n", "<C-c>", '"+yy', opts)
+keymap({ "n", "v" }, "<C-v>", '"+p', opts)
+keymap("i", "<C-v>", "<C-r>+", opts)
+keymap("c", "<C-v>", "<C-r>+", opts)
+keymap("t", "<C-v>", [[<C-\><C-n>"+pi]], opts)
+
+keymap({ "n", "i", "v" }, "<C-a>", "<Esc>ggVG", opts)
+keymap({ "n", "i", "v" }, "<C-l>", "<Esc>V", opts)
+
+keymap("n", "<C-z>", "u", opts)
+keymap("i", "<C-z>", "<C-o>u", opts)
+keymap("n", "<C-y>", "<C-r>", opts)
+
+keymap("v", "<C-d>", "d", opts)
+keymap("n", "<C-d>", "dd", opts)
+
 keymap("n", "<leader>a", "<C-w>h", opts)
 keymap("n", "<leader>d", "<C-w>l", opts)
 keymap("n", "<leader>w", "<C-w>k", opts)
 keymap("n", "<leader>s", "<C-w>j", opts)
 
--- === Buffer Navigation ===
 keymap("n", "<leader>e", ":bnext<CR>", opts)
 keymap("n", "<leader>q", ":bprevious<CR>", opts)
 keymap("n", "<leader>x", function()
@@ -34,23 +57,3 @@ keymap("n", "<leader>x", function()
     vim.cmd("bd")
   end
 end, opts)
-
--- === Clipboard (System) ===
-keymap("v", "<C-S-c>", '"+y', opts)
-keymap("n", "<C-S-v>", '"+p', opts)
-keymap("i", "<C-S-v>", "<C-r>+", opts)
-keymap("c", "<C-S-v>", "<C-r>+", opts)
-
--- === Select All ===
-keymap("n", "<C-a>", "ggVG", opts)
-keymap("v", "<C-a>", "<Esc>ggVG", opts)
-keymap("i", "<C-a>", "<Esc>ggVG", opts)
-
--- === Undo Redo ===
-keymap("n", "<C-z>", "u", opts)
-keymap("i", "<C-z>", "<C-o>u", opts)
-keymap("n", "<C-y>", "<C-r>", opts)
-
--- === Delete Actions ===
-keymap({ "n", "v" }, "x", "d", opts)
-keymap({ "n", "v" }, "xx", "dd", opts)
