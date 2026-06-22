@@ -6,11 +6,11 @@ Neovim configuration built on [LazyVim](https://github.com/LazyVim/LazyVim).
 
 | Feature | Tools |
 |---------|-------|
-| **WASD Navigation** | `w/a/s/d` → arrow keys |
+| **WASD Navigation** | `w/a/s/d` as arrow keys |
 | **LSP** | vtsls, pyright, clangd, solidity |
-| **Completion** | blink.cmp + LuaSnip + minuet-ai |
+| **Completion** | blink.cmp, LuaSnip, minuet-ai |
 | **AI Inline** | minuet-ai.nvim + 9router (local LLM) |
-| **Formatting** | conform.nvim — format on save |
+| **Formatting** | conform.nvim, format on save |
 | **Testing** | neotest (python, jest, vitest) |
 | **Debug** | nvim-dap (node, python, codelldb) |
 | **File Explorer** | snacks.nvim sidebar |
@@ -26,19 +26,19 @@ Neovim configuration built on [LazyVim](https://github.com/LazyVim/LazyVim).
 ├── lazyvim.json
 ├── kitty.conf
 ├── lua/
-│   ├── config/        # options, keymaps, autocmds
+│   ├── config
 │   └── plugins/
-│       ├── appearance/   # theme, lualine, bufferline, dashboard
-│       ├── equipment/    # explorer, git, telescope, autosave
-│       └── intelligence/ # LSP, completion, AI, testing, debug
+│       ├── appearance/
+│       ├── equipment/
+│       └── intelligence/
 ```
 
 ## Requirements
 
 - Neovim >= 0.10
-- Nerd Font (optional)
+- Nerd Font
 - Kitty terminal (recommended)
-- 9router — for AI autocomplete
+- 9router (for AI autocomplete)
 
 ## Install
 
