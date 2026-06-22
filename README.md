@@ -1,22 +1,24 @@
-# neovim dotfiles
+# nvim dotfiles
 
-## 🚀 Fitur
+Neovim configuration built on [LazyVim](https://github.com/LazyVim/LazyVim).
 
-| Fitur | Tools |
-|-------|-------|
-| **Navigasi WASD** | `w/a/s/d` → arrow keys |
+## Features
+
+| Feature | Tools |
+|---------|-------|
+| **WASD Navigation** | `w/a/s/d` → arrow keys |
 | **LSP** | vtsls, pyright, clangd, solidity |
 | **Completion** | blink.cmp + LuaSnip + minuet-ai |
 | **AI Inline** | minuet-ai.nvim + 9router (local LLM) |
-| **Formatting** | conform.nvim — format-on-save |
+| **Formatting** | conform.nvim — format on save |
 | **Testing** | neotest (python, jest, vitest) |
 | **Debug** | nvim-dap (node, python, codelldb) |
 | **File Explorer** | snacks.nvim sidebar |
 | **Git** | gitsigns, fugitive, snacks.lazygit |
-| **Gamifikasi** | triforce.nvim (XP, level, achievements) |
+| **Gamification** | triforce.nvim (XP, levels, achievements) |
 | **Dashboard** | EVE ONLINE / PARA OCELLUM ASCII |
 
-## ⚙️ Struktur
+## Structure
 
 ```
 ~/.config/nvim/
@@ -31,14 +33,14 @@
 │       └── intelligence/ # LSP, completion, AI, testing, debug
 ```
 
-## 🔧 Requirements
+## Requirements
 
 - Neovim >= 0.10
-- Hack Nerd Font (opsional)
+- Nerd Font (optional)
 - Kitty terminal (recommended)
-- 9router — untuk AI autocomplete
+- 9router — for AI autocomplete
 
-## 🚀 Install
+## Install
 
 ```bash
 git clone git@github.com:daudonhere/nvim-dotfiles.git ~/.config/nvim
