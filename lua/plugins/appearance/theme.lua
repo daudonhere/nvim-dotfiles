@@ -5,7 +5,7 @@ return {
     config = function()
       require("onedarkpro").setup({
         options = {
-          transparency = false,
+          transparency = true,
           terminal_colors = true,
           highlight_inactive_windows = false,
         },
