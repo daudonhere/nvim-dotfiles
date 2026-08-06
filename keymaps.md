@@ -1,424 +1,511 @@
 # Keymaps Reference — Neovim Config
 
----
+Dokumentasi keymap aktif Neovim config ini. Leader = `space`.
 
-## 1. Quick Summary
+**Notasi:** `keymaps = fungsi`. Tombol ditulis sebagai `space + f + c` (contoh: leader f c), `ctrl + a`, `shift + a`, `alt + a`. Mode yang berlaku ditulis dalam tanda kurung jika bukan normal saja. Seluruh keymap diverifikasi langsung dari `maparg` (dump headless) + sumber config.
 
-- Space + e = Toggle Explorer (file tree)
-- Space + t = Toggle Terminal
-- Space + l = LazyGit
-- Space + f + f = Find Files
-- Space + f + b = Search in active buffer
-- Space + f + p = Search in project (live_grep)
-- Space + a = Move window left
-- Space + d = Move window right
-- Space + s = Move window bottom
-- Space + w = Move window up
-- Space + Right arrow = Next buffer
-- Space + Left arrow = Prev buffer
-- Space + x = Close buffer (smart)
-- Space + / (normal) = Smart disable code
-- Space + / (visual) = Toggle comment
-- Control + z = Undo
-- Control + y = Redo
-- g d = LSP: go to definition
-- g r = LSP: references
-- K = LSP: hover
-- Space + D + b = Debug: toggle breakpoint
-- Space + D + c = Debug: start / continue
-- Space + D + o = Debug: step over
-- Space + D + i = Debug: step into
-- Space + T + t = Test: run nearest
-- Space + T + f = Test: run all tests in file
-- Space + T + s = Test: toggle summary
-- Space + T + o = Test: show output
-- Space + m + c = CodeCompanion: chat (local AI via 9router)
-- Space + m + i = CodeCompanion: inline assistant
-- Space + m + a = CodeCompanion: actions
+Daftar isi:
+
+1. [Keymaps Aktif](#1-keymaps-aktif)
+2. [Keymaps Conflict](#2-keymaps-conflict)
+3. [Keymaps Nonaktif](#3-keymaps-nonaktif-nop)
+4. [Keymaps Default LazyVim](#4-keymaps-default-lazyvim)
+5. [Keymaps Default Nvim](#5-keymaps-default-nvim)
 
 ---
 
-## 2. Navigation & Editing — `lua/config/keymaps.lua`
+## 1. Keymaps Aktif
 
-### Basic movement (arrows = Vim standard)
+Semua keymap yang benar-benar aktif saat ini (keymap custom + plugin + default LazyVim yang menang).
 
-- Up arrow = k (up 1 line) — n,v
-- Down arrow = j (down 1 line) — n,v
-- Left arrow = h (left 1 char) — n,v
-- Right arrow = l (right 1 char) — n,v
-- Control + Left arrow = b (word prev) — n,v
-- Control + Right arrow = w (word next) — n,v
-- Control + Left arrow = Control + o + b (word prev) — i
-- Control + Right arrow = Control + o + w (word next) — i
-- Control + Up arrow = Jump 50% of total lines up — n,v
-- Control + Down arrow = Jump 50% of total lines down — n,v
-- Home = ^ (start of line) — n,v
-- End = $ (end of line) — n,v
-- Home = Control + o + ^ (start of line) — i
-- End = Control + o + $ (end of line) — i
+### 1.1 Navigasi dasar — `lua/config/keymaps.lua`
 
-### Block jump
+- `up` = k (naik 1 baris) — normal, visual
+- `down` = j (turun 1 baris) — normal, visual
+- `left` = h (kiri 1 karakter) — normal, visual
+- `right` = l (kanan 1 karakter) — normal, visual
+- `ctrl + left` = b (kata sebelumnya) — normal, visual
+- `ctrl + right` = w (kata berikutnya) — normal, visual
+- `ctrl + left` = ctrl + o + b (kata sebelumnya) — insert
+- `ctrl + right` = ctrl + o + w (kata berikutnya) — insert
+- `ctrl + up` = lompat 50% total baris ke atas — normal, visual
+- `ctrl + down` = lompat 50% total baris ke bawah — normal, visual
+- `home` = ^ (awal baris) — normal, visual
+- `end` = $ (akhir baris) — normal, visual
+- `home` = ctrl + o + ^ (awal baris) — insert
+- `end` = ctrl + o + $ (akhir baris) — insert
+- `insert` = i (masuk insert mode) — normal
+- `delete` = dd (hapus satu baris) — normal
 
-- PageUp = Jump to start of enclosing block (JSX tag, function, class); goes to parent if already at the boundary — n
-- PageDown = Jump to end of enclosing block (same logic) — n
+> Arrow keys dipetakan ulang ke `hjkl` sehingga navigasi terasa sama seperti huruf Vim standar. `k`/`j` default LazyVim tetap smart-wrap (`gk`/`gj`); arrow memakai `k`/`j` polos.
 
-Fallback: jump to nearest `{`. Treesitter-based.
+### 1.2 Lompat blok — `lua/config/keymaps.lua`
 
-### Insert / delete / clipboard / undo-redo / select
+- `pageup` = lompat ke awal blok yang menaungi (JSX tag, ekspresi JSX, fungsi, class) — normal
+- `pagedown` = lompat ke akhir blok yang menaungi — normal
 
-- Insert = i (enter insert) — n
-- Delete = d d (delete line) — n
-- Control + d = Delete without register — n,v
-- Control + z = Undo — n
-- Control + y = Redo — n
-- Control + z = Undo — i
-- Control + a = Select all — n,i,v
-- Control + Shift + a = Select line — n,i,v
+Berbasis treesitter. Jika sudah di tepi blok, keluar ke blok induknya; fallback: cari `{` terdekat. Scroll menyesuaikan (`^zz`).
 
-### Space prefix — window, buffer, resize
+### 1.3 Clipboard, undo/redo, seleksi — `lua/config/keymaps.lua`
 
-- Space + a = Window left
-- Space + d = Window right
-- Space + w = Window up
-- Space + s = Window down
-- Space + Right arrow = Next buffer
-- Space + Left arrow = Prev buffer
-- Space + x = Smart close buffer (close prev + delete if other buffers exist, else `bd`)
-- Space + k = List all keymaps
-- Space + Up arrow = Resize window +2 lines
-- Space + Down arrow = Resize window -2 lines
-- Space + PageUp = Resize window +2 columns
-- Space + PageDown = Resize window -2 columns
+- `ctrl + c` = salin ke clipboard (yank) — normal (`"+yy`), visual (`"+y`)
+- `ctrl + v` = tempel dari clipboard — normal, visual (`"+p`), insert (`<C-r>+`), perintah (`<C-r>+`), terminal (`<C-\><C-n>"+pi`)
+- `ctrl + a` = pilih semua (ggVG) — normal, insert, visual
+- `ctrl + shift + a` = pilih baris (V) — normal, insert, visual
+- `ctrl + z` = undo — normal (`u`), insert (`<C-o>u`)
+- `ctrl + y` = redo (`<C-r>`) — normal
+- `ctrl + d` = hapus tanpa register (`"_d`) — normal, visual
+- `ctrl + x` = potong tanpa register (`d`) — visual
+- `ctrl + s` = simpan file (`<cmd>w<CR><Esc>`) — normal, insert, visual (default LazyVim)
+
+### 1.4 Space prefix — window, buffer, resize — `lua/config/keymaps.lua`
+
+- `space + a` = pindah fokus ke window kiri
+- `space + d` = pindah fokus ke window kanan
+- `space + w` = pindah fokus ke window atas
+- `space + s` = pindah fokus ke window bawah
+- `space + left` = buffer sebelumnya (bprevious)
+- `space + right` = buffer berikutnya (bnext)
+- `space + x` = tutup buffer cerdas (bila masih ada buffer lain: `bp | bd #`, jika hanya satu: `bd`)
+- `space + k` = daftar semua keymap (telescope keymaps)
+- `space + up` = resize tinggi window +2
+- `space + down` = resize tinggi window -2
+- `space + pageup` = resize lebar window +2
+- `space + pagedown` = resize lebar window -2
+
+### 1.5 Ruang kerja — Snacks (`lua/plugins/equipment/snack.lua`)
+
+- `space + e` = buka/tutup Explorer (sidebar kiri)
+- `space + t` = toggle terminal (bawah, 20% tinggi)
+- `space + l` = LazyGit
+- `space + shift + e` = Explorer (cwd)
+
+#### Explorer internal
+
+- `a` = tambah file, `r` = rename, `d` = hapus
+- `q` / `esc` = tutup explorer
+- `ctrl + shift + c` = salin path file (yank)
+- `ctrl + shift + v` = tempel path sebagai teks
+- `ctrl + c` = salin / duplikasi file
+- `ctrl + v` = tempel file / pindahkan file yang di-cut
+- `ctrl + shift + x` = cut file
+- `space + r` = refresh
+- `ctrl + right` = lebarkan explorer +4
+- `ctrl + left` = sempitkan explorer -4
+- `h` = tutup node, `l` = buka node
+
+### 1.6 File & pencarian — `lua/plugins/equipment/telescope.lua` + default LazyVim
+
+- `space + space` = cari file (root)
+- `space + f + f` = cari file (telescope find_files)
+- `space + f + b` = cari di buffer aktif (fuzzy)
+- `space + f + p` = cari teks di proyek (live_grep)
+- `space + f + c` = cari file konfigurasi (lihat [konflik](#2-keymaps-conflict))
+- `space + f + e` = Explorer (root)
+- `space + f + shift + e` = Explorer (cwd)
+- `space + f + f` `shift` = cari file (cwd) — `space + f + shift + f`
+- `space + f + g` = cari file (git-files)
+- `space + f + r` = file terbaru (recent)
+- `space + f + shift + r` = file terbaru (cwd)
+- `space + f + n` = file baru (enew)
+- `space + f + t` = terminal (root)
+- `space + f + shift + t` = terminal (cwd)
+- `space + f + shift + b` = daftar buffer (semua)
+- `space + ,` = pindah buffer (pilihan)
+- `space + :` = riwayat perintah
+- `space + .` = toggle scratch buffer
+- `space + shift + s` = pilih scratch buffer
+
+#### Telescope (insert mode)
+
+- `ctrl + w` = pilihan sebelumnya
+- `ctrl + s` = pilihan berikutnya
+- `ctrl + v` = tempel isi clipboard ke kolom pencarian
+
+> Workflow cari & ganti ala VSCode: `space + f + p` (live_grep) → `<C-q>` kirim hasil ke quickfix → `:cdo s/pola/ganti/ge | update`.
+
+### 1.7 Git — `lua/plugins/equipment/git.lua` (fugitive + gitsigns) + default LazyVim
+
+- `space + g + s` = Git status (fugitive)
+- `space + g + d` = Git diff split (`Gdiffsplit`) — override diff telescope
+- `space + g + b` = Git blame (fugitive) — override blame line
+- `space + g + p` = Git push
+- `space + g + l` = Git pull — override git log
+- `space + g + g` = LazyGit (root)
+- `space + g + shift + g` = LazyGit (cwd)
+- `space + g + shift + l` = Git log (cwd)
+- `space + g + shift + d` = Git diff (origin)
+- `space + g + f` = riwayat file aktif
+- `space + g + shift + s` = Git stash
+- `space + g + shift + b` = buka di GitHub (open) — normal, visual
+- `space + g + shift + y` = salin URL GitHub — normal, visual
+- `space + g + i` = buka GitHub issues
+- `space + g + shift + i` = daftar GitHub issues (semua)
+- `space + g + p` = buka pull request — normal (GitHub)
+- `space + g + shift + p` = daftar pull request (semua)
+- `space + g + c` = daftar commit (telescope)
+- `space + g + h + p` = preview hunk (gitsigns)
+- `space + g + h + b` = blame baris (gitsigns)
+
+### 1.8 LSP & kode — default LazyVim (buffer-local, aktif setelah LSP attach)
+
+- `g + d` = definisi
+- `g + r` = referensi
+- `g + shift + i` = implementasi
+- `g + y` = definisi tipe
+- `g + shift + d` = deklarasi
+- `k` = hover
+- `g + k` = signature help — normal
+- `ctrl + k` = signature help — insert
+- `space + c + a` = code action — normal, visual
+- `space + c + c` = jalankan codelens
+- `space + c + shift + c` = refresh & tampilkan codelens
+- `space + c + r` = rename
+- `space + c + shift + r` = rename file
+- `space + c + shift + a` = source action
+- `space + c + l` = info LSP (picker)
+- `space + c + d` = diagnosa baris (float)
+- `space + c + s` = daftar simbol (Trouble)
+- `space + c + shift + s` = referensi/definisi (Trouble)
+- `space + c + m` = Mason
+- `space + shift + k` = keywordprg
+- `space + c + f` = format — normal, visual (lihat konflik `space + f + c`)
+- `space + c + shift + f` = format bahasa-injeksi — normal, visual
+- `] d` = diagnosa berikutnya, `[ d` = diagnosa sebelumnya
+- `] e` = error berikutnya, `[ e` = error sebelumnya
+- `] w` = warning berikutnya, `[ w` = warning sebelumnya
+- `] q` = item trouble/quickfix berikutnya, `[ q` = sebelumnya
+- `] t` = todo berikutnya, `[ t` = todo sebelumnya
+- `g + r + a` = code action, `g + r + n` = rename, `g + r + r` = referensi, `g + r + i` = implementasi, `g + r + t` = definisi tipe, `g + r + x` = jalankan codelens
+- `g + o` = simbol dokumen
+
+### 1.9 Formatting — conform.nvim (`lua/plugins/appearance/formatting.lua`)
+
+- `space + c + f` = format (normal) — gunakan ini untuk format di normal mode (bukan `space + f + c`)
+- `space + f + c` = format — visual, select, operator (di normal mode kalah oleh "Find Config File", lihat [konflik](#2-keymaps-conflict))
+
+Format otomatis saat simpan aktif (stylua/prettier/black, `format_on_save`).
+
+### 1.10 Debug — nvim-dap + DAP UI (`lua/plugins/intelligence/debugging.lua`)
+
+- `space + d + b` = toggle breakpoint
+- `space + d + c` = mulai / lanjutkan debug
+- `space + d + o` = step over
+- `space + d + i` = step into
+- `space + d + u` = toggle DAP UI
+
+DAP UI terbuka otomatis saat attach/launch, tertutup saat selesai. Adapter: pwa-node (ts-node), python, codelldb.
+
+### 1.11 Test — neotest (`lua/plugins/intelligence/testing.lua`)
+
+- `space + t + t` = jalankan test terdekat
+- `space + t + f` = jalankan semua test di file
+- `space + t + s` = toggle ringkasan
+- `space + t + o` = tampilkan output
+
+Adapter: python (pytest), jest, vitest.
+
+### 1.12 Todo & gamifikasi
+
+- `space + t + d` = cari todo (TodoTelescope)
+- `] t` = todo berikutnya, `[ t` = todo sebelumnya
+- `space + t + p` = profil Triforce (XP/level/achievement)
+
+### 1.13 Buffer — BufferLine + default LazyVim
+
+- `space + b + b` = pindah ke buffer lain (`<Cmd>e #<CR>`)
+- `` space + ` `` = pindah ke buffer lain
+- `space + b + d` = hapus buffer
+- `space + b + shift + d` = hapus buffer & window
+- `space + b + o` = hapus buffer lain
+- `space + b + i` = hapus buffer tak terlihat
+- `space + b + l` = hapus buffer kiri
+- `space + b + r` = hapus buffer kanan
+- `space + b + p` = toggle pin
+- `space + b + shift + p` = tutup buffer non-pin
+- `space + b + j` = pilih buffer (BufferLinePick)
+- `shift + h` = buffer sebelumnya, `shift + l` = buffer berikutnya
+- `[ b` = buffer sebelumnya, `] b` = buffer berikutnya
+- `[ shift + b` = pindahkan buffer kiri, `] shift + b` = pindahkan buffer kanan
+
+### 1.14 Tab & window split — default LazyVim
+
+- `space + tab + tab` = tab baru
+- `space + tab + ]` = tab berikutnya
+- `space + tab + [` = tab sebelumnya
+- `space + tab + l` = tab terakhir
+- `space + tab + f` = tab pertama
+- `space + tab + d` = tutup tab
+- `space + tab + o` = tutup tab lain
+- `space + -` = split horizontal (bawah)
+- `space + |` = split vertikal (kanan)
+- `ctrl + h/j/k/l` = pindah window (default LazyVim)
+- `ctrl + w` + space = mode hydra window (which-key)
+
+### 1.15 Toggle UI — prefix `space + u` (default LazyVim)
+
+- `space + u + f` = auto-format (global)
+- `space + u + shift + f` = auto-format (buffer)
+- `space + u + s` = spelling
+- `space + u + w` = wrap
+- `space + u + shift + l` = nomor baris relatif
+- `space + u + l` = nomor baris
+- `space + u + d` = diagnosa
+- `space + u + c` = conceal level
+- `space + u + shift + a` = tabline
+- `space + u + shift + t` = highlight treesitter
+- `space + u + b` = background gelap
+- `space + u + shift + d` = dim
+- `space + u + a` = animasi
+- `space + u + g` = indent guides
+- `space + u + shift + s` = smooth scroll
+- `space + u + h` = inlay hints
+- `space + u + i` = inspect posisi
+- `space + u + shift + i` = inspect pohon treesitter
+- `space + u + r` = redraw / hapus hlsearch / update diff
+- `space + u + n` = tutup notifikasi
+- `space + u + p` = mini pairs
+- `space + u + z` = zen mode
+- `space + u + shift + z` = zoom mode
+
+### 1.16 Session & quit — prefix `space + q` (default LazyVim)
+
+- `space + q + q` = keluar semua
+- `space + q + s` = restore session
+- `space + q + shift + s` = pilih session
+- `space + q + l` = restore session terakhir
+- `space + q + d` = jangan simpan session saat ini
+
+### 1.17 AI — CodeCompanion, minuet, codegen (`lua/plugins/intelligence/*`, `lua/config/codegen.lua`)
+
+- `space + m + c` = toggle chat CodeCompanion — normal, visual
+- `space + m + i` = inline assistant — normal, visual
+- `space + m + a` = actions (palet perintah/prompt) — normal, visual
+- `space + m + m` = toggle minimap
+
+#### Chat buffer (CodeCompanion, adapter nine_router → localhost:20128, model oc-thinking)
+
+- `enter` = kirim pesan
+- `ctrl + s` = kirim pesan
+- `g + x` = bersihkan chat
+- `g + y` = salin kode
+- `g + a` = ganti adapter
+- `] ]` = header berikutnya
+- `[ [` = header sebelumnya
+
+#### Inline autocomplete — minuet-ai (endpoint localhost:20128/v1, model oc-flash, auto-suggest saat InsertEnter)
+
+- `alt + shift + a` = terima semua baris
+- `alt + a` = terima 1 baris
+- `alt + z` = terima N baris
+- `alt + e` = buang saran
+- `alt + [` = saran sebelumnya / pemicu manual
+- `alt + ]` = saran berikutnya / pemicu manual
+
+#### Codegen (insert mode)
+
+- Ketik `//codegen: <instruksi>` (kursor di akhir baris) lalu `enter` = baris marker diganti kode yang dihasilkan (inline, model oc-thinking, tanpa diff). Saat baris diawali `//codegen`, saran blink/minuet dan snippet dinonaktifkan; startup/error ditampilkan via notifikasi.
+
+### 1.18 Lainnya
+
+- `rightmouse` = menu konteks (`lua/plugins/appearance/menu.lua`)
+- `space + ;` = pilih breadcrumb (dropbar, `lua/plugins/appearance/breadcrumb.lua`)
+- `space + c + p` = color picker (ccc, `lua/plugins/appearance/color-picker.lua`)
+- `space + /` = disable kode cerdas: menambahkan baris komentar `Disabled Code` lalu menonaktifkan baris; `g c c` untuk toggle jika sudah dikomentari — normal (comment.lua)
+- `space + /` = toggle komentar — visual, select (comment.lua)
+- `g + c + c` = toggle komentar baris
+- `g + c + o` = komentar kosong di bawah
+- `g + c + shift + o` = komentar kosong di atas
+- `g + c` = komentar — normal, visual
+- `space + n` = riwayat notifikasi
+- `space + ?` = keymap buffer (which-key)
+- `space + shift + l` = changelog LazyVim
+- `space + shift + k` = keywordprg
+
+#### Blink.cmp (insert mode, `lua/plugins/intelligence/completion.lua`)
+
+- `ctrl + space` = tampilkan / dokumentasi / sembunyikan dokumentasi
+- `enter` = terima saran (fallback newline)
+- `ctrl + [` = pilihan sebelumnya
+- `ctrl + ]` = pilihan berikutnya
+- `up` = pilihan sebelumnya, `down` = pilihan berikutnya
+- `tab` = terima snippet / pilihan berikutnya (jika snippet aktif, accept)
+- `shift + tab` = mundur tabstop snippet
+- `esc` = tutup popup (fallback keluar insert)
+
+Sumber: lsp, path, snippets, buffer, minuet (score offset 100). Snippet: LuaSnip (friendly-snippets + 516 snippet custom framework, lihat `snippets/`).
+
+#### Dashboard (hanya aktif di buffer dashboard)
+
+- `1` = cari file, `2` = file baru, `3` = cari teks, `4` = file terbaru, `5` = buka config, `6` = restore session, `7` = Lazy, `0` = keluar
 
 ---
 
-## 3. Space prefix maps — Custom (from `lua/plugins/`)
+## 2. Keymaps Conflict
 
-### Main
+Konflik keymap yang terdeteksi. Yang **efektif** adalah yang menang di `maparg`.
 
-- Space + e = Explorer (left sidebar) — snack.lua
-- Space + t = Toggle Terminal — snack.lua
-- Space + l = LazyGit — snack.lua
-- Space + m + m = Toggle minimap — minimap.lua
-- Space + c + p = Color picker (ccc) — appearance
-- Space + ; = Pick breadcrumb (dropbar) — breadcrumb.lua
-- Space + / (n) = Smart disable code: comment `// Disabled Code` + disable lines; g c c toggle if already commented — comment.lua
-- Space + / (x) = Toggle comment visual — comment.lua
-- g c c = Toggle comment — LazyVim + mini.comment
-- g c o = Empty comment below — LazyVim + mini.comment
-- g c O = Empty comment above — LazyVim + mini.comment
-- Control + , = Scroll up half screen (smooth) — n,v,x — smooth-scroll.lua
-- Control + . = Scroll down half screen (smooth) — n,v,x — smooth-scroll.lua
+### 2.1 `space + f + c` — Format Code vs Find Config File
 
-### Files & Picker
+- Sumber conflict: `formatting.lua:7` (`<leader>fc` = Format Code, mode = semua mode) vs LazyVim `pick.lua:70` (`<leader>fc` = Find Config File, normal).
+- **Efektif di normal mode:** `space + f + c` = **Cari file konfigurasi** (LazyVim menang). Keymap format **mati** di normal mode.
+- **Masih aktif di visual/select/operator:** `space + f + c` = Format Code.
+- **Solusi format di normal mode:** gunakan `space + c + f` (= Format, default LazyVim, tetap jalan).
 
-- Space + Space = Find files (root)
-- Space + f + f = Find files (telescope)
-- Space + f + b = Search in active buffer (overrides "Buffers")
-- Space + f + p = Grep project (overrides "Projects")
-- Space + f + Shift + F = Find files (cwd)
-- Space + f + g = Find files (git-files)
-- Space + f + r = Recent
-- Space + f + Shift + R = Recent (cwd)
-- Space + f + Shift + B = Buffers (all)
-- Space + f + c = Find config file
-- Space + f + n = New file
-- Space + f + e = Explorer (root)
-- Space + f + Shift + E = Explorer (cwd)
-- Space + f + t = Terminal (root)
-- Space + f + Shift + T = Terminal (cwd)
-- Space + , = Switch buffer
-- Space + : = Command history
-- Space + n = Notification history
-- Space + u + Shift + C = Colorschemes
-- Space + ? = Buffer keymaps (which-key)
-- Space + . = Toggle scratch buffer
-- Space + Shift + S = Select scratch
+### 2.2 Neoscroll vs keymap custom `<ctrl + d>` dan `<ctrl + y>`
+
+- neoscroll default memetakan `<C-d>`, `<C-e>`, `<C-u>`, `<C-b>`, `<C-f>`, `<C-y>`, `zt`, `zz`, `zb` untuk smooth scroll.
+- Keymap user `_d` (`keymaps.lua:130`) dan `<C-r>` redo dipetakan ulang di `VeryLazy`, sehingga **menang** atas neoscroll.
+- Efektif: `ctrl + d` = hapus tanpa register, `ctrl + y` = redo. Smooth scroll tetap tersedia via `ctrl + e`, `ctrl + u`, `ctrl + b`, `ctrl + f`.
+- Keymap scroll custom: `ctrl + ,` = scroll naik setengah layar (smooth), `ctrl + .` = scroll turun setengah layar — normal, visual, select (smooth-scroll.lua).
+
+---
+
+## 3. Keymaps Nonaktif (Nop)
+
+Semua keymap yang dinonaktifkan (`<Nop>`) karena bentrok dengan navigasi custom (`<leader>d/s/w/x/t`). Sumber: `keymaps.lua:173-181`, `lua/plugins/equipment/keymap-fixes.lua`, `snack.lua`, `todo.lua`.
+
+### Profiler LazyVim (d = window kanan)
+
+- `space + d + p + p` = profiler toggle
+- `space + d + p + h` = profiler highlights
+- `space + d + p + s` = snapshots
+
+### Window (w = window atas)
+
+- `space + w + d` = hapus window (pakai `ctrl + w + c` / `space + x`)
+- `space + w + m` = zoom (masih ada di `space + u + shift + z`)
+
+### Quickfix/location (x = tutup buffer)
+
+- `space + x + l` = location list
+- `space + x + q` = quickfix list
+
+### Trouble (x = tutup buffer)
+
+- `space + x + x` = toggle trouble
+- `space + x + shift + x` = trouble semua
+- `space + x + shift + l` = trouble loclist
+- `space + x + shift + q` = trouble quickfix
+- `space + x + t` = trouble todo
+- `space + x + shift + t` = trouble todo (semua)
+
+### Search & replace (s = window bawah)
+
+- `space + s + r` = ganti di proyek (grug-far) — normal, visual
+
+### Noice notification (s = window bawah)
+
+- `space + s + n + a` = archive notifications
+- `space + s + n + d` = dismiss all
+- `space + s + n + h` = dismiss notifications
+- `space + s + n + l` = history
+- `space + s + n + t` = dismiss picker (dan refresh)
+
+### Snacks picker grup `space + s *` (s = window bawah)
+
+`space + s"`, `space + s/`, `space + s a`, `space + s b`, `space + s shift + b`, `space + s c`, `space + s shift + c`, `space + s d`, `space + s shift + d`, `space + s g`, `space + s shift + g`, `space + s h`, `space + s shift + h`, `space + s i`, `space + s j`, `space + s k`, `space + s l`, `space + s m`, `space + s shift + m`, `space + s p`, `space + s q`, `space + s shift + r`, `space + s s`, `space + s shift + s`, `space + s u`, `space + s w`, `space + s shift + w` — semua nonaktif (dahulu = picker Snacks).
+
+### Todo (s = window bawah, x = tutup buffer)
+
+- `space + s + t` = todo komentar (nonaktif)
+- `space + s + shift + t` = todo komentar semua (nonaktif)
+- `space + x + t` = todo komentar (nonaktif)
+- `space + x + shift + t` = todo komentar semua (nonaktif)
+
+---
+
+## 4. Keymaps Default LazyVim
+
+Referensi default LazyVim yang **masih aktif** (belum di-override/dinonaktifkan). Sebagian sudah masuk bagian 1; di sini daftar lengkapnya per kelompok.
+
+### Navigasi & editing
+
+- `j` = `gj` (turun cerdas-wrap), `k` = `gk` (naik cerdas-wrap)
+- `n` = hasil pencarian berikutnya (+`zv`), `shift + n` = hasil pencarian sebelumnya
+- `y` = yank (baris), `shift + y` = `y$` (sampai akhir baris)
+- `alt + j` = pindah baris ke bawah (move down), `alt + k` = pindah baris ke atas — normal, visual, insert
+- `] ` = tambah baris kosong di bawah, `[ ` = tambah baris kosong di atas
+- `%` / `g%` / `[%` / `]%` = lompat pasangan tanda kurung / tag (matchit)
+- `g + [` = pindah "around" kiri, `g + ]` = pindah "around" kanan
+- `g + x` = buka path/URI di bawah kursor dengan handler sistem
+
+### Flash (lompatan visual) — flash.nvim
+
+- `s` = flash (lompat), `shift + s` = flash treesitter — normal, visual, operator
+- `shift + r` = treesitter search — visual, operator
+- `f` / `shift + f` / `t` / `shift + t` = lompat (Flash)
+
+### Seleksi inkremental treesitter
+
+- `ctrl + space` = seleksi inkremental treesitter — normal, visual, operator
+
+### Scroll / window
+
+- `ctrl + b` = scroll mundur, `ctrl + f` = scroll maju
+- `ctrl + h/j/k/l` = pindah window (kiri/bawah/atas/kanan)
+- `ctrl + w` `space` = mode hydra window
+- `ctrl + w` `d` = diagnosa di bawah kursor (dan `ctrl + w` `ctrl + d`)
+
+### Buffer / quickfix / loclist
+
+- `shift + h` / `shift + l` = buffer sebelumnya / berikutnya (BufferLine)
+- `[ b` / `] b` = buffer sebelumnya / berikutnya
+- `[ shift + b` / `] shift + b` = pindahkan buffer
+- `[ q` / `] q` = item quickfix/trouble sebelumnya / berikutnya
+- `[ l` / `] l`, `[ a` / `] a`, `[ t` / `] t`, dan varian huruf besar (`[ A`/`] A`, `[ L`/`] L`, `[ Q`/`] Q`, `[ T`/`] T`) = navigasi daftar argumen/lokasi/quickfix/tag (default Vim)
 
 ### Git
 
-- Space + g + s = Git status (fugitive)
-- Space + g + d = Git diff split (fugitive) — overrides diff telescope
-- Space + g + b = Git blame (fugitive) — overrides blame line
-- Space + g + l = Git pull (fugitive) — overrides git log
-- Space + g + p = Git push (fugitive)
-- Space + g + Shift + L = Git log (cwd)
-- Space + g + f = Git current file history
-- Space + g + Shift + D = Git diff (origin)
-- Space + g + Shift + S = Git stash
-- Space + g + Shift + B = Git browse (open) — n,x
-- Space + g + Shift + Y = Git browse (copy URL) — n,x
-- Space + g + i = GitHub issues (open)
-- Space + g + Shift + I = GitHub issues (all)
-- Space + g + Shift + P = PRs (all)
-- Space + g + h + p = Hunk preview (gitsigns)
-- Space + g + h + b = Blame line (gitsigns)
+- `space + g + c` = daftar commit
+- `space + g + shift + g` = LazyGit (cwd)
+- `space + g + shift + b` / `space + g + shift + y` = browse GitHub (buka / salin URL)
 
-### Code / LSP
+### Lainnya
 
-- Space + c + d = Line diagnostics (float)
-- Space + c + f = Format — n,x
-- Space + c + Shift + F = Format injected langs — n,x
-- Space + c + s = Trouble symbols
-- Space + c + Shift + S = LSP references
-- Space + c + m = Mason
-- Space + Shift + K = Keywordprg
+- `space + shift + l` = changelog LazyVim
+- `space + ?` = keymap buffer (which-key)
+- `space + n` = riwayat notifikasi
+- `space + shift + k` = keywordprg (`K` = `norm! K`)
+- `ctrl + s` = simpan file
 
-### Debug — prefix D (Shift + D)
-
-- Space + D + b = Toggle breakpoint
-- Space + D + c = Start / Continue debug
-- Space + D + o = Step over
-- Space + D + i = Step into
-- Space + D + u = Toggle DAP UI
-
-### Test / Todo / Triforce — prefix T (Shift + T)
-
-- Space + T + t = Run nearest test
-- Space + T + f = Run all tests in file
-- Space + T + s = Toggle summary
-- Space + T + o = Show output
-- Space + T + d = Search todos (TodoTelescope)
-- Space + T + p = Show Triforce profile (XP/level)
-- ] t = Next todo comment
-- [ t = Prev todo comment
-
-### Buffer — prefix b
-
-- Space + b + d = Delete buffer
-- Space + b + o = Delete other buffers
-- Space + b + i = Delete invisible buffers
-- Space + b + Shift + D = Delete buffer & window
-- Space + b + b = Switch to other buffer
-- Space + ` = Switch to other buffer
-- Space + b + p = Toggle pin
-- Space + b + Shift + P = Close non-pinned
-- Space + b + l = Delete buffer left
-- Space + b + r = Delete buffer right
-- Space + b + j = Pick buffer (BufferLine)
-- Shift + h = Prev buffer
-- Shift + l = Next buffer
-
-### Toggle UI — prefix u
-
-- Space + u + f = Auto format (global)
-- Space + u + Shift + F = Auto format (buffer)
-- Space + u + s = Spelling
-- Space + u + w = Wrap
-- Space + u + Shift + L = Relative number
-- Space + u + l = Line number
-- Space + u + d = Diagnostics
-- Space + u + c = Conceal level
-- Space + u + Shift + A = Tabline
-- Space + u + Shift + T = Treesitter highlight
-- Space + u + b = Dark background
-- Space + u + Shift + D = Dim
-- Space + u + a = Animations
-- Space + u + g = Indent guides
-- Space + u + Shift + S = Scroll animations
-- Space + u + h = Inlay hints
-- Space + u + i = Inspect pos
-- Space + u + Shift + I = Inspect treesitter tree
-- Space + u + r = Redraw / clear hlsearch / diff update
-- Space + u + n = Dismiss notifications
-- Space + u + p = Mini pairs
-- Space + u + z = Zen mode
-- Space + u + Shift + Z = Zoom mode
-
-### Tab & Window
-
-- Space + Tab + Tab = New tab
-- Space + Tab + ] = Next tab
-- Space + Tab + [ = Prev tab
-- Space + Tab + l = Last tab
-- Space + Tab + f = First tab
-- Space + Tab + d = Close tab
-- Space + Tab + o = Close other tabs
-- Space + - = Split horizontal (bottom)
-- Space + | = Split vertical (right, press Shift + backslash)
-
-### Session — prefix q
-
-- Space + q + q = Quit all
-- Space + q + s = Restore session
-- Space + q + Shift + S = Select session
-- Space + q + l = Restore last session
-- Space + q + d = Don't save current session
-
-### AI (CodeCompanion) — prefix m
-
-- Space + m + c = Toggle chat (chat buffer) — n,v
-- Space + m + i = Inline assistant — n,v
-- Space + m + a = Actions (command/prompt library palette)
-- In chat buffer: Enter = send
-- In chat buffer: Control + s = send
-- In chat buffer: g x = clear
-- In chat buffer: g y = yank code
-- In chat buffer: g a = switch adapter
-- In chat buffer: ] ] = next header
-- In chat buffer: [ [ = prev header
-- Inline autocomplete (minuet-ai): Alt + Shift + A = accept all
-- Inline autocomplete (minuet-ai): Alt + a = accept 1 line
-- Inline autocomplete (minuet-ai): Alt + z = accept N lines
-- Inline autocomplete (minuet-ai): Alt + e = dismiss
-- Inline autocomplete (minuet-ai): Alt + [ = prev / manual trigger
-- Inline autocomplete (minuet-ai): Alt + ] = next / manual trigger
-- **Codegen (insert mode):** type `//codegen: <instruction>` with the cursor at the end of the line, then press Enter. The marker line is replaced with generated code.
-
-## 4. LSP — LazyVim defaults
-
-- g d = Definition
-- g r = References
-- g Shift + I = Implementation
-- g y = Type definition
-- g Shift + D = Declaration
-- K = Hover — n
-- g K = Signature help — n
-- Control + k = Signature help — i
-- Space + c + a = Code action — n,x
-- Space + c + c = Run codelens
-- Space + c + Shift + C = Refresh & display codelens
-- Space + c + r = Rename
-- Space + c + Shift + R = Rename file
-- Space + c + Shift + A = Source action
-- Space + c + l = LSP info (picker)
-- ] d = Next diagnostic
-- [ d = Prev diagnostic
-- ] e = Next error
-- [ e = Prev error
-- ] w = Next warning
-- [ w = Prev warning
+> Default LSP (`g d`, `g r`, `k` hover, `space + c *`) buffer-local dan sudah masuk bagian 1.8.
 
 ---
 
-## 5. Git — LazyVim defaults (reference, partially overridden)
+## 5. Keymaps Default Nvim
 
-- Space + g + g = LazyGit (root)
-- Space + g + Shift + G = LazyGit (cwd)
-- Space + g + Shift + L = Git log (cwd)
-- Space + g + l = *override* → Git pull
-- Space + g + b = *override* → Git blame
-- Space + g + f = Git current file history
-- Space + g + Shift + B = Git browse (open) — n,x
-- Space + g + Shift + Y = Git browse (copy URL) — n,x
-- Space + g + c = Commits (telescope)
-- Space + g + Shift + S = Git stash
-- Space + g + d = *override* → Gdiffsplit
+Default bawaan Neovim yang masih aktif (tidak di-override config). Yang **diubah** config dicatat dengan tanda `*`.
 
----
+### Normal
 
-## 6. Windows / Buffers / Tabs — LazyVim defaults
+- `dd`, `yy`, `p`, `shift + p`, `u` (undo), `ctrl + r` (redo)
+- `gg` / `shift + g` = awal/akhir file, `g g` = baris
+- `w` / `e` / `b` = pindah per kata
+- `x` = hapus karakter (di bawah/atas kursor)
+- `*` / `#` = cari kata di bawah kursor
+- `ctrl + ]` = go to tag
+- `zz` / `zt` / `zb` = scroll agar baris di tengah/atas/bawah * (kini smooth-scroll neoscroll)
 
-- Control + h = Move window left
-- Control + j = Move window bottom
-- Control + k = Move window up
-- Control + l = Move window right
-- Space + - = Split bottom
-- Space + | = Split right
-- Shift + h = Prev buffer
-- Shift + l = Next buffer
-- [ b = Prev buffer
-- ] b = Next buffer
-- Space + u + Shift + Z = Toggle zoom (alias Space + w + m)
-- Space + u + z = Toggle zen mode
+### Insert
 
----
+- `esc` / `ctrl + [` = keluar insert (juga menutup popup blink.cmp dan hapus hlsearch)
+- `ctrl + w` = hapus kata sebelumnya (`<C-G>u<C-W>`)
+- `ctrl + u` = hapus sampai awal baris (`<C-G>u<C-U>`)
+- `ctrl + h` = hapus karakter sebelumnya
+- `,` / `.` / `;` = simpan undo point (break undo)
 
-## 7. Space prefix — quick map
+### Command / perintah
 
-- Space + a = Move window left
-- Space + d = Move window right
-- Space + s = Move window bottom
-- Space + w = Move window up
-- Space + b = Buffer
-- Space + c = Code/LSP (action, rename, format, trouble)
-- Space + D = Debug (breakpoint, run, step, DAP UI)
-- Space + e = Explorer
-- Space + f = File/find
-- Space + g = Git
-- Space + h = Hunk (gitsigns)
-- Space + k = Keymaps
-- Space + l = LazyGit
-- Space + m = Minimap
-- Space + q = Session / quit
-- Space + s = Bottom window (group s disabled)
-- Space + T = Test (neotest) + todo + triforce
-- Space + t = Terminal
-- Space + u = UI toggle
-- Space + w = Up window (group w disabled)
-- Space + x = Close buffer (group x disabled)
-- Space + ; = Breadcrumb
-- Space + / = Comment (LazyVim grep disabled)
+- `tab` = lengkapi perintah
+- `ctrl + r` = sisipkan register
+- `shift + enter` = buka perintah di window (redirect cmdline)
 
----
+### Umum (dibuat ulang oleh config)
 
-## 8. Snacks Explorer — internal keymaps
-
-- a = Add file
-- r = Rename
-- d = Delete
-- q = Close explorer
-- Esc = Close explorer
-- Control + Shift + c = Copy file path (yank)
-- Control + Shift + v = Paste path as text
-- Control + c = Copy / duplicate file
-- Control + v = Paste file / move cut file
-- Control + Shift + x = Cut file
-- Space + r = Refresh
-- Control + Right arrow = Widen explorer +4
-- Control + Left arrow = Narrow explorer -4
-- h = Collapse node
-- l = Expand node
-
----
-
-## 9. Disabled Keymaps (Nop) — conflicts with custom navigation
-
-- d p p = Profiler (LazyVim core) — off because d = right window
-- d p h = Profiler (LazyVim core) — off because d = right window
-- w d = Window (LazyVim core) — off because w = up window
-- w m = Window (LazyVim core) — off because w = up window
-- x l = Quickfix (LazyVim core) — off because x = close buffer
-- x q = Quickfix (LazyVim core) — off because x = close buffer
-- x x = Trouble — off because x = close buffer
-- x X = Trouble — off because x = close buffer
-- x L = Trouble — off because x = close buffer
-- x Q = Trouble — off because x = close buffer
-- s r = Grep replace (grug-far) — off because s = bottom window
-- s n = Noice notification — off because s = bottom window
-- s n a = Noice notification — off because s = bottom window
-- s n d = Noice notification — off because s = bottom window
-- s n h = Noice notification — off because s = bottom window
-- s n l = Noice notification — off because s = bottom window
-- s n t = Noice notification — off because s = bottom window
-- s " = Picker (snacks_picker) — off because s = bottom window
-- s / = Picker (snacks_picker) — off because s = bottom window
-- s a = Picker (snacks_picker) — off because s = bottom window
-- s b = Picker (snacks_picker) — off because s = bottom window
-- s B = Picker (snacks_picker) — off because s = bottom window
-- s c = Picker (snacks_picker) — off because s = bottom window
-- s C = Picker (snacks_picker) — off because s = bottom window
-- s d = Picker (snacks_picker) — off because s = bottom window
-- s D = Picker (snacks_picker) — off because s = bottom window
-- s g = Picker (snacks_picker) — off because s = bottom window
-- s G = Picker (snacks_picker) — off because s = bottom window
-- s h = Picker (snacks_picker) — off because s = bottom window
-- s H = Picker (snacks_picker) — off because s = bottom window
-- s i = Picker (snacks_picker) — off because s = bottom window
-- s j = Picker (snacks_picker) — off because s = bottom window
-- s k = Picker (snacks_picker) — off because s = bottom window
-- s l = Picker (snacks_picker) — off because s = bottom window
-- s m = Picker (snacks_picker) — off because s = bottom window
-- s M = Picker (snacks_picker) — off because s = bottom window
-- s p = Picker (snacks_picker) — off because s = bottom window
-- s q = Picker (snacks_picker) — off because s = bottom window
-- s R = Picker (snacks_picker) — off because s = bottom window
-- s s = Picker (snacks_picker) — off because s = bottom window
-- s S = Picker (snacks_picker) — off because s = bottom window
-- s u = Picker (snacks_picker) — off because s = bottom window
-- s w = Picker (snacks_picker) — off because s = bottom window
-- s W = Picker (snacks_picker) — off because s = bottom window
-- s t = Todo (todo-comments) — off because s = window
-- s T = Todo (todo-comments) — off because s = window
-- x t = Todo (todo-comments) — off because x = close buffer
-- x T = Todo (todo-comments) — off because x = close buffer
+- `*` arrow keys (`up/down/left/right`) → `k/j/h/l`
+- `*` `home` / `end` → `^` / `$`
+- `*` `ctrl + a` → pilih semua; `*` `ctrl + v` → tempel; `*` `ctrl + c` → salin (dulu mengganggu operasi Vim)
+- `*` `ctrl + d` → hapus tanpa register (bukan scroll)
+- `*` `ctrl + y` → redo (bukan scroll)
+- `*` `ctrl + z` → undo (normal & insert)

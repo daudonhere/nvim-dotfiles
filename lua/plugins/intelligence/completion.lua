@@ -38,6 +38,7 @@ return {
           "fallback",
         },
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
+        ["<Esc>"] = { "hide", "fallback" },
       },
       sources = {
         default = { "lsp", "path", "snippets", "buffer", "minuet" },
