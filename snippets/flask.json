@@ -1,0 +1,552 @@
+{
+  "Flask app": {
+    "prefix": "fls",
+    "body": [
+      "from flask import Flask, jsonify, request",
+      "",
+      "app = Flask(__name__)",
+      "",
+      "@app.route('/${1:route}')",
+      "def ${2:index}():",
+      "    return jsonify({'${3:message}': '${4:Hello World}'})",
+      "",
+      "if __name__ == '__main__':",
+      "    app.run(debug=${5:True})"
+    ],
+    "description": "Flask app skeleton"
+  },
+  "Flask app factory": {
+    "prefix": "flappfac",
+    "body": [
+      "from flask import Flask",
+      "",
+      "def create_app():",
+      "    app = Flask(__name__)",
+      "    app.config.from_object('${1:config.Config}')",
+      "",
+      "    from .${2:views} import ${2:views}_bp",
+      "    app.register_blueprint(${2:views}_bp)",
+      "",
+      "    return app"
+    ],
+    "description": "Flask app factory"
+  },
+  "Flask route GET": {
+    "prefix": "flg",
+    "body": [
+      "@app.route('${1:/route}')",
+      "def ${2:view}():",
+      "    ${3}"
+    ],
+    "description": "Flask GET route"
+  },
+  "Flask route POST": {
+    "prefix": "flp",
+    "body": [
+      "@app.route('${1:/route}', methods=['POST'])",
+      "def ${2:view}():",
+      "    data = request.json",
+      "    ${3}"
+    ],
+    "description": "Flask POST route"
+  },
+  "Flask route GET+POST": {
+    "prefix": "flgp",
+    "body": [
+      "@app.route('${1:/route}', methods=['GET', 'POST'])",
+      "def ${2:view}():",
+      "    ${3}"
+    ],
+    "description": "Flask GET+POST route"
+  },
+  "Flask route dynamic": {
+    "prefix": "flgdyn",
+    "body": [
+      "@app.route('${1:/route}/<int:${2:id}>')",
+      "def ${3:view}(${2:id}):",
+      "    ${4}"
+    ],
+    "description": "Flask dynamic route"
+  },
+  "Flask blueprint": {
+    "prefix": "flb",
+    "body": [
+      "from flask import Blueprint",
+      "",
+      "${1:bp} = Blueprint('${1:bp}', __name__)",
+      "",
+      "@${1:bp}.route('${2:/route}')",
+      "def ${3:view}():",
+      "    ${4}"
+    ],
+    "description": "Flask blueprint"
+  },
+  "Flask register blueprint": {
+    "prefix": "flreg",
+    "body": [
+      "app.register_blueprint(${1:bp}, url_prefix='/${2:prefix}')"
+    ],
+    "description": "Flask register_blueprint"
+  },
+  "Flask jsonify": {
+    "prefix": "fljson",
+    "body": [
+      "return jsonify({${1:'message': 'ok'}}), ${2:200}"
+    ],
+    "description": "Flask jsonify response"
+  },
+  "Flask render template": {
+    "prefix": "flrender",
+    "body": [
+      "return render_template('${1:index}.html', ${2:name=name})"
+    ],
+    "description": "Flask render_template"
+  },
+  "Flask redirect": {
+    "prefix": "flredir",
+    "body": [
+      "return redirect(url_for('${1:view}'))"
+    ],
+    "description": "Flask redirect + url_for"
+  },
+  "Flask url_for": {
+    "prefix": "flurl",
+    "body": [
+      "url_for('${1:view}')"
+    ],
+    "description": "Flask url_for"
+  },
+  "Flask static url": {
+    "prefix": "flstatic",
+    "body": [
+      "url_for('static', filename='${1:css/style.css}')"
+    ],
+    "description": "Flask static url_for"
+  },
+  "Flask flash": {
+    "prefix": "flflash",
+    "body": [
+      "flash('${1:message}', '${2:success}')"
+    ],
+    "description": "Flask flash message"
+  },
+  "Flask abort": {
+    "prefix": "flabort",
+    "body": [
+      "from flask import abort",
+      "",
+      "abort(${1:404}, description='${2:Not found}')"
+    ],
+    "description": "Flask abort"
+  },
+  "Flask get_or_404": {
+    "prefix": "flget",
+    "body": [
+      "from flask import get_or_404",
+      "",
+      "${1:thing} = get_or_404(${2:Thing}, id=${3:id})"
+    ],
+    "description": "Flask get_or_404"
+  },
+  "Flask error handler": {
+    "prefix": "fl404",
+    "body": [
+      "@app.errorhandler(${1:404})",
+      "def ${2:not_found}(error):",
+      "    return jsonify({'error': '${3:Not found}'}), ${1:404}"
+    ],
+    "description": "Flask errorhandler"
+  },
+  "Flask request args": {
+    "prefix": "flargs",
+    "body": [
+      "${1:query} = request.args.get('${2:q}', '')"
+    ],
+    "description": "Flask request.args.get"
+  },
+  "Flask request form": {
+    "prefix": "flform",
+    "body": [
+      "${1:name} = request.form.get('${2:name}')"
+    ],
+    "description": "Flask request.form.get"
+  },
+  "Flask request json": {
+    "prefix": "fljsonreq",
+    "body": [
+      "data = request.get_json() or {}",
+      "${1:name} = data.get('${2:name}')"
+    ],
+    "description": "Flask request.get_json"
+  },
+  "Flask session": {
+    "prefix": "flsession",
+    "body": [
+      "from flask import session",
+      "",
+      "session['${1:user_id}'] = ${2:user_id}"
+    ],
+    "description": "Flask session"
+  },
+  "Flask CORS": {
+    "prefix": "flcors",
+    "body": [
+      "from flask_cors import CORS",
+      "",
+      "CORS(app, origins=['${1:http://localhost:5173}'])"
+    ],
+    "description": "Flask flask-cors"
+  },
+  "Flask SQLAlchemy": {
+    "prefix": "flsql",
+    "body": [
+      "from flask_sqlalchemy import SQLAlchemy",
+      "",
+      "app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///${1:app}.db'",
+      "db = SQLAlchemy(app)"
+    ],
+    "description": "Flask SQLAlchemy setup"
+  },
+  "Flask model": {
+    "prefix": "flmodel",
+    "body": [
+      "class ${1:User}(db.Model):",
+      "    id = db.Column(db.Integer, primary_key=True)",
+      "    ${2:name} = db.Column(db.String(${3:80}), nullable=False)"
+    ],
+    "description": "Flask SQLAlchemy model"
+  },
+  "Flask relationship": {
+    "prefix": "flrel",
+    "body": [
+      "${1:things} = db.relationship('${2:Thing}', backref='${3:owner}', lazy=True)"
+    ],
+    "description": "Flask SQLAlchemy relationship"
+  },
+  "Flask query": {
+    "prefix": "flquery",
+    "body": [
+      "${1:Thing}.query.filter_by(${2:field}=${3:value}).all()"
+    ],
+    "description": "Flask query filter_by"
+  },
+  "Flask first_or_404": {
+    "prefix": "flfirst",
+    "body": [
+      "${1:Thing}.query.get_or_404(${2:id})"
+    ],
+    "description": "Flask query get_or_404"
+  },
+  "Flask migrate": {
+    "prefix": "flmig",
+    "body": [
+      "from flask_migrate import Migrate",
+      "",
+      "migrate = Migrate(app, db)"
+    ],
+    "description": "Flask flask-migrate"
+  },
+  "Flask config": {
+    "prefix": "flconfig",
+    "body": [
+      "import os",
+      "",
+      "class Config:",
+      "    SECRET_KEY = os.environ.get('SECRET_KEY') or '${1:dev-key}'",
+      "    ${2:SQLALCHEMY_DATABASE_URI} = os.environ.get('${2:DATABASE_URL}')"
+    ],
+    "description": "Flask config class"
+  },
+  "Flask before_request": {
+    "prefix": "flbefore",
+    "body": [
+      "@app.before_request",
+      "def ${1:before}():",
+      "    ${2}"
+    ],
+    "description": "Flask before_request hook"
+  },
+  "Flask teardown": {
+    "prefix": "flteardown",
+    "body": [
+      "@app.teardown_appcontext",
+      "def ${1:cleanup}(exception):",
+      "    ${2}"
+    ],
+    "description": "Flask teardown_appcontext"
+  },
+  "Flask make_response": {
+    "prefix": "flresp",
+    "body": [
+      "from flask import make_response",
+      "",
+      "response = make_response(${1:jsonify({})}, ${2:200})",
+      "response.headers['${3:X-Custom}'] = '${4:value}'"
+    ],
+    "description": "Flask make_response"
+  },
+  "Flask app context": {
+    "prefix": "flappctx",
+    "body": [
+      "with app.app_context():",
+      "    ${1}"
+    ],
+    "description": "Flask app_context"
+  },
+  "Flask CLI command": {
+    "prefix": "flcli",
+    "body": [
+      "import click",
+      "from flask.cli import with_appcontext",
+      "",
+      "@app.cli.command('${1:cmd}')",
+      "@with_appcontext",
+      "def ${1:cmd}_command():",
+      "    ${2}"
+    ],
+    "description": "Flask Click CLI command"
+  },
+  "Flask app.run": {
+    "prefix": "flrun",
+    "body": [
+      "if __name__ == '__main__':",
+      "    app.run(host='${1:0.0.0.0}', port=${2:5000}, debug=${3:True})"
+    ],
+    "description": "Flask app.run"
+  },
+  "Flask template for": {
+    "prefix": "fltplfor",
+    "body": [
+      "{% for ${1:item} in ${2:items} %}",
+      "  ${3}",
+      "{% endfor %}"
+    ],
+    "description": "Flask Jinja for loop"
+  },
+  "Flask template if": {
+    "prefix": "fltplif",
+    "body": [
+      "{% if ${1:condition} %}",
+      "  ${2}",
+      "{% endif %}"
+    ],
+    "description": "Flask Jinja if"
+  },
+  "Flask template extends": {
+    "prefix": "fltplext",
+    "body": [
+      "{% extends '${1:base}.html' %}",
+      "",
+      "{% block ${2:content} %}",
+      "{% endblock %}"
+    ],
+    "description": "Flask Jinja extends"
+  },
+  "Flask request object": {
+    "prefix": "flrequestobj",
+    "body": [
+      "from flask import request",
+      "",
+      "print(request.method, request.path, request.args, request.json)"
+    ],
+    "description": "Flask request object debug"
+  },
+  "Flask upload file": {
+    "prefix": "flfiles",
+    "body": [
+      "file = request.files['${1:file}']",
+      "file.save('${2:uploads/}' + file.filename)"
+    ],
+    "description": "Flask request.files save"
+  },
+  "Flask json body": {
+    "prefix": "fljsonbody",
+    "body": [
+      "data = request.get_json(silent=True) or {}"
+    ],
+    "description": "Flask request.get_json"
+  },
+  "Flask session get": {
+    "prefix": "flsessionget",
+    "body": [
+      "user_id = session.get('${1:user_id}')"
+    ],
+    "description": "Flask session.get"
+  },
+  "Flask session pop": {
+    "prefix": "flsessionpop",
+    "body": [
+      "session.pop('${1:user_id}', None)"
+    ],
+    "description": "Flask session.pop"
+  },
+  "Flask send_file": {
+    "prefix": "flsendfile",
+    "body": [
+      "from flask import send_file",
+      "",
+      "return send_file('${1:files/report.pdf}', as_attachment=True)"
+    ],
+    "description": "Flask send_file"
+  },
+  "Flask streaming response": {
+    "prefix": "flstream",
+    "body": [
+      "from flask import Response, stream_with_context",
+      "",
+      "@app.route('${1:/stream}')",
+      "def stream():",
+      "    @stream_with_context",
+      "    def gen():",
+      "        yield '${2:chunk}'",
+      "    return Response(gen())"
+    ],
+    "description": "Flask streaming response"
+  },
+  "Flask MethodView": {
+    "prefix": "flmethodview",
+    "body": [
+      "from flask.views import MethodView",
+      "",
+      "class ${1:Thing}API(MethodView):",
+      "    def get(self):",
+      "        ${2}",
+      "        return jsonify(${3:{}})"
+    ],
+    "description": "Flask MethodView"
+  },
+  "Flask context_processor": {
+    "prefix": "flcontextproc",
+    "body": [
+      "@app.context_processor",
+      "def inject_globals():",
+      "    return {'${1:app_name}': '${2:MyApp}'}"
+    ],
+    "description": "Flask context_processor"
+  },
+  "Flask WTForms": {
+    "prefix": "flwtf",
+    "body": [
+      "from flask_wtf import FlaskForm",
+      "from wtforms import StringField, SubmitField",
+      "from wtforms.validators import DataRequired",
+      "",
+      "class ${1:Thing}Form(FlaskForm):",
+      "    ${2:name} = StringField('${2:Name}', validators=[DataRequired()])",
+      "    submit = SubmitField('Save')"
+    ],
+    "description": "Flask WTForms form"
+  },
+  "Flask validate_on_submit": {
+    "prefix": "flwtfvalidate",
+    "body": [
+      "if ${1:form}.validate_on_submit():",
+      "    ${2}"
+    ],
+    "description": "Flask WTForms validate"
+  },
+  "Flask query filter": {
+    "prefix": "flqueryfilter",
+    "body": [
+      "${1:Thing}.query.filter(${1:Thing}.${2:field} == ${3:value}).all()"
+    ],
+    "description": "Flask query filter"
+  },
+  "Flask query order": {
+    "prefix": "flqueryorder",
+    "body": [
+      "${1:Thing}.query.order_by(${1:Thing}.${2:created_at}.desc()).all()"
+    ],
+    "description": "Flask query order_by"
+  },
+  "Flask query first": {
+    "prefix": "flqueryfirst",
+    "body": [
+      "${1:thing} = ${2:Thing}.query.filter_by(${3:field}=${4:value}).first()"
+    ],
+    "description": "Flask query first"
+  },
+  "Flask paginate": {
+    "prefix": "flquerypaginate",
+    "body": [
+      "${1:page} = ${2:Thing}.query.paginate(page=${3:page}, per_page=${4:10}, error_out=False)"
+    ],
+    "description": "Flask paginate"
+  },
+  "Flask count": {
+    "prefix": "flquerycount",
+    "body": [
+      "count = ${1:Thing}.query.count()"
+    ],
+    "description": "Flask query count"
+  },
+  "Flask config classes": {
+    "prefix": "flconfigdev",
+    "body": [
+      "class ${1:Development}Config(Config):",
+      "    DEBUG = True",
+      "",
+      "class ${2:Production}Config(Config):",
+      "    DEBUG = False"
+    ],
+    "description": "Flask dev/prod config"
+  },
+  "Flask app.logger": {
+    "prefix": "fllogger",
+    "body": [
+      "app.logger.info('${1:message}')",
+      "app.logger.error('${2:error}')"
+    ],
+    "description": "Flask app.logger"
+  },
+  "Flask test client": {
+    "prefix": "fltest",
+    "body": [
+      "import pytest",
+      "",
+      "def test_index(client):",
+      "    res = client.get('${1:/}')",
+      "    assert res.status_code == ${2:200}"
+    ],
+    "description": "Flask pytest test client"
+  },
+  "Flask health": {
+    "prefix": "flhealth",
+    "body": [
+      "@app.route('/health')",
+      "def health():",
+      "    return jsonify({'status': 'ok'})"
+    ],
+    "description": "Flask health check"
+  },
+  "Flask macro": {
+    "prefix": "fltplmacro",
+    "body": [
+      "{% macro ${1:input}(name) %}",
+      "<input type=\"text\" name=\"{{ name }}\">",
+      "{% endmacro %}"
+    ],
+    "description": "Flask Jinja macro"
+  },
+  "Flask template include": {
+    "prefix": "fltplinclude",
+    "body": [
+      "{% include '${1:partial}.html' %}"
+    ],
+    "description": "Flask Jinja include"
+  },
+  "Flask template url": {
+    "prefix": "fltplurl",
+    "body": [
+      "href=\"{{ url_for('${1:view}') }}\""
+    ],
+    "description": "Flask Jinja url_for"
+  },
+  "Flask template set": {
+    "prefix": "fltplset",
+    "body": [
+      "{% set ${1:total} = ${2:a} + ${3:b} %}"
+    ],
+    "description": "Flask Jinja set"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "custom-framework-snippets",
+  "contributes": {
+    "snippets": [
+      { "language": ["typescript", "typescriptreact", "javascript", "javascriptreact"], "path": "./nestjs.json" },
+      { "language": ["typescript", "typescriptreact", "javascript", "javascriptreact"], "path": "./express.json" },
+      { "language": ["typescript", "typescriptreact", "javascript", "javascriptreact"], "path": "./hardhat.json" },
+      { "language": "python", "path": "./fastapi.json" },
+      { "language": "python", "path": "./flask.json" },
+      { "language": "python", "path": "./django.json" },
+      { "language": "solidity", "path": "./foundry.json" },
+      { "language": "arduino", "path": "./arduino.json" }
+    ]
+  }
+}

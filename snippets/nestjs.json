@@ -1,0 +1,786 @@
+{
+  "NestJS Controller": {
+    "prefix": "nc",
+    "body": [
+      "import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';",
+      "import { ${1:Thing}Service } from './${2:thing}.service';",
+      "",
+      "@Controller('${3:route}')",
+      "export class ${1:Thing}Controller {",
+      "  constructor(private readonly ${1:Thing}Service: ${1:Thing}Service) {}",
+      "}"
+    ],
+    "description": "NestJS controller skeleton"
+  },
+  "NestJS Module": {
+    "prefix": "nmod",
+    "body": [
+      "import { Module } from '@nestjs/common';",
+      "",
+      "@Module({",
+      "  imports: [],",
+      "  controllers: [],",
+      "  providers: [],",
+      "})",
+      "export class ${1:App}Module {}"
+    ],
+    "description": "NestJS module skeleton"
+  },
+  "NestJS Service": {
+    "prefix": "nsrv",
+    "body": [
+      "import { Injectable } from '@nestjs/common';",
+      "",
+      "@Injectable()",
+      "export class ${1:Thing}Service {",
+      "  ${2}",
+      "}"
+    ],
+    "description": "NestJS injectable service"
+  },
+  "NestJS GET": {
+    "prefix": "ng",
+    "body": [
+      "@Get('${1:route}')",
+      "${2:findAll}() {",
+      "  return this.${3:service}.${2:findAll}();",
+      "}"
+    ],
+    "description": "NestJS @Get handler"
+  },
+  "NestJS POST": {
+    "prefix": "np",
+    "body": [
+      "@Post('${1:route}')",
+      "create(@Body() ${2:createDto}: Create${3:Thing}Dto) {",
+      "  return this.${4:service}.create(${2:createDto});",
+      "}"
+    ],
+    "description": "NestJS @Post handler"
+  },
+  "NestJS PUT": {
+    "prefix": "nput",
+    "body": [
+      "@Put('${1:id}')",
+      "update(@Param('${1:id}') ${1:id}: string, @Body() ${2:updateDto}: Update${3:Thing}Dto) {",
+      "  return this.${4:service}.update(${1:id}, ${2:updateDto});",
+      "}"
+    ],
+    "description": "NestJS @Put handler"
+  },
+  "NestJS PATCH": {
+    "prefix": "npatch",
+    "body": [
+      "@Patch('${1:id}')",
+      "update(@Param('${1:id}') ${1:id}: string, @Body() ${2:updateDto}: Update${3:Thing}Dto) {",
+      "  return this.${4:service}.update(${1:id}, ${2:updateDto});",
+      "}"
+    ],
+    "description": "NestJS @Patch handler"
+  },
+  "NestJS DELETE": {
+    "prefix": "ndel",
+    "body": [
+      "@Delete('${1:id}')",
+      "remove(@Param('${1:id}') ${1:id}: string) {",
+      "  return this.${2:service}.remove(${1:id});",
+      "}"
+    ],
+    "description": "NestJS @Delete handler"
+  },
+  "NestJS Param": {
+    "prefix": "nparam",
+    "body": [
+      "@Param('${1:id}') ${1:id}: string"
+    ],
+    "description": "NestJS @Param argument"
+  },
+  "NestJS Query": {
+    "prefix": "nquery",
+    "body": [
+      "@Query('${1:page}') ${1:page}: string"
+    ],
+    "description": "NestJS @Query argument"
+  },
+  "NestJS Body": {
+    "prefix": "nbody",
+    "body": [
+      "@Body() ${1:body}: ${2:Type}"
+    ],
+    "description": "NestJS @Body argument"
+  },
+  "NestJS Res": {
+    "prefix": "nres",
+    "body": [
+      "@Res() res: Response"
+    ],
+    "description": "NestJS @Res argument"
+  },
+  "NestJS Req": {
+    "prefix": "nreq",
+    "body": [
+      "@Req() req: Request"
+    ],
+    "description": "NestJS @Req argument"
+  },
+  "NestJS DTO": {
+    "prefix": "ndto",
+    "body": [
+      "export class Create${1:Thing}Dto {",
+      "  ${2}",
+      "}"
+    ],
+    "description": "NestJS DTO class"
+  },
+  "NestJS Inject": {
+    "prefix": "ninj",
+    "body": [
+      "@Inject('${1:TOKEN}') private readonly ${2:dependency}: ${3:Type},"
+    ],
+    "description": "NestJS @Inject token"
+  },
+  "NestJS Guards": {
+    "prefix": "nguard",
+    "body": [
+      "@UseGuards(${1:AuthGuard})"
+    ],
+    "description": "NestJS @UseGuards"
+  },
+  "NestJS custom guard": {
+    "prefix": "nguardc",
+    "body": [
+      "import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';",
+      "",
+      "@Injectable()",
+      "export class ${1:Role}Guard implements CanActivate {",
+      "  canActivate(context: ExecutionContext): boolean {",
+      "    const request = context.switchToHttp().getRequest();",
+      "    ${2}",
+      "    return true;",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS custom guard class"
+  },
+  "NestJS JWT auth guard": {
+    "prefix": "nguardj",
+    "body": [
+      "import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';",
+      "import { JwtService } from '@nestjs/jwt';",
+      "",
+      "@Injectable()",
+      "export class JwtAuthGuard implements CanActivate {",
+      "  constructor(private jwtService: JwtService) {}",
+      "",
+      "  canActivate(context: ExecutionContext): boolean {",
+      "    const request = context.switchToHttp().getRequest();",
+      "    const auth = request.headers.authorization?.split(' ')[1];",
+      "    if (!auth) throw new UnauthorizedException();",
+      "    request.user = this.jwtService.verify(auth);",
+      "    return true;",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS JWT auth guard class"
+  },
+  "NestJS Roles decorator": {
+    "prefix": "nroles",
+    "body": [
+      "@Roles('${1:admin}')"
+    ],
+    "description": "NestJS @Roles usage"
+  },
+  "NestJS Roles definition": {
+    "prefix": "nrolesd",
+    "body": [
+      "import { SetMetadata } from '@nestjs/common';",
+      "",
+      "export const Roles = (...roles: string[]) => SetMetadata('roles', roles);"
+    ],
+    "description": "NestJS Roles decorator definition"
+  },
+  "NestJS Pipes": {
+    "prefix": "npipe",
+    "body": [
+      "@UsePipes(new ValidationPipe({ whitelist: true }))"
+    ],
+    "description": "NestJS @UsePipes validation"
+  },
+  "NestJS ParseIntPipe": {
+    "prefix": "nparseint",
+    "body": [
+      "@Param('${1:id}', ParseIntPipe) ${1:id}: number"
+    ],
+    "description": "NestJS ParseIntPipe"
+  },
+  "NestJS ParseUUIDPipe": {
+    "prefix": "npuuid",
+    "body": [
+      "@Param('${1:id}', ParseUUIDPipe) ${1:id}: string"
+    ],
+    "description": "NestJS ParseUUIDPipe"
+  },
+  "NestJS Interceptors": {
+    "prefix": "ninter",
+    "body": [
+      "@UseInterceptors(ClassSerializerInterceptor)"
+    ],
+    "description": "NestJS @UseInterceptors"
+  },
+  "NestJS ExceptionFilter": {
+    "prefix": "nexcf",
+    "body": [
+      "import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';",
+      "",
+      "@Catch(HttpException)",
+      "export class ${1:Http}ExceptionFilter implements ExceptionFilter {",
+      "  catch(exception: HttpException, host: ArgumentsHost) {",
+      "    const response = host.switchToHttp().getResponse();",
+      "    const status = exception.getStatus();",
+      "    response.status(status).json({",
+      "      statusCode: status,",
+      "      message: exception.message,",
+      "    });",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS custom exception filter"
+  },
+  "NestJS throw BadRequest": {
+    "prefix": "nbad",
+    "body": [
+      "throw new BadRequestException('${1:message}');"
+    ],
+    "description": "NestJS BadRequestException"
+  },
+  "NestJS throw NotFound": {
+    "prefix": "n404",
+    "body": [
+      "throw new NotFoundException('${1:message}');"
+    ],
+    "description": "NestJS NotFoundException"
+  },
+  "NestJS throw Unauthorized": {
+    "prefix": "n401",
+    "body": [
+      "throw new UnauthorizedException('${1:message}');"
+    ],
+    "description": "NestJS UnauthorizedException"
+  },
+  "NestJS throw Forbidden": {
+    "prefix": "n403",
+    "body": [
+      "throw new ForbiddenException('${1:message}');"
+    ],
+    "description": "NestJS ForbiddenException"
+  },
+  "NestJS global pipes": {
+    "prefix": "npipeg",
+    "body": [
+      "app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));"
+    ],
+    "description": "NestJS global ValidationPipe"
+  },
+  "NestJS ConfigModule": {
+    "prefix": "nconfig",
+    "body": [
+      "ConfigModule.forRoot({ isGlobal: true }),"
+    ],
+    "description": "NestJS ConfigModule import"
+  },
+  "NestJS ConfigService": {
+    "prefix": "ncsrv",
+    "body": [
+      "constructor(private configService: ConfigService) {}",
+      "this.configService.get<string>('${1:KEY}')"
+    ],
+    "description": "NestJS ConfigService get"
+  },
+  "NestJS middleware": {
+    "prefix": "nmid",
+    "body": [
+      "import { Injectable, NestMiddleware } from '@nestjs/common';",
+      "",
+      "@Injectable()",
+      "export class ${1:Logger}Middleware implements NestMiddleware {",
+      "  use(req: any, res: any, next: () => void) {",
+      "    ${2}",
+      "    next();",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS middleware class"
+  },
+  "NestJS Logger": {
+    "prefix": "nlogger",
+    "body": [
+      "private readonly logger = new Logger(${1:ClassName}.name);",
+      "this.logger.log('${2:message}');"
+    ],
+    "description": "NestJS Logger usage"
+  },
+  "NestJS websocket gateway": {
+    "prefix": "nws",
+    "body": [
+      "import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';",
+      "import { Server, Socket } from 'socket.io';",
+      "",
+      "@WebSocketGateway({ cors: true })",
+      "export class ${1:Events}Gateway {",
+      "  @WebSocketServer() server: Server;",
+      "",
+      "  @SubscribeMessage('${2:message}')",
+      "  handleMessage(client: Socket, payload: any): void {",
+      "    ${3}",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS socket.io gateway"
+  },
+  "NestJS TypeORM entity": {
+    "prefix": "nentity",
+    "body": [
+      "import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';",
+      "",
+      "@Entity('${1:things}')",
+      "export class ${2:Thing} {",
+      "  @PrimaryGeneratedColumn('uuid')",
+      "  id: string;",
+      "",
+      "  @Column()",
+      "  ${3:name}: string;",
+      "}"
+    ],
+    "description": "NestJS TypeORM entity"
+  },
+  "NestJS InjectRepository": {
+    "prefix": "ninjrepo",
+    "body": [
+      "import { InjectRepository } from '@nestjs/typeorm';",
+      "import { Repository } from 'typeorm';",
+      "",
+      "constructor(",
+      "  @InjectRepository(${1:Thing}) private readonly repo: Repository<${1:Thing}>,",
+      ") {}"
+    ],
+    "description": "NestJS InjectRepository"
+  },
+  "NestJS ManyToOne": {
+    "prefix": "nmanytoone",
+    "body": [
+      "@ManyToOne(() => ${1:User}, (${1:user}) => ${1:user}.${2:things})",
+      "${1:user}: ${1:User};"
+    ],
+    "description": "NestJS TypeORM ManyToOne"
+  },
+  "NestJS PrismaService": {
+    "prefix": "nprisma",
+    "body": [
+      "constructor(private prisma: PrismaService) {}",
+      "await this.prisma.${1:thing}.${2:findMany}();"
+    ],
+    "description": "NestJS inject PrismaService"
+  },
+  "NestJS class-validator": {
+    "prefix": "nval",
+    "body": [
+      "import { IsString, IsNotEmpty } from 'class-validator';",
+      "",
+      "@IsString()",
+      "@IsNotEmpty()",
+      "${1:name}: string;"
+    ],
+    "description": "NestJS class-validator decorators"
+  },
+  "NestJS class-validator number": {
+    "prefix": "nvalnum",
+    "body": [
+      "import { IsNumber, Min } from 'class-validator';",
+      "",
+      "@IsNumber()",
+      "@Min(${1:0})",
+      "${2:price}: number;"
+    ],
+    "description": "NestJS numeric validation"
+  },
+  "NestJS class-validator email": {
+    "prefix": "nvalemail",
+    "body": [
+      "import { IsEmail } from 'class-validator';",
+      "",
+      "@IsEmail()",
+      "${1:email}: string;"
+    ],
+    "description": "NestJS email validation"
+  },
+  "NestJS Swagger tags": {
+    "prefix": "nswagtag",
+    "body": [
+      "import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';",
+      "",
+      "@ApiTags('${1:things}')"
+    ],
+    "description": "NestJS Swagger @ApiTags"
+  },
+  "NestJS Swagger operation": {
+    "prefix": "nswagop",
+    "body": [
+      "@ApiOperation({ summary: '${1:summary}' })",
+      "@ApiResponse({ status: ${2:200}, description: '${3:ok}' })"
+    ],
+    "description": "NestJS Swagger operation"
+  },
+  "NestJS Swagger bearer": {
+    "prefix": "nswagauth",
+    "body": [
+      "@ApiBearerAuth()"
+    ],
+    "description": "NestJS Swagger bearer auth"
+  },
+  "NestJS pagination DTO": {
+    "prefix": "npaginate",
+    "body": [
+      "export class PaginationDto {",
+      "  @IsOptional() @IsInt() @Min(1)",
+      "  page?: number = 1;",
+      "",
+      "  @IsOptional() @IsInt() @Min(1) @Max(100)",
+      "  limit?: number = 10;",
+      "}"
+    ],
+    "description": "NestJS pagination DTO"
+  },
+  "NestJS full CRUD": {
+    "prefix": "ncrud",
+    "body": [
+      "import { Controller, Get, Post, Body, Param, Patch, Delete, HttpCode, Query } from '@nestjs/common';",
+      "import { ${1:Thing}Service } from './${2:thing}.service';",
+      "import { Create${1:Thing}Dto } from './dto/create-${2:thing}.dto';",
+      "import { Update${1:Thing}Dto } from './dto/update-${2:thing}.dto';",
+      "",
+      "@Controller('${3:route}')",
+      "export class ${1:Thing}Controller {",
+      "  constructor(private readonly ${1:Thing}Service: ${1:Thing}Service) {}",
+      "",
+      "  @Post()",
+      "  create(@Body() dto: Create${1:Thing}Dto) {",
+      "    return this.${1:Thing}Service.create(dto);",
+      "  }",
+      "",
+      "  @Get()",
+      "  findAll(@Query('page') page?: string) {",
+      "    return this.${1:Thing}Service.findAll(page);",
+      "  }",
+      "",
+      "  @Get(':id')",
+      "  findOne(@Param('id') id: string) {",
+      "    return this.${1:Thing}Service.findOne(id);",
+      "  }",
+      "",
+      "  @Patch(':id')",
+      "  update(@Param('id') id: string, @Body() dto: Update${1:Thing}Dto) {",
+      "    return this.${1:Thing}Service.update(id, dto);",
+      "  }",
+      "",
+      "  @Delete(':id')",
+      "  @HttpCode(204)",
+      "  remove(@Param('id') id: string) {",
+      "    return this.${1:Thing}Service.remove(id);",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS full CRUD controller"
+  },
+  "NestJS validate int": {
+    "prefix": "nisint",
+    "body": [
+      "import { IsInt } from 'class-validator';",
+      "",
+      "@IsInt()",
+      "${1:count}: number;"
+    ],
+    "description": "NestJS @IsInt"
+  },
+  "NestJS validate bool": {
+    "prefix": "nisbool",
+    "body": [
+      "import { IsBoolean } from 'class-validator';",
+      "",
+      "@IsBoolean()",
+      "${1:active}: boolean;"
+    ],
+    "description": "NestJS @IsBoolean"
+  },
+  "NestJS validate array": {
+    "prefix": "nisarr",
+    "body": [
+      "import { IsArray, IsString } from 'class-validator';",
+      "",
+      "@IsArray()",
+      "@IsString({ each: true })",
+      "${1:tags}: string[];"
+    ],
+    "description": "NestJS @IsArray of strings"
+  },
+  "NestJS validate date": {
+    "prefix": "nisdate",
+    "body": [
+      "import { IsDateString } from 'class-validator';",
+      "",
+      "@IsDateString()",
+      "${1:date}: string;"
+    ],
+    "description": "NestJS @IsDateString"
+  },
+  "NestJS validate length": {
+    "prefix": "nlength",
+    "body": [
+      "import { MinLength, MaxLength } from 'class-validator';",
+      "",
+      "@MinLength(${1:3})",
+      "@MaxLength(${2:50})",
+      "${3:name}: string;"
+    ],
+    "description": "NestJS string length validation"
+  },
+  "NestJS validate optional": {
+    "prefix": "nisopt",
+    "body": [
+      "import { IsOptional } from 'class-validator';",
+      "",
+      "@IsOptional()",
+      "${1:field}?: ${2:string};"
+    ],
+    "description": "NestJS @IsOptional"
+  },
+  "NestJS custom pipe": {
+    "prefix": "npipec",
+    "body": [
+      "import { ArgumentMetadata, Injectable, PipeTransform, BadRequestException } from '@nestjs/common';",
+      "",
+      "@Injectable()",
+      "export class ${1:Parse}Pipe implements PipeTransform {",
+      "  transform(value: any, metadata: ArgumentMetadata) {",
+      "    ${2}",
+      "    return value;",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS custom pipe class"
+  },
+  "NestJS custom interceptor": {
+    "prefix": "ninterc",
+    "body": [
+      "import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';",
+      "import { Observable } from 'rxjs';",
+      "",
+      "@Injectable()",
+      "export class ${1:Log}Interceptor implements NestInterceptor {",
+      "  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {",
+      "    ${2}",
+      "    return next.handle();",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS custom interceptor class"
+  },
+  "NestJS file upload": {
+    "prefix": "nfile",
+    "body": [
+      "import { FileInterceptor } from '@nestjs/platform-express';",
+      "import { UploadedFile } from '@nestjs/common';",
+      "",
+      "@Post('${1:upload}')",
+      "@UseInterceptors(FileInterceptor('${2:file}'))",
+      "uploadFile(@UploadedFile() file: Express.Multer.File) {",
+      "  return { file: file.originalname };",
+      "}"
+    ],
+    "description": "NestJS FileInterceptor upload"
+  },
+  "NestJS CacheModule": {
+    "prefix": "ncache",
+    "body": [
+      "import { CacheModule } from '@nestjs/cache-manager';",
+      "",
+      "CacheModule.register({ ttl: ${1:60000} }),"
+    ],
+    "description": "NestJS CacheModule import"
+  },
+  "NestJS cron": {
+    "prefix": "nsched",
+    "body": [
+      "import { Cron, CronExpression } from '@nestjs/schedule';",
+      "",
+      "@Cron(CronExpression.EVERY_HOUR)",
+      "handleCron() {",
+      "  ${1}",
+      "}"
+    ],
+    "description": "NestJS @Cron schedule"
+  },
+  "NestJS event listener": {
+    "prefix": "neventemit",
+    "body": [
+      "import { OnEvent } from '@nestjs/event-emitter';",
+      "",
+      "@OnEvent('${1:event.name}')",
+      "handleEvent(payload: ${2:any}) {",
+      "  ${3}",
+      "}"
+    ],
+    "description": "NestJS @OnEvent listener"
+  },
+  "NestJS forwardRef": {
+    "prefix": "nforward",
+    "body": [
+      "import { forwardRef } from '@nestjs/common';",
+      "",
+      "forwardRef(() => ${1:Module})"
+    ],
+    "description": "NestJS forwardRef"
+  },
+  "NestJS OnModuleInit": {
+    "prefix": "noninit",
+    "body": [
+      "import { OnModuleInit } from '@nestjs/common';",
+      "",
+      "export class ${1:Service} implements OnModuleInit {",
+      "  async onModuleInit() {",
+      "    ${2}",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS OnModuleInit lifecycle"
+  },
+  "NestJS TypeOrmModule.forFeature": {
+    "prefix": "nmoduletypeorm",
+    "body": [
+      "TypeOrmModule.forFeature([${1:Thing}]),"
+    ],
+    "description": "NestJS TypeOrmModule.forFeature"
+  },
+  "NestJS JwtModule.register": {
+    "prefix": "nmodulejwt",
+    "body": [
+      "JwtModule.register({",
+      "  secret: process.env.${1:JWT_SECRET},",
+      "  signOptions: { expiresIn: '${2:7d}' },",
+      "}),"
+    ],
+    "description": "NestJS JwtModule.register"
+  },
+  "NestJS ConfigModule.forRoot": {
+    "prefix": "nmodulecfg",
+    "body": [
+      "ConfigModule.forRoot({ isGlobal: true, envFilePath: '${1:.env}' }),"
+    ],
+    "description": "NestJS ConfigModule.forRoot"
+  },
+  "NestJS AuthService": {
+    "prefix": "nauth",
+    "body": [
+      "import { JwtService } from '@nestjs/jwt';",
+      "import { Injectable, UnauthorizedException } from '@nestjs/common';",
+      "",
+      "@Injectable()",
+      "export class ${1:AuthService} {",
+      "  constructor(private jwtService: JwtService) {}",
+      "",
+      "  async login(user: { id: string; role: string }) {",
+      "    const payload = { sub: user.id, role: user.role };",
+      "    return { access_token: await this.jwtService.signAsync(payload) };",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS AuthService login"
+  },
+  "NestJS unit test": {
+    "prefix": "nestest",
+    "body": [
+      "import { Test, TestingModule } from '@nestjs/testing';",
+      "import { ${1:Thing}Service } from './${2:thing}.service';",
+      "",
+      "describe('${1:Thing}Service', () => {",
+      "  let service: ${1:Thing}Service;",
+      "",
+      "  beforeEach(async () => {",
+      "    const module: TestingModule = await Test.createTestingModule({",
+      "      providers: [${1:Thing}Service],",
+      "    }).compile();",
+      "",
+      "    service = module.get(${1:Thing}Service);",
+      "  });",
+      "",
+      "  it('should be defined', () => {",
+      "    expect(service).toBeDefined();",
+      "  });",
+      "});"
+    ],
+    "description": "NestJS jest unit test"
+  },
+  "NestJS e2e test": {
+    "prefix": "ne2e",
+    "body": [
+      "import { Test, TestingModule } from '@nestjs/testing';",
+      "import { INestApplication } from '@nestjs/common';",
+      "import * as request from 'supertest';",
+      "import { ${1:AppModule} } from './../src/app.module';",
+      "",
+      "describe('${2:AppController} (e2e)', () => {",
+      "  let app: INestApplication;",
+      "",
+      "  beforeEach(async () => {",
+      "    const moduleFixture: TestingModule = await Test.createTestingModule({",
+      "      imports: [${1:AppModule}],",
+      "    }).compile();",
+      "",
+      "    app = moduleFixture.createNestApplication();",
+      "    await app.init();",
+      "  });",
+      "",
+      "  it('${3:works} (GET /)', () => {",
+      "    return request(app.getHttpServer()).get('/').expect(200);",
+      "  });",
+      "});"
+    ],
+    "description": "NestJS supertest e2e test"
+  },
+  "NestJS RolesGuard": {
+    "prefix": "nguardroles",
+    "body": [
+      "import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';",
+      "import { Reflector } from '@nestjs/core';",
+      "",
+      "@Injectable()",
+      "export class RolesGuard implements CanActivate {",
+      "  constructor(private reflector: Reflector) {}",
+      "",
+      "  canActivate(context: ExecutionContext): boolean {",
+      "    const roles = this.reflector.getAllAndOverride<string[]>('roles', [",
+      "      context.getHandler(),",
+      "      context.getClass(),",
+      "    ]);",
+      "    if (!roles?.length) return true;",
+      "    const request = context.switchToHttp().getRequest();",
+      "    return roles.includes(request.user?.role);",
+      "  }",
+      "}"
+    ],
+    "description": "NestJS RolesGuard with reflector"
+  },
+  "NestJS global prefix": {
+    "prefix": "nglobalprefix",
+    "body": [
+      "app.setGlobalPrefix('${1:api}');"
+    ],
+    "description": "NestJS app.setGlobalPrefix"
+  },
+  "NestJS RedirectException": {
+    "prefix": "nredirect",
+    "body": [
+      "throw new RedirectException('${1:/login}');"
+    ],
+    "description": "NestJS RedirectException"
+  }
+}

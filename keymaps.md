@@ -1,32 +1,40 @@
 # Keymaps Reference — Neovim Config
 
-> How to read this file:
-> - Keys are separated by "+", pressed one after another.
-> - An uppercase letter means hold Shift (e.g. "D" = Shift + D).
-> - Examples: "Space + e" = press Space, then e. "Control + Shift + A" = hold Control and Shift, then press A.
-> - "Space + D + b" = press Space, then Shift + D, then b.
->
-> Sources: `lua/config/keymaps.lua`, files in `lua/plugins/`, and LazyVim defaults.
-
 ---
 
 ## 1. Quick Summary
 
 - Space + e = Toggle Explorer (file tree)
 - Space + t = Toggle Terminal
-- Space + l = LazyGit ⚠️ *(`lazygit` binary not installed — pressing it errors)*
+- Space + l = LazyGit
 - Space + f + f = Find Files
 - Space + f + b = Search in active buffer
 - Space + f + p = Search in project (live_grep)
-- Space + a / d / s / w = Move window ← → ↑ ↓
-- Space + Right / Left arrow = Next / prev buffer
+- Space + a = Move window left
+- Space + d = Move window right
+- Space + s = Move window bottom
+- Space + w = Move window up
+- Space + Right arrow = Next buffer
+- Space + Left arrow = Prev buffer
 - Space + x = Close buffer (smart)
-- Space + / = Smart disable code (n) / toggle comment (x)
-- Control + z = Undo, Control + y = Redo
-- g d / g r / K = LSP: definition / references / hover
-- Space + D + b / D + c / D + o / D + i = Debug: breakpoint / run / step over / step into
-- Space + T + t / T + f / T + s / T + o = Test: nearest / file / summary / output
-- Space + m + c / m + i / m + a = CodeCompanion: chat / inline / actions (local AI via 9router)
+- Space + / (normal) = Smart disable code
+- Space + / (visual) = Toggle comment
+- Control + z = Undo
+- Control + y = Redo
+- g d = LSP: go to definition
+- g r = LSP: references
+- K = LSP: hover
+- Space + D + b = Debug: toggle breakpoint
+- Space + D + c = Debug: start / continue
+- Space + D + o = Debug: step over
+- Space + D + i = Debug: step into
+- Space + T + t = Test: run nearest
+- Space + T + f = Test: run all tests in file
+- Space + T + s = Test: toggle summary
+- Space + T + o = Test: show output
+- Space + m + c = CodeCompanion: chat (local AI via 9router)
+- Space + m + i = CodeCompanion: inline assistant
+- Space + m + a = CodeCompanion: actions
 
 ---
 
@@ -34,13 +42,20 @@
 
 ### Basic movement (arrows = Vim standard)
 
-- Up / Down arrow = k/j (up/down 1 line) — n,v
-- Left / Right arrow = h/l (left/right 1 char) — n,v
-- Control + Left / Right arrow = b/w (word prev/next) — n,v
-- Control + Left / Right arrow = Control + o + b / Control + o + w — i
-- Control + Up / Down arrow = Jump 50% of total lines up/down — n,v
-- Home / End = ^/$ (start/end of line) — n,v
-- Home / End = Control + o + ^ / Control + o + $ — i
+- Up arrow = k (up 1 line) — n,v
+- Down arrow = j (down 1 line) — n,v
+- Left arrow = h (left 1 char) — n,v
+- Right arrow = l (right 1 char) — n,v
+- Control + Left arrow = b (word prev) — n,v
+- Control + Right arrow = w (word next) — n,v
+- Control + Left arrow = Control + o + b (word prev) — i
+- Control + Right arrow = Control + o + w (word next) — i
+- Control + Up arrow = Jump 50% of total lines up — n,v
+- Control + Down arrow = Jump 50% of total lines down — n,v
+- Home = ^ (start of line) — n,v
+- End = $ (end of line) — n,v
+- Home = Control + o + ^ (start of line) — i
+- End = Control + o + $ (end of line) — i
 
 ### Block jump
 
@@ -51,26 +66,29 @@ Fallback: jump to nearest `{`. Treesitter-based.
 
 ### Insert / delete / clipboard / undo-redo / select
 
-> Clipboard is automatic: `vim.opt.clipboard = "unnamedplus"` (init.lua) — y = copy,
-> p = paste, d / x = cut, all via the system clipboard. Ctrl keys keep Vim defaults
-> (Control + c = cancel, Control + v = blockwise visual, Control + x = decrement).
-
 - Insert = i (enter insert) — n
 - Delete = d d (delete line) — n
 - Control + d = Delete without register — n,v
-- Control + z / Control + y = Undo / Redo — n
+- Control + z = Undo — n
+- Control + y = Redo — n
 - Control + z = Undo — i
 - Control + a = Select all — n,i,v
 - Control + Shift + a = Select line — n,i,v
 
 ### Space prefix — window, buffer, resize
 
-- Space + a / d / w / s = Window left / right / up / down
-- Space + Right / Left arrow = Next / prev buffer
+- Space + a = Window left
+- Space + d = Window right
+- Space + w = Window up
+- Space + s = Window down
+- Space + Right arrow = Next buffer
+- Space + Left arrow = Prev buffer
 - Space + x = Smart close buffer (close prev + delete if other buffers exist, else `bd`)
 - Space + k = List all keymaps
-- Space + Up / Down arrow = Resize window +2 / -2 lines
-- Space + PageUp / PageDown = Resize window +2 / -2 columns
+- Space + Up arrow = Resize window +2 lines
+- Space + Down arrow = Resize window -2 lines
+- Space + PageUp = Resize window +2 columns
+- Space + PageDown = Resize window -2 columns
 
 ---
 
@@ -80,14 +98,17 @@ Fallback: jump to nearest `{`. Treesitter-based.
 
 - Space + e = Explorer (left sidebar) — snack.lua
 - Space + t = Toggle Terminal — snack.lua
-- Space + l = LazyGit *(requires lazygit binary)* — snack.lua
+- Space + l = LazyGit — snack.lua
 - Space + m + m = Toggle minimap — minimap.lua
 - Space + c + p = Color picker (ccc) — appearance
 - Space + ; = Pick breadcrumb (dropbar) — breadcrumb.lua
 - Space + / (n) = Smart disable code: comment `// Disabled Code` + disable lines; g c c toggle if already commented — comment.lua
 - Space + / (x) = Toggle comment visual — comment.lua
-- g c c / g c o / g c O = Toggle comment / empty comment below / above — LazyVim + mini.comment
-- Control + , / Control + . = Scroll up/down half screen (smooth) — n,v,x — smooth-scroll.lua
+- g c c = Toggle comment — LazyVim + mini.comment
+- g c o = Empty comment below — LazyVim + mini.comment
+- g c O = Empty comment above — LazyVim + mini.comment
+- Control + , = Scroll up half screen (smooth) — n,v,x — smooth-scroll.lua
+- Control + . = Scroll down half screen (smooth) — n,v,x — smooth-scroll.lua
 
 ### Files & Picker
 
@@ -97,20 +118,22 @@ Fallback: jump to nearest `{`. Treesitter-based.
 - Space + f + p = Grep project (overrides "Projects")
 - Space + f + Shift + F = Find files (cwd)
 - Space + f + g = Find files (git-files)
-- Space + f + r / f + Shift + R = Recent / Recent (cwd)
+- Space + f + r = Recent
+- Space + f + Shift + R = Recent (cwd)
 - Space + f + Shift + B = Buffers (all)
 - Space + f + c = Find config file
 - Space + f + n = New file
-- Space + f + e / f + Shift + E = Explorer (root) / (cwd)
-- Space + f + t / f + Shift + T = Terminal (root) / (cwd)
+- Space + f + e = Explorer (root)
+- Space + f + Shift + E = Explorer (cwd)
+- Space + f + t = Terminal (root)
+- Space + f + Shift + T = Terminal (cwd)
 - Space + , = Switch buffer
 - Space + : = Command history
 - Space + n = Notification history
 - Space + u + Shift + C = Colorschemes
 - Space + ? = Buffer keymaps (which-key)
-- Space + . / Space + Shift + S = Toggle scratch buffer / select scratch
-
-> Default picker = **Snacks**. The "Space + s" group is disabled (see §7).
+- Space + . = Toggle scratch buffer
+- Space + Shift + S = Select scratch
 
 ### Git
 
@@ -123,15 +146,21 @@ Fallback: jump to nearest `{`. Treesitter-based.
 - Space + g + f = Git current file history
 - Space + g + Shift + D = Git diff (origin)
 - Space + g + Shift + S = Git stash
-- Space + g + Shift + B / g + Shift + Y = Git browse (open) / (copy URL) — n,x
-- Space + g + i / g + Shift + I / g + Shift + P = GitHub issues (open) / (all) / PRs (all)
-- Space + g + h + p / g + h + b = Hunk preview / blame line (gitsigns)
+- Space + g + Shift + B = Git browse (open) — n,x
+- Space + g + Shift + Y = Git browse (copy URL) — n,x
+- Space + g + i = GitHub issues (open)
+- Space + g + Shift + I = GitHub issues (all)
+- Space + g + Shift + P = PRs (all)
+- Space + g + h + p = Hunk preview (gitsigns)
+- Space + g + h + b = Blame line (gitsigns)
 
 ### Code / LSP
 
 - Space + c + d = Line diagnostics (float)
-- Space + c + f / c + Shift + F = Format / Format injected langs — n,x
-- Space + c + s / c + Shift + S = Trouble symbols / LSP references
+- Space + c + f = Format — n,x
+- Space + c + Shift + F = Format injected langs — n,x
+- Space + c + s = Trouble symbols
+- Space + c + Shift + S = LSP references
 - Space + c + m = Mason
 - Space + Shift + K = Keywordprg
 
@@ -143,8 +172,6 @@ Fallback: jump to nearest `{`. Treesitter-based.
 - Space + D + i = Step into
 - Space + D + u = Toggle DAP UI
 
-> Prefix D is used because d = right window. (formerly d b / d c / d o / d i / d u)
-
 ### Test / Todo / Triforce — prefix T (Shift + T)
 
 - Space + T + t = Run nearest test
@@ -153,95 +180,127 @@ Fallback: jump to nearest `{`. Treesitter-based.
 - Space + T + o = Show output
 - Space + T + d = Search todos (TodoTelescope)
 - Space + T + p = Show Triforce profile (XP/level)
-- ] t / [ t = Next / prev todo comment
-
-> Prefix T is used because t = terminal. (formerly t t / t f / t s / t o)
+- ] t = Next todo comment
+- [ t = Prev todo comment
 
 ### Buffer — prefix b
 
 - Space + b + d = Delete buffer
-- Space + b + o / b + i = Delete other / invisible buffers
+- Space + b + o = Delete other buffers
+- Space + b + i = Delete invisible buffers
 - Space + b + Shift + D = Delete buffer & window
-- Space + b + b / Space + ` = Switch to other buffer
-- Space + b + p / b + Shift + P = Toggle pin / close non-pinned
-- Space + b + l / b + r = Delete buffer left / right
+- Space + b + b = Switch to other buffer
+- Space + ` = Switch to other buffer
+- Space + b + p = Toggle pin
+- Space + b + Shift + P = Close non-pinned
+- Space + b + l = Delete buffer left
+- Space + b + r = Delete buffer right
 - Space + b + j = Pick buffer (BufferLine)
-- Shift + h / Shift + l = Prev / next buffer
+- Shift + h = Prev buffer
+- Shift + l = Next buffer
 
 ### Toggle UI — prefix u
 
-- Space + u + f / u + Shift + F = Auto format (global) / (buffer)
+- Space + u + f = Auto format (global)
+- Space + u + Shift + F = Auto format (buffer)
 - Space + u + s = Spelling
 - Space + u + w = Wrap
-- Space + u + Shift + L / u + l = Relative number / line number
+- Space + u + Shift + L = Relative number
+- Space + u + l = Line number
 - Space + u + d = Diagnostics
 - Space + u + c = Conceal level
 - Space + u + Shift + A = Tabline
 - Space + u + Shift + T = Treesitter highlight
-- Space + u + b / u + Shift + D = Dark background / dim
-- Space + u + a / u + g = Animations / indent guides
+- Space + u + b = Dark background
+- Space + u + Shift + D = Dim
+- Space + u + a = Animations
+- Space + u + g = Indent guides
 - Space + u + Shift + S = Scroll animations
 - Space + u + h = Inlay hints
-- Space + u + i / u + Shift + I = Inspect pos / inspect treesitter tree
+- Space + u + i = Inspect pos
+- Space + u + Shift + I = Inspect treesitter tree
 - Space + u + r = Redraw / clear hlsearch / diff update
 - Space + u + n = Dismiss notifications
 - Space + u + p = Mini pairs
-- Space + u + z / u + Shift + Z = Zen mode / zoom mode
+- Space + u + z = Zen mode
+- Space + u + Shift + Z = Zoom mode
 
 ### Tab & Window
 
 - Space + Tab + Tab = New tab
-- Space + Tab + ] / [ = Next / prev tab
-- Space + Tab + l / f = Last / first tab
-- Space + Tab + d / o = Close / close other tabs
+- Space + Tab + ] = Next tab
+- Space + Tab + [ = Prev tab
+- Space + Tab + l = Last tab
+- Space + Tab + f = First tab
+- Space + Tab + d = Close tab
+- Space + Tab + o = Close other tabs
 - Space + - = Split horizontal (bottom)
 - Space + | = Split vertical (right, press Shift + backslash)
 
 ### Session — prefix q
 
 - Space + q + q = Quit all
-- Space + q + s / q + Shift + S = Restore session / select session
+- Space + q + s = Restore session
+- Space + q + Shift + S = Select session
 - Space + q + l = Restore last session
 - Space + q + d = Don't save current session
 
 ### AI (CodeCompanion) — prefix m
 
-> CodeCompanion.nvim connects to the local 9router (`localhost:20128`), model `oc-thinking`. Inline autocomplete (minuet-ai) uses `oc-flash` on the completion plugin (see below).
-
 - Space + m + c = Toggle chat (chat buffer) — n,v
 - Space + m + i = Inline assistant — n,v
 - Space + m + a = Actions (command/prompt library palette)
-- In chat buffer: Enter / Control + s = send, g x = clear, g y = yank code, g a = switch adapter, ] ] / [ [ = next/prev header
-- Inline autocomplete (minuet-ai): Alt + Shift + A = accept all, Alt + a = accept 1 line, Alt + z = accept N lines, Alt + e = dismiss, Alt + [ / Alt + ] = prev/next/manual trigger
+- In chat buffer: Enter = send
+- In chat buffer: Control + s = send
+- In chat buffer: g x = clear
+- In chat buffer: g y = yank code
+- In chat buffer: g a = switch adapter
+- In chat buffer: ] ] = next header
+- In chat buffer: [ [ = prev header
+- Inline autocomplete (minuet-ai): Alt + Shift + A = accept all
+- Inline autocomplete (minuet-ai): Alt + a = accept 1 line
+- Inline autocomplete (minuet-ai): Alt + z = accept N lines
+- Inline autocomplete (minuet-ai): Alt + e = dismiss
+- Inline autocomplete (minuet-ai): Alt + [ = prev / manual trigger
+- Inline autocomplete (minuet-ai): Alt + ] = next / manual trigger
 - **Codegen (insert mode):** type `//codegen: <instruction>` with the cursor at the end of the line, then press Enter. The marker line is replaced with generated code.
-
-> Space + m + m (minimap toggle) stays — no conflict with the m prefix above.
-
----
 
 ## 4. LSP — LazyVim defaults
 
-- g d / g r / g Shift + I = Definition / references / implementation
-- g y / g Shift + D = Type definition / declaration
-- K / g K = Hover / signature help — n
+- g d = Definition
+- g r = References
+- g Shift + I = Implementation
+- g y = Type definition
+- g Shift + D = Declaration
+- K = Hover — n
+- g K = Signature help — n
 - Control + k = Signature help — i
 - Space + c + a = Code action — n,x
-- Space + c + c / c + Shift + C = Run codelens / refresh & display
-- Space + c + r / c + Shift + R = Rename / rename file
+- Space + c + c = Run codelens
+- Space + c + Shift + C = Refresh & display codelens
+- Space + c + r = Rename
+- Space + c + Shift + R = Rename file
 - Space + c + Shift + A = Source action
 - Space + c + l = LSP info (picker)
-- ] d / [ d, ] e / [ e, ] w / [ w = Next/prev diagnostic / error / warning
+- ] d = Next diagnostic
+- [ d = Prev diagnostic
+- ] e = Next error
+- [ e = Prev error
+- ] w = Next warning
+- [ w = Prev warning
 
 ---
 
 ## 5. Git — LazyVim defaults (reference, partially overridden)
 
-- Space + g + g / g + Shift + G = LazyGit (root/cwd) — **inactive, lazygit not installed**
+- Space + g + g = LazyGit (root)
+- Space + g + Shift + G = LazyGit (cwd)
 - Space + g + Shift + L = Git log (cwd)
 - Space + g + l = *override* → Git pull
 - Space + g + b = *override* → Git blame
 - Space + g + f = Git current file history
-- Space + g + Shift + B / g + Shift + Y = Git browse (open) / (copy URL) — n,x
+- Space + g + Shift + B = Git browse (open) — n,x
+- Space + g + Shift + Y = Git browse (copy URL) — n,x
 - Space + g + c = Commits (telescope)
 - Space + g + Shift + S = Git stash
 - Space + g + d = *override* → Gdiffsplit
@@ -250,35 +309,27 @@ Fallback: jump to nearest `{`. Treesitter-based.
 
 ## 6. Windows / Buffers / Tabs — LazyVim defaults
 
-- Control + h / j / k / l = Move window left/bottom/up/right
-- Space + - / Space + | = Split bottom / right
-- Shift + h / Shift + l = Prev / next buffer
-- [ b / ] b = Prev / next buffer
+- Control + h = Move window left
+- Control + j = Move window bottom
+- Control + k = Move window up
+- Control + l = Move window right
+- Space + - = Split bottom
+- Space + | = Split right
+- Shift + h = Prev buffer
+- Shift + l = Next buffer
+- [ b = Prev buffer
+- ] b = Next buffer
 - Space + u + Shift + Z = Toggle zoom (alias Space + w + m)
 - Space + u + z = Toggle zen mode
 
-> Resize window: Space + Up / Down arrow (lines), Space + PageUp / PageDown (columns), or Control + w + =, :resize.
-
 ---
 
-## 7. Disabled Keymaps (Nop) — conflicts with custom navigation
+## 7. Space prefix — quick map
 
-> Alternatives used: Space + k (keymaps), ] d / [ d (diagnostics), Space + : (cmd history), Space + , (buffer).
-
-- d p p / d p h = Profiler (LazyVim core) — off because d = right window
-- w d / w m = Window (LazyVim core) — off because w = up window
-- x l / x q = Quickfix (LazyVim core) — off because x = close buffer
-- x x / x X / x L / x Q = Trouble — off because x = close buffer
-- s r = Grep replace (grug-far) — off because s = bottom window
-- s n / s n a / s n d / s n h / s n l / s n t = Noice notification — off because s = bottom window
-- s " / s / / s a / s b / s B / s c / s C / s d / s D / s g / s G / s h / s H / s i / s j / s k / s l / s m / s M / s p / s q / s R / s s / s S / s u / s w / s W = Picker (snacks_picker) — off because s = bottom window
-- s t / s T / x t / x T = Todo (todo-comments) — off because s / x = window/close
-
----
-
-## 8. Space prefix — quick map
-
-- Space + a / d / s / w = Move window (left/right/bottom/up)
+- Space + a = Move window left
+- Space + d = Move window right
+- Space + s = Move window bottom
+- Space + w = Move window up
 - Space + b = Buffer
 - Space + c = Code/LSP (action, rename, format, trouble)
 - Space + D = Debug (breakpoint, run, step, DAP UI)
@@ -301,17 +352,73 @@ Fallback: jump to nearest `{`. Treesitter-based.
 
 ---
 
-## 9. Snacks Explorer — internal keymaps
+## 8. Snacks Explorer — internal keymaps
 
 - a = Add file
 - r = Rename
 - d = Delete
-- q / Esc = Close explorer
+- q = Close explorer
+- Esc = Close explorer
 - Control + Shift + c = Copy file path (yank)
 - Control + Shift + v = Paste path as text
 - Control + c = Copy / duplicate file
 - Control + v = Paste file / move cut file
 - Control + Shift + x = Cut file
 - Space + r = Refresh
-- Control + Right / Left arrow = Widen / narrow explorer ±4
-- h / l = Collapse / expand node
+- Control + Right arrow = Widen explorer +4
+- Control + Left arrow = Narrow explorer -4
+- h = Collapse node
+- l = Expand node
+
+---
+
+## 9. Disabled Keymaps (Nop) — conflicts with custom navigation
+
+- d p p = Profiler (LazyVim core) — off because d = right window
+- d p h = Profiler (LazyVim core) — off because d = right window
+- w d = Window (LazyVim core) — off because w = up window
+- w m = Window (LazyVim core) — off because w = up window
+- x l = Quickfix (LazyVim core) — off because x = close buffer
+- x q = Quickfix (LazyVim core) — off because x = close buffer
+- x x = Trouble — off because x = close buffer
+- x X = Trouble — off because x = close buffer
+- x L = Trouble — off because x = close buffer
+- x Q = Trouble — off because x = close buffer
+- s r = Grep replace (grug-far) — off because s = bottom window
+- s n = Noice notification — off because s = bottom window
+- s n a = Noice notification — off because s = bottom window
+- s n d = Noice notification — off because s = bottom window
+- s n h = Noice notification — off because s = bottom window
+- s n l = Noice notification — off because s = bottom window
+- s n t = Noice notification — off because s = bottom window
+- s " = Picker (snacks_picker) — off because s = bottom window
+- s / = Picker (snacks_picker) — off because s = bottom window
+- s a = Picker (snacks_picker) — off because s = bottom window
+- s b = Picker (snacks_picker) — off because s = bottom window
+- s B = Picker (snacks_picker) — off because s = bottom window
+- s c = Picker (snacks_picker) — off because s = bottom window
+- s C = Picker (snacks_picker) — off because s = bottom window
+- s d = Picker (snacks_picker) — off because s = bottom window
+- s D = Picker (snacks_picker) — off because s = bottom window
+- s g = Picker (snacks_picker) — off because s = bottom window
+- s G = Picker (snacks_picker) — off because s = bottom window
+- s h = Picker (snacks_picker) — off because s = bottom window
+- s H = Picker (snacks_picker) — off because s = bottom window
+- s i = Picker (snacks_picker) — off because s = bottom window
+- s j = Picker (snacks_picker) — off because s = bottom window
+- s k = Picker (snacks_picker) — off because s = bottom window
+- s l = Picker (snacks_picker) — off because s = bottom window
+- s m = Picker (snacks_picker) — off because s = bottom window
+- s M = Picker (snacks_picker) — off because s = bottom window
+- s p = Picker (snacks_picker) — off because s = bottom window
+- s q = Picker (snacks_picker) — off because s = bottom window
+- s R = Picker (snacks_picker) — off because s = bottom window
+- s s = Picker (snacks_picker) — off because s = bottom window
+- s S = Picker (snacks_picker) — off because s = bottom window
+- s u = Picker (snacks_picker) — off because s = bottom window
+- s w = Picker (snacks_picker) — off because s = bottom window
+- s W = Picker (snacks_picker) — off because s = bottom window
+- s t = Todo (todo-comments) — off because s = window
+- s T = Todo (todo-comments) — off because s = window
+- x t = Todo (todo-comments) — off because x = close buffer
+- x T = Todo (todo-comments) — off because x = close buffer

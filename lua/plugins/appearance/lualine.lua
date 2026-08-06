@@ -74,7 +74,7 @@ return {
             function()
               local codegen = require("config.codegen")
               if codegen.is_busy() then
-                return " " .. codegen.spinner() .. " codegen"
+                return " " .. codegen.spinner() .. " " .. codegen.label()
               end
               return ""
             end,

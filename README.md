@@ -72,7 +72,8 @@ Plugin authors can reuse the same state:
 | API | Purpose |
 |-----|---------|
 | `require("config.codegen").marker_active()` | true while the current line starts with `//codegen` — gate your suggestions here |
-| `require("config.codegen").is_busy()` | true while a codegen request is in flight |
+| `require("config.codegen").is_busy()` | true while any AI request is in flight (codegen, CodeCompanion chat/inline, minuet) |
+| `require("config.codegen").label()` | source label of the active request: `codegen`, `AI`, or `minuet` |
 | `require("config.codegen").spinner()` | next spinner frame for a statusline indicator |
 
 Example — disable completion while typing a codegen marker:
@@ -89,8 +90,10 @@ This is exactly how `blink.cmp` and `minuet-ai` are wired in this config
 
 Feedback events fired for integration:
 
+- `CodeCompanionRequestStarted` / `CodeCompanionRequestFinished` — fired for **every** CodeCompanion request (chat and inline, success and error); drives the shared busy state.
 - `CodeCompanionInlineStarted` — request started/finished; `ev.data.status == "error"` on failure (used for the error notification).
 - `CodeCompanionInlineFinished` — request finished successfully.
+- `MinuetRequestStartedPre` / `MinuetRequestFinished` — minuet batch lifecycle; `Finished` fires `n_requests` times.
 
 ### AI key resolver
 

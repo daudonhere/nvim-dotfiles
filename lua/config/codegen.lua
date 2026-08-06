@@ -5,19 +5,26 @@ local levels = vim.log.levels
 
 local group = vim.api.nvim_create_augroup("codegen_feedback", { clear = true })
 
-local busy = false
+local active_requests = 0
+local current_label = nil
+local codegen_active = false
+local minuet_finished = 0
 local spinner_frames = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
 local spinner_idx = 0
 local spinner_timer = vim.uv.new_timer()
 local stall_timer = vim.uv.new_timer()
 
 function M.is_busy()
-  return busy
+  return active_requests > 0
 end
 
 function M.spinner()
   spinner_idx = spinner_idx + 1
   return spinner_frames[((spinner_idx - 1) % #spinner_frames) + 1]
+end
+
+function M.label()
+  return current_label or "AI"
 end
 
 local function refresh_statusline()
@@ -26,20 +33,52 @@ local function refresh_statusline()
   end)
 end
 
-local function set_busy(on)
-  busy = on
-  if on then
-    if not spinner_timer:is_active() then
-      spinner_timer:start(0, 150, vim.schedule_wrap(refresh_statusline))
-    end
-    stall_timer:start(130000, 0, vim.schedule_wrap(function()
-      set_busy(false)
-    end))
-  else
-    spinner_timer:stop()
-    stall_timer:stop()
-    vim.schedule(refresh_statusline)
+local function start_indicator()
+  if not spinner_timer:is_active() then
+    spinner_timer:start(0, 150, vim.schedule_wrap(refresh_statusline))
   end
+  stall_timer:start(300000, 0, vim.schedule_wrap(function()
+    active_requests = 0
+    current_label = nil
+    minuet_finished = 0
+    codegen_active = false
+    spinner_timer:stop()
+    refresh_statusline()
+  end))
+end
+
+local function stop_indicator()
+  spinner_timer:stop()
+  stall_timer:stop()
+  vim.schedule(refresh_statusline)
+end
+
+function M.request_start(label)
+  active_requests = active_requests + 1
+  if label then
+    current_label = label
+  end
+  if label == "codegen" then
+    codegen_active = true
+  end
+  start_indicator()
+end
+
+function M.request_end()
+  active_requests = math.max(active_requests - 1, 0)
+  if active_requests == 0 then
+    current_label = nil
+    minuet_finished = 0
+    stop_indicator()
+  end
+end
+
+function M.reset()
+  active_requests = 0
+  current_label = nil
+  minuet_finished = 0
+  codegen_active = false
+  stop_indicator()
 end
 
 function M.marker_active()
@@ -60,6 +99,44 @@ vim.api.nvim_create_autocmd({ "TextChangedI", "CursorMovedI" }, {
 
 vim.api.nvim_create_autocmd("User", {
   group = group,
+  pattern = "CodeCompanionRequestStarted",
+  callback = function()
+    M.request_start(codegen_active and "codegen" or "AI")
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  group = group,
+  pattern = "CodeCompanionRequestFinished",
+  callback = function()
+    M.request_end()
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  group = group,
+  pattern = "MinuetRequestStartedPre",
+  callback = function()
+    M.request_start("minuet")
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  group = group,
+  pattern = "MinuetRequestFinished",
+  callback = function(ev)
+    local data = ev.data or {}
+    local total = data.n_requests or 1
+    minuet_finished = minuet_finished + 1
+    if minuet_finished >= total then
+      minuet_finished = 0
+      M.request_end()
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  group = group,
   pattern = "CodeCompanionInlineStarted",
   callback = function(ev)
     local data = ev.data or {}
@@ -67,7 +144,8 @@ vim.api.nvim_create_autocmd("User", {
     if status == nil then
       return
     end
-    set_busy(false)
+    codegen_active = false
+    M.request_end()
     if status == "error" then
       local msg = "AI codegen gagal"
       if data.data and data.data.error and data.data.error.message then
@@ -82,7 +160,8 @@ vim.api.nvim_create_autocmd("User", {
   group = group,
   pattern = "CodeCompanionInlineFinished",
   callback = function()
-    set_busy(false)
+    codegen_active = false
+    M.request_end()
   end,
 })
 
@@ -92,7 +171,6 @@ function M.run(instruction, lnum)
     return
   end
   notify("AI codegen: " .. instruction, levels.INFO, { title = "Codegen" })
-  set_busy(true)
   local ok, inline = pcall(function()
     local ctx = require("codecompanion.utils.context").get(bufnr, {})
     lnum = lnum or vim.api.nvim_win_get_cursor(0)[1]
@@ -108,6 +186,8 @@ function M.run(instruction, lnum)
     notify("Codegen gagal: " .. tostring(inline), levels.ERROR, { title = "Codegen" })
     return
   end
+  codegen_active = true
+  M.request_start("codegen")
   inline:prompt(instruction)
 end
 

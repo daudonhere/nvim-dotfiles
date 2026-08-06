@@ -1,0 +1,874 @@
+{
+  "Arduino setup": {
+    "prefix": "setup",
+    "body": [
+      "void setup() {",
+      "  ${1:Serial.begin(115200);}",
+      "}",
+      "",
+      "void loop() {",
+      "  ${2}",
+      "}"
+    ],
+    "description": "Arduino setup + loop"
+  },
+  "Arduino pinMode OUTPUT": {
+    "prefix": "pino",
+    "body": [
+      "pinMode(${1:LED_BUILTIN}, OUTPUT);"
+    ],
+    "description": "Arduino pinMode OUTPUT"
+  },
+  "Arduino pinMode INPUT": {
+    "prefix": "pini",
+    "body": [
+      "pinMode(${1:2}, INPUT_PULLUP);"
+    ],
+    "description": "Arduino pinMode INPUT_PULLUP"
+  },
+  "Arduino digitalWrite": {
+    "prefix": "dwrite",
+    "body": [
+      "digitalWrite(${1:LED_BUILTIN}, ${2:HIGH});"
+    ],
+    "description": "Arduino digitalWrite"
+  },
+  "Arduino digitalRead": {
+    "prefix": "dread",
+    "body": [
+      "int ${1:val} = digitalRead(${2:2});"
+    ],
+    "description": "Arduino digitalRead"
+  },
+  "Arduino analogRead": {
+    "prefix": "aread",
+    "body": [
+      "int ${1:val} = analogRead(${2:A0});"
+    ],
+    "description": "Arduino analogRead"
+  },
+  "Arduino analogWrite": {
+    "prefix": "awrite",
+    "body": [
+      "analogWrite(${1:9}, ${2:128});"
+    ],
+    "description": "Arduino analogWrite (PWM)"
+  },
+  "Arduino Serial.begin": {
+    "prefix": "ser",
+    "body": [
+      "Serial.begin(${1:115200});"
+    ],
+    "description": "Arduino Serial.begin"
+  },
+  "Arduino Serial.print": {
+    "prefix": "sprint",
+    "body": [
+      "Serial.print(${1:\"value: \"});",
+      "Serial.println(${2:value});"
+    ],
+    "description": "Arduino Serial.print/println"
+  },
+  "Arduino Serial read": {
+    "prefix": "sread",
+    "body": [
+      "if (Serial.available() > 0) {",
+      "  String ${1:data} = Serial.readStringUntil('\\n');",
+      "  ${2}",
+      "}"
+    ],
+    "description": "Arduino Serial readString"
+  },
+  "Arduino blink": {
+    "prefix": "blink",
+    "body": [
+      "void setup() {",
+      "  pinMode(${1:LED_BUILTIN}, OUTPUT);",
+      "}",
+      "",
+      "void loop() {",
+      "  digitalWrite(${1:LED_BUILTIN}, HIGH);",
+      "  delay(${2:500});",
+      "  digitalWrite(${1:LED_BUILTIN}, LOW);",
+      "  delay(${2:500});",
+      "}"
+    ],
+    "description": "Arduino blink"
+  },
+  "Arduino millis non-blocking": {
+    "prefix": "millis",
+    "body": [
+      "unsigned long ${1:prevMillis} = 0;",
+      "const unsigned long ${2:interval} = ${3:1000};",
+      "",
+      "void loop() {",
+      "  unsigned long currentMillis = millis();",
+      "  if (currentMillis - ${1:prevMillis} >= ${2:interval}) {",
+      "    ${1:prevMillis} = currentMillis;",
+      "    ${4}",
+      "  }",
+      "}"
+    ],
+    "description": "Arduino non-blocking millis"
+  },
+  "Arduino debounce": {
+    "prefix": "debounce",
+    "body": [
+      "const int ${1:BUTTON_PIN} = ${2:2};",
+      "int lastState = HIGH;",
+      "unsigned long lastDebounceTime = 0;",
+      "const unsigned long debounceDelay = ${3:50};",
+      "",
+      "void loop() {",
+      "  int reading = digitalRead(${1:BUTTON_PIN});",
+      "  if (reading != lastState) {",
+      "    lastDebounceTime = millis();",
+      "  }",
+      "  if ((millis() - lastDebounceTime) > debounceDelay) {",
+      "    ${4}",
+      "  }",
+      "  lastState = reading;",
+      "}"
+    ],
+    "description": "Arduino button debounce"
+  },
+  "Arduino map": {
+    "prefix": "mapv",
+    "body": [
+      "${1:out} = map(${2:value}, ${3:0}, ${4:1023}, ${5:0}, ${6:255});"
+    ],
+    "description": "Arduino map()"
+  },
+  "Arduino delay": {
+    "prefix": "delaym",
+    "body": [
+      "delay(${1:1000});"
+    ],
+    "description": "Arduino delay ms"
+  },
+  "Arduino attachInterrupt": {
+    "prefix": "intcon",
+    "body": [
+      "attachInterrupt(digitalPinToInterrupt(${1:2}), ${2:isr}, ${3:CHANGE});",
+      "",
+      "volatile bool ${4:flag} = false;",
+      "",
+      "void IRAM_ATTR ${2:isr}() {",
+      "  ${4:flag} = true;",
+      "}"
+    ],
+    "description": "Arduino attachInterrupt"
+  },
+  "Arduino tone": {
+    "prefix": "tone",
+    "body": [
+      "tone(${1:8}, ${2:262}${3:, 500});"
+    ],
+    "description": "Arduino tone()"
+  },
+  "Arduino Servo": {
+    "prefix": "srv",
+    "body": [
+      "#include <Servo.h>",
+      "",
+      "Servo ${1:servo};",
+      "",
+      "void setup() {",
+      "  ${1:servo}.attach(${2:9});",
+      "}",
+      "",
+      "void loop() {",
+      "  ${1:servo}.write(${3:90});",
+      "  delay(${4:15});",
+      "}"
+    ],
+    "description": "Arduino Servo"
+  },
+  "Arduino DHT sensor": {
+    "prefix": "dht",
+    "body": [
+      "#include <DHT.h>",
+      "",
+      "#define DHTPIN ${1:2}",
+      "#define DHTTYPE DHT${2:22}",
+      "DHT dht(DHTPIN, DHTTYPE);",
+      "",
+      "void setup() {",
+      "  Serial.begin(115200);",
+      "  dht.begin();",
+      "}",
+      "",
+      "void loop() {",
+      "  float h = dht.readHumidity();",
+      "  float t = dht.readTemperature();",
+      "  delay(2000);",
+      "}"
+    ],
+    "description": "Arduino DHT sensor"
+  },
+  "Arduino ultrasonic": {
+    "prefix": "ultra",
+    "body": [
+      "const int ${1:TRIG} = ${2:9};",
+      "const int ${3:ECHO} = ${4:10};",
+      "",
+      "void setup() {",
+      "  pinMode(${1:TRIG}, OUTPUT);",
+      "  pinMode(${3:ECHO}, INPUT);",
+      "  Serial.begin(115200);",
+      "}",
+      "",
+      "void loop() {",
+      "  digitalWrite(${1:TRIG}, LOW);",
+      "  delayMicroseconds(2);",
+      "  digitalWrite(${1:TRIG}, HIGH);",
+      "  delayMicroseconds(10);",
+      "  digitalWrite(${1:TRIG}, LOW);",
+      "  long duration = pulseIn(${3:ECHO}, HIGH);",
+      "  float distance = duration * 0.034 / 2;",
+      "  delay(100);",
+      "}"
+    ],
+    "description": "Arduino HC-SR04 ultrasonic"
+  },
+  "Arduino Dallas temp": {
+    "prefix": "dallas",
+    "body": [
+      "#include <OneWire.h>",
+      "#include <DallasTemperature.h>",
+      "",
+      "#define ONE_WIRE_BUS ${1:2}",
+      "OneWire oneWire(ONE_WIRE_BUS);",
+      "DallasTemperature sensors(&oneWire);",
+      "",
+      "void setup() {",
+      "  Serial.begin(115200);",
+      "  sensors.begin();",
+      "}",
+      "",
+      "void loop() {",
+      "  sensors.requestTemperatures();",
+      "  float t = sensors.getTempCByIndex(0);",
+      "  delay(1000);",
+      "}"
+    ],
+    "description": "Arduino DS18B20 temperature"
+  },
+  "Arduino relay": {
+    "prefix": "relay",
+    "body": [
+      "const int ${1:RELAY_PIN} = ${2:4};",
+      "",
+      "void setup() {",
+      "  pinMode(${1:RELAY_PIN}, OUTPUT);",
+      "}",
+      "",
+      "void loop() {",
+      "  digitalWrite(${1:RELAY_PIN}, ${3:HIGH});",
+      "  delay(${4:5000});",
+      "  digitalWrite(${1:RELAY_PIN}, LOW);",
+      "  delay(${4:5000});",
+      "}"
+    ],
+    "description": "Arduino relay control"
+  },
+  "Arduino NeoPixel": {
+    "prefix": "neopix",
+    "body": [
+      "#include <Adafruit_NeoPixel.h>",
+      "",
+      "#define PIN ${1:6}",
+      "#define NUMPIXELS ${2:16}",
+      "Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);",
+      "",
+      "void setup() {",
+      "  pixels.begin();",
+      "}",
+      "",
+      "void loop() {",
+      "  for (int i = 0; i < NUMPIXELS; i++) {",
+      "    pixels.setPixelColor(i, pixels.Color(${3:255}, ${4:0}, ${5:0}));",
+      "    pixels.show();",
+      "    delay(${6:50});",
+      "  }",
+      "}"
+    ],
+    "description": "Arduino Adafruit_NeoPixel"
+  },
+  "Arduino LCD I2C": {
+    "prefix": "lcd",
+    "body": [
+      "#include <LiquidCrystal_I2C.h>",
+      "",
+      "LiquidCrystal_I2C lcd(${1:0x27}, ${2:16}, ${3:2});",
+      "",
+      "void setup() {",
+      "  lcd.init();",
+      "  lcd.backlight();",
+      "  lcd.setCursor(${4:0}, ${5:0});",
+      "  lcd.print(\"${6:Hello}\");",
+      "}"
+    ],
+    "description": "Arduino LiquidCrystal_I2C"
+  },
+  "Arduino OLED SSD1306": {
+    "prefix": "oled",
+    "body": [
+      "#include <Wire.h>",
+      "#include <Adafruit_GFX.h>",
+      "#include <Adafruit_SSD1306.h>",
+      "",
+      "#define SCREEN_WIDTH ${1:128}",
+      "#define SCREEN_HEIGHT ${2:64}",
+      "Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, ${3:-1});",
+      "",
+      "void setup() {",
+      "  if (!display.begin(SSD1306_SWITCHCAPVCC, ${4:0x3C})) {",
+      "    for (;;);",
+      "  }",
+      "  display.clearDisplay();",
+      "  display.setTextSize(${5:1});",
+      "  display.setTextColor(SSD1306_WHITE);",
+      "  display.setCursor(${6:0}, ${7:0});",
+      "  display.println(\"${8:Hello}\");",
+      "  display.display();",
+      "}"
+    ],
+    "description": "Arduino OLED SSD1306"
+  },
+  "Arduino I2C begin": {
+    "prefix": "i2c",
+    "body": [
+      "#include <Wire.h>",
+      "",
+      "void setup() {",
+      "  Wire.begin();",
+      "}"
+    ],
+    "description": "Arduino Wire begin"
+  },
+  "Arduino SPI begin": {
+    "prefix": "spi",
+    "body": [
+      "#include <SPI.h>",
+      "",
+      "void setup() {",
+      "  SPI.begin();",
+      "}"
+    ],
+    "description": "Arduino SPI begin"
+  },
+  "Arduino SD card": {
+    "prefix": "sd",
+    "body": [
+      "#include <SD.h>",
+      "",
+      "const int ${1:chipSelect} = ${2:4};",
+      "",
+      "void setup() {",
+      "  if (!SD.begin(${1:chipSelect})) {",
+      "    Serial.println(\"SD init failed\");",
+      "    return;",
+      "  }",
+      "}"
+    ],
+    "description": "Arduino SD card"
+  },
+  "Arduino file write": {
+    "prefix": "filew",
+    "body": [
+      "File ${1:file} = SD.open(\"${2:/data.txt}\", FILE_WRITE);",
+      "if (${1:file}) {",
+      "  ${1:file}.println(\"${3:text}\");",
+      "  ${1:file}.close();",
+      "}"
+    ],
+    "description": "Arduino SD file write"
+  },
+  "Arduino file read": {
+    "prefix": "filer",
+    "body": [
+      "File ${1:file} = SD.open(\"${2:/data.txt}\");",
+      "if (${1:file}) {",
+      "  while (${1:file}.available()) {",
+      "    Serial.write(${1:file}.read());",
+      "  }",
+      "  ${1:file}.close();",
+      "}"
+    ],
+    "description": "Arduino SD file read"
+  },
+  "Arduino JSON parse": {
+    "prefix": "json",
+    "body": [
+      "#include <ArduinoJson.h>",
+      "",
+      "StaticJsonDocument<${1:1024}> doc;",
+      "deserializeJson(doc, ${2:jsonString});",
+      "",
+      "const char* ${3:name} = doc[\"${3:name}\"];"
+    ],
+    "description": "Arduino ArduinoJson"
+  },
+  "Arduino state machine": {
+    "prefix": "statem",
+    "body": [
+      "enum State { IDLE, ${1:RUNNING}, ${2:DONE} };",
+      "State state = IDLE;",
+      "",
+      "void loop() {",
+      "  switch (state) {",
+      "    case IDLE:",
+      "      ${3}",
+      "      break;",
+      "    case ${1:RUNNING}:",
+      "      ${4}",
+      "      break;",
+      "    case ${2:DONE}:",
+      "      ${5}",
+      "      break;",
+      "  }",
+      "}"
+    ],
+    "description": "Arduino enum state machine"
+  },
+  "Arduino WiFi connect": {
+    "prefix": "wifi",
+    "body": [
+      "#include <WiFi.h>",
+      "",
+      "const char* ssid = \"${1:SSID}\";",
+      "const char* password = \"${2:PASSWORD}\";",
+      "",
+      "void setup() {",
+      "  Serial.begin(115200);",
+      "  WiFi.begin(ssid, password);",
+      "  while (WiFi.status() != WL_CONNECTED) {",
+      "    delay(500);",
+      "    Serial.print(\".\");",
+      "  }",
+      "  Serial.println(WiFi.localIP());",
+      "}"
+    ],
+    "description": "Arduino WiFi.begin"
+  },
+  "Arduino NTP time": {
+    "prefix": "ntp",
+    "body": [
+      "#include <WiFi.h>",
+      "#include <time.h>",
+      "",
+      "const char* ntpServer = \"${1:pool.ntp.org}\";",
+      "const long gmtOffset_sec = ${2:3600 * 7};",
+      "const int daylightOffset_sec = ${3:0};",
+      "",
+      "void setup() {",
+      "  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);",
+      "  struct tm timeinfo;",
+      "  if (!getLocalTime(&timeinfo)) {",
+      "    Serial.println(\"NTP failed\");",
+      "  }",
+      "}"
+    ],
+    "description": "Arduino NTP time"
+  },
+  "Arduino Access Point": {
+    "prefix": "ap",
+    "body": [
+      "#include <WiFi.h>",
+      "",
+      "void setup() {",
+      "  WiFi.softAP(\"${1:AP_NAME}\", \"${2:PASSWORD}\");",
+      "  Serial.println(WiFi.softAPIP());",
+      "}"
+    ],
+    "description": "Arduino softAP"
+  },
+  "Arduino WebServer": {
+    "prefix": "web",
+    "body": [
+      "#include <WebServer.h>",
+      "",
+      "WebServer server(${1:80});",
+      "",
+      "void setup() {",
+      "  server.on(\"/\", []() {",
+      "    server.send(200, \"text/plain\", \"${2:Hello}\");",
+      "  });",
+      "  server.begin();",
+      "}",
+      "",
+      "void loop() {",
+      "  server.handleClient();",
+      "}"
+    ],
+    "description": "Arduino WebServer"
+  },
+  "Arduino MQTT": {
+    "prefix": "mqtt",
+    "body": [
+      "#include <PubSubClient.h>",
+      "",
+      "WiFiClient espClient;",
+      "PubSubClient client(espClient);",
+      "",
+      "void callback(char* topic, byte* payload, unsigned int length) {",
+      "  ${1}",
+      "}",
+      "",
+      "void reconnect() {",
+      "  while (!client.connected()) {",
+      "    if (client.connect(\"${2:clientId}\", \"${3:user}\", \"${4:pass}\")) {",
+      "      client.subscribe(\"${5:topic}\");",
+      "    } else {",
+      "      delay(5000);",
+      "    }",
+      "  }",
+      "}"
+    ],
+    "description": "Arduino MQTT PubSubClient"
+  },
+  "Arduino HTTP GET": {
+    "prefix": "http",
+    "body": [
+      "#include <HTTPClient.h>",
+      "",
+      "HTTPClient http;",
+      "http.begin(\"${1:http://localhost:3000/api}\");",
+      "int code = http.GET();",
+      "String body = http.getString();",
+      "http.end();"
+    ],
+    "description": "Arduino HTTPClient GET"
+  },
+  "Arduino EEPROM": {
+    "prefix": "eeprom",
+    "body": [
+      "#include <EEPROM.h>",
+      "",
+      "EEPROM.write(${1:0}, ${2:value});",
+      "EEPROM.commit();"
+    ],
+    "description": "Arduino EEPROM write"
+  },
+  "Arduino deep sleep": {
+    "prefix": "sleep",
+    "body": [
+      "#include <esp_sleep.h>",
+      "",
+      "esp_deep_sleep_start();"
+    ],
+    "description": "Arduino ESP32 deep sleep"
+  },
+  "Arduino ESP.restart": {
+    "prefix": "esprestart",
+    "body": [
+      "ESP.restart();"
+    ],
+    "description": "Arduino ESP32 restart"
+  },
+  "Arduino free heap": {
+    "prefix": "espfree",
+    "body": [
+      "Serial.print(\"Free heap: \");",
+      "Serial.println(ESP.getFreeHeap());"
+    ],
+    "description": "Arduino ESP free heap"
+  },
+  "Arduino PWM fade": {
+    "prefix": "fade",
+    "body": [
+      "int ${1:brightness} = 0;",
+      "int fadeAmount = 5;",
+      "",
+      "void loop() {",
+      "  analogWrite(${2:9}, ${1:brightness});",
+      "  ${1:brightness} += fadeAmount;",
+      "  if (${1:brightness} <= 0 || ${1:brightness} >= 255) fadeAmount = -fadeAmount;",
+      "  delay(30);",
+      "}"
+    ],
+    "description": "Arduino PWM fade"
+  },
+  "Arduino RGB LED": {
+    "prefix": "rgb",
+    "body": [
+      "const int rPin = ${1:9}, gPin = ${2:10}, bPin = ${3:11};",
+      "",
+      "void setColor(int r, int g, int b) {",
+      "  analogWrite(rPin, r);",
+      "  analogWrite(gPin, g);",
+      "  analogWrite(bPin, b);",
+      "}"
+    ],
+    "description": "Arduino RGB LED"
+  },
+  "Arduino melody": {
+    "prefix": "melody",
+    "body": [
+      "const int buzzerPin = ${1:8};",
+      "int melody[] = {${2:262, 330, 392, 523}};",
+      "int durations[] = {${3:4, 4, 4, 4}};",
+      "",
+      "void playMelody() {",
+      "  for (int i = 0; i < ${4:4}; i++) {",
+      "    int dur = 1000 / durations[i];",
+      "    tone(buzzerPin, melody[i], dur);",
+      "    delay(dur * 1.3);",
+      "  }",
+      "}"
+    ],
+    "description": "Arduino melody with tone"
+  },
+  "Arduino rotary encoder": {
+    "prefix": "rotary",
+    "body": [
+      "const int clkPin = ${1:2}, dtPin = ${2:3};",
+      "int lastClk = digitalRead(clkPin);",
+      "int position = 0;",
+      "",
+      "void loop() {",
+      "  int clk = digitalRead(clkPin);",
+      "  if (clk != lastClk) {",
+      "    position += (digitalRead(dtPin) != clk) ? 1 : -1;",
+      "  }",
+      "  lastClk = clk;",
+      "}"
+    ],
+    "description": "Arduino rotary encoder"
+  },
+  "Arduino joystick": {
+    "prefix": "joystick",
+    "body": [
+      "const int xPin = ${1:A0}, yPin = ${2:A1}, btnPin = ${3:2};",
+      "",
+      "void loop() {",
+      "  int x = analogRead(xPin);",
+      "  int y = analogRead(yPin);",
+      "  bool pressed = !digitalRead(btnPin);",
+      "  delay(50);",
+      "}"
+    ],
+    "description": "Arduino joystick read"
+  },
+  "Arduino potentiometer": {
+    "prefix": "pot",
+    "body": [
+      "const int potPin = ${1:A0};",
+      "",
+      "void loop() {",
+      "  int value = analogRead(potPin);",
+      "  int mapped = map(value, 0, 1023, 0, 255);",
+      "  delay(50);",
+      "}"
+    ],
+    "description": "Arduino potentiometer"
+  },
+  "Arduino LDR": {
+    "prefix": "ldr",
+    "body": [
+      "const int ldrPin = ${1:A0};",
+      "int light = analogRead(ldrPin);"
+    ],
+    "description": "Arduino LDR light sensor"
+  },
+  "Arduino PIR motion": {
+    "prefix": "pir",
+    "body": [
+      "const int pirPin = ${1:2};",
+      "void setup() { pinMode(pirPin, INPUT); Serial.begin(115200); }",
+      "void loop() {",
+      "  if (digitalRead(pirPin)) { Serial.println(\"Motion\"); }",
+      "  delay(200);",
+      "}"
+    ],
+    "description": "Arduino PIR motion sensor"
+  },
+  "Arduino stepper": {
+    "prefix": "stepper",
+    "body": [
+      "#include <Stepper.h>",
+      "const int stepsPerRev = ${1:2048};",
+      "Stepper myStepper(stepsPerRev, ${2:8}, ${3:9}, ${4:10}, ${5:11});",
+      "",
+      "void loop() {",
+      "  myStepper.setSpeed(${6:15});",
+      "  myStepper.step(${7:100});",
+      "}"
+    ],
+    "description": "Arduino stepper motor"
+  },
+  "Arduino DC motor": {
+    "prefix": "dcmotor",
+    "body": [
+      "const int in1 = ${1:9}, in2 = ${2:10}, ena = ${3:11};",
+      "void setup() { pinMode(in1, OUTPUT); pinMode(in2, OUTPUT); pinMode(ena, OUTPUT); }",
+      "void loop() {",
+      "  digitalWrite(in1, HIGH); digitalWrite(in2, LOW);",
+      "  analogWrite(ena, ${4:200});",
+      "  delay(${5:2000});",
+      "  digitalWrite(in1, LOW); digitalWrite(in2, LOW);",
+      "  delay(${5:2000});",
+      "}"
+    ],
+    "description": "Arduino DC motor L298N"
+  },
+  "Arduino button read": {
+    "prefix": "button",
+    "body": [
+      "const int btnPin = ${1:2};",
+      "void setup() { pinMode(btnPin, INPUT_PULLUP); }",
+      "void loop() {",
+      "  if (digitalRead(btnPin) == LOW) { ${2} }",
+      "}"
+    ],
+    "description": "Arduino button with pullup"
+  },
+  "Arduino sprintf": {
+    "prefix": "sprintf",
+    "body": [
+      "char buf[${1:64}];",
+      "sprintf(buf, \"Value: %d\", ${2:value});",
+      "Serial.println(buf);"
+    ],
+    "description": "Arduino sprintf format"
+  },
+  "Arduino dtostrf": {
+    "prefix": "dtostrf",
+    "body": [
+      "char buf[${1:10}];",
+      "dtostrf(${2:value}, ${3:6}, ${4:2}, buf);"
+    ],
+    "description": "Arduino float to string"
+  },
+  "Arduino bit ops": {
+    "prefix": "bit",
+    "body": [
+      "if (bitRead(${1:value}, ${2:0})) { ${3} }",
+      "bitWrite(${1:value}, ${2:0}, ${4:1});"
+    ],
+    "description": "Arduino bitRead/bitWrite"
+  },
+  "Arduino keypad": {
+    "prefix": "keypad",
+    "body": [
+      "#include <Keypad.h>",
+      "const byte rows = ${1:4}, cols = ${2:4};",
+      "char keys[rows][cols] = {{'1','2','3','A'},{'4','5','6','B'},{'7','8','9','C'},{'*','0','#','D'}};",
+      "byte rowPins[rows] = {${3:9,8,7,6}};",
+      "byte colPins[cols] = {${4:5,4,3,2}};",
+      "Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, rows, cols);",
+      "void loop() {",
+      "  char key = keypad.getKey();",
+      "  if (key) { Serial.println(key); }",
+      "}"
+    ],
+    "description": "Arduino matrix keypad"
+  },
+  "Arduino OLED draw": {
+    "prefix": "oleddraw",
+    "body": [
+      "display.clearDisplay();",
+      "display.drawLine(${1:0}, ${2:0}, ${3:127}, ${4:63}, SSD1306_WHITE);",
+      "display.drawCircle(${5:64}, ${6:32}, ${7:10}, SSD1306_WHITE);",
+      "display.display();"
+    ],
+    "description": "Arduino OLED draw shapes"
+  },
+  "Arduino RTC DS1307": {
+    "prefix": "rtc",
+    "body": [
+      "#include <Wire.h>",
+      "#include <RTClib.h>",
+      "RTC_DS1307 rtc;",
+      "void setup() { rtc.begin(); }",
+      "void loop() {",
+      "  DateTime now = rtc.now();",
+      "  Serial.println(now.timestamp());",
+      "  delay(1000);",
+      "}"
+    ],
+    "description": "Arduino DS1307 RTC"
+  },
+  "Arduino SD list": {
+    "prefix": "sdlist",
+    "body": [
+      "File root = SD.open(\"/\");",
+      "while (true) {",
+      "  File entry = root.openNextFile();",
+      "  if (!entry) break;",
+      "  Serial.println(entry.name());",
+      "  entry.close();",
+      "}"
+    ],
+    "description": "Arduino list SD files"
+  },
+  "Arduino HTTP JSON": {
+    "prefix": "httpjson",
+    "body": [
+      "HTTPClient http;",
+      "http.begin(\"${1:url}\");",
+      "int code = http.GET();",
+      "StaticJsonDocument<${2:1024}> doc;",
+      "deserializeJson(doc, http.getString());",
+      "http.end();"
+    ],
+    "description": "Arduino HTTP + JSON"
+  },
+  "Arduino OTA": {
+    "prefix": "ota",
+    "body": [
+      "#include <ArduinoOTA.h>",
+      "",
+      "void setup() {",
+      "  ArduinoOTA.begin();",
+      "}",
+      "",
+      "void loop() {",
+      "  ArduinoOTA.handle();",
+      "}"
+    ],
+    "description": "Arduino ESP32 OTA"
+  },
+  "Arduino BLE server": {
+    "prefix": "ble",
+    "body": [
+      "#include <BLEDevice.h>",
+      "#include <BLEServer.h>",
+      "",
+      "void setup() {",
+      "  BLEDevice::init(\"${1:MyESP32}\");",
+      "  BLEServer* server = BLEDevice::createServer();",
+      "}"
+    ],
+    "description": "Arduino ESP32 BLE server"
+  },
+  "Arduino interrupt counter": {
+    "prefix": "intcnt",
+    "body": [
+      "volatile int ${1:pulseCount} = 0;",
+      "",
+      "void IRAM_ATTR countISR() {",
+      "  ${1:pulseCount}++;",
+      "}",
+      "",
+      "void setup() {",
+      "  attachInterrupt(digitalPinToInterrupt(${2:2}), countISR, RISING);",
+      "  Serial.begin(115200);",
+      "}",
+      "",
+      "void loop() {",
+      "  Serial.println(${1:pulseCount});",
+      "  delay(${3:1000});",
+      "}"
+    ],
+    "description": "Arduino interrupt counter"
+  },
+  "Arduino pulseIn": {
+    "prefix": "pulsein",
+    "body": [
+      "unsigned long width = pulseIn(${1:3}, ${2:HIGH});"
+    ],
+    "description": "Arduino pulseIn"
+  }
+}
