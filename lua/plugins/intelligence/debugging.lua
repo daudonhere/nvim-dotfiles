@@ -6,11 +6,11 @@ return {
     "jay-babu/mason-nvim-dap.nvim",
   },
   keys = {
-    { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-    { "<leader>dc", function() require("dap").continue() end, desc = "Start/Continue Debug" },
-    { "<leader>do", function() require("dap").step_over() end, desc = "Step Over" },
-    { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
-    { "<leader>du", function() require("dapui").toggle() end, desc = "Toggle Debug UI" },
+    { "<leader>Db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+    { "<leader>Dc", function() require("dap").continue() end, desc = "Start/Continue Debug" },
+    { "<leader>Do", function() require("dap").step_over() end, desc = "Step Over" },
+    { "<leader>Di", function() require("dap").step_into() end, desc = "Step Into" },
+    { "<leader>Du", function() require("dapui").toggle() end, desc = "Toggle Debug UI" },
   },
   config = function()
     local dap = require("dap")

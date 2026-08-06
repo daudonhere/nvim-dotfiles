@@ -1,16 +1,23 @@
 return {
   'gisketch/triforce.nvim',
   dependencies = { 'nvzone/volt' },
+  keys = {
+    {
+      '<leader>Tp',
+      function()
+        require('triforce').show_profile()
+      end,
+      desc = 'Show Triforce Profile',
+    },
+  },
   config = function()
     require('triforce').setup({
       enabled = true,
-      gamification = {
+      gamification_enabled = true,
+      notifications = {
         enabled = true,
         level_up = true,
         achievements = true,
-      },
-      keymap = {
-        show_profile = '<leader>tp',
       },
       auto_save_interval = 300,
       custom_languages = {

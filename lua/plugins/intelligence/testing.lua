@@ -11,28 +11,28 @@ return {
   },
   keys = {
     {
-      "<leader>tt",
+      "<leader>Tt",
       function()
         require("neotest").run.run()
       end,
       desc = "Run Nearest Test",
     },
     {
-      "<leader>tf",
+      "<leader>Tf",
       function()
         require("neotest").run.run(vim.fn.expand("%"))
       end,
       desc = "Run Current File",
     },
     {
-      "<leader>ts",
+      "<leader>Ts",
       function()
         require("neotest").summary.toggle()
       end,
       desc = "Toggle Summary",
     },
     {
-      "<leader>to",
+      "<leader>To",
       function()
         require("neotest").output.open({ enter = true })
       end,

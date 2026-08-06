@@ -4,8 +4,7 @@ return {
     version = "v3.x.x",
     lazy = false,
     keys = {
-      { "<leader>tm", "<cmd>Neominimap Toggle<cr>", desc = "Toggle global minimap" },
-      { "<leader>mm", "<cmd>Neominimap Enable<cr>", desc = "Enable global minimap" }
+      { "<leader>mm", "<cmd>Neominimap Toggle<cr>", desc = "Toggle global minimap" },
     },
     init = function()
       vim.opt.wrap = false

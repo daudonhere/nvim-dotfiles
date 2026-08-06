@@ -8,14 +8,18 @@ return {
       local servers = { "vtsls", "pyright", "clangd", "solidity_ls_nomicfoundation" }
 
       for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup({
+        local opts = {
           capabilities = capabilities,
           settings = {
             typescript = {
               inlayHints = { includeInlayParameterNameHints = "all" },
             },
           },
-        })
+        }
+        if lsp == "solidity_ls_nomicfoundation" then
+          opts.cmd = { "solidity-ls", "--stdio" }
+        end
+        lspconfig[lsp].setup(opts)
       end
     end,
   },

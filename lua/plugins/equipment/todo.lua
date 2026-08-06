@@ -10,6 +10,11 @@ return {
   }, keys = {
     { "]t", function() require("todo-comments").jump_next() end, desc = "Next Todo" },
     { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous Todo" },
-    { "<leader>ts", "<cmd>TodoTelescope<cr>", desc = "Search Todos" },
+    { "<leader>Td", "<cmd>TodoTelescope<cr>", desc = "Search Todos" },
+    -- Nonaktifkan <leader>st/sT + xt/xT LazyVim (bentrok dengan <leader>s/x = window/close buffer)
+    { "<leader>st", "<Nop>", desc = "disabled" },
+    { "<leader>sT", "<Nop>", desc = "disabled" },
+    { "<leader>xt", "<Nop>", desc = "disabled" },
+    { "<leader>xT", "<Nop>", desc = "disabled" },
   },
 }

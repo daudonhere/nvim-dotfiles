@@ -19,5 +19,14 @@ return {
     end
     map("n", "<leader>/", toggle_disabled_code, { expr = true, remap = true, desc = "Smart Disable Code" })
     map("x", "<leader>/", "gc", { remap = true, desc = "Toggle Comment" })
+
+    -- Re-apply setelah semua plugin load supaya menang atas grep <leader>/ LazyVim
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "VeryLazy",
+      callback = function()
+        map("n", "<leader>/", toggle_disabled_code, { expr = true, remap = true, desc = "Smart Disable Code" })
+        map("x", "<leader>/", "gc", { remap = true, desc = "Toggle Comment" })
+      end,
+    })
   end,
 }

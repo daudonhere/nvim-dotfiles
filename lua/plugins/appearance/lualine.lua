@@ -6,7 +6,6 @@ return {
     local custom_bg = "#282C34"
     local custom_fg = "#ecf0f1"
 
-    -- Buat theme object kustom agar tidak error indexing nil
     local my_lualine_theme = {
       normal = {
         a = { bg = "#2ecc71", fg = "#282C34", gui = "bold" },
@@ -70,7 +69,21 @@ return {
           { "filetype", padding = { left = 0, right = 1 } },
         },
         lualine_y = { "progress" },
-        lualine_z = { "location" },
+        lualine_z = {
+          {
+            function()
+              local codegen = require("config.codegen")
+              if codegen.is_busy() then
+                return " " .. codegen.spinner() .. " codegen"
+              end
+              return ""
+            end,
+            color = { bg = "#282C34", fg = "#f1c40f", gui = "bold" },
+            separator = "",
+            padding = { left = 1, right = 0 },
+          },
+          "location",
+        },
       },
       extensions = { "lazy", "mason" },
     })

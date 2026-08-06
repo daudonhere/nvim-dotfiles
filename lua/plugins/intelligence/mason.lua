@@ -11,6 +11,7 @@ return {
         "solidity-ls",
         "eslint_d",
         "prettier",
+        "tailwindcss-language-server",
       },
       ui = {
         border = "single",

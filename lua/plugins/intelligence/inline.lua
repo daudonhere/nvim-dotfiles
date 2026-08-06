@@ -1,9 +1,11 @@
 local combo_map = {
-  default = "fast-combo",
+  default = "oc-flash",
 }
 
 local endpoint = "http://localhost:20128/v1/chat/completions"
-local api_key = os.getenv("MINUET_API_KEY") or ""
+local api_key = function()
+  return require("config.ai_key").get() or ""
+end
 
 local function get_combo()
   return combo_map[vim.bo.filetype] or combo_map.default
@@ -25,8 +27,14 @@ return {
     opts = {
       provider = "openai",
       n_completions = 1,
-      context_window = 4096,
+      context_window = 8192,
+      request_timeout = 30,
       stream = true,
+      enable_predicates = {
+        function()
+          return not require("config.codegen").marker_active()
+        end,
+      },
       provider_options = {
         openai = {
           end_point = endpoint,
@@ -35,6 +43,16 @@ return {
           optional = {
             max_tokens = 256,
             temperature = 0.3,
+            reasoning_effort = "none",
+          },
+          transform = {
+            function(transformed_data)
+              local body = transformed_data.body
+              if type(body.model) == "function" then
+                body.model = body.model()
+              end
+              return transformed_data
+            end,
           },
         },
       },

@@ -13,6 +13,9 @@ return {
       "rafamadriz/friendly-snippets",
     },
     opts = {
+      enabled = function()
+        return not require("config.codegen").marker_active()
+      end,
       snippets = { preset = "luasnip" },
       keymap = {
         preset = "none",
