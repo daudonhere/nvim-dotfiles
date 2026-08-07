@@ -97,7 +97,9 @@ keymap("i", "<Home>", "<C-o>^", opts)
 keymap("i", "<End>", "<C-o>$", opts)
 
 -- Insert / Delete
-keymap("n", "<Insert>", "i", opts)
+keymap("n", "<Insert>", function()
+  require("snacks").terminal.toggle()
+end, opts)
 keymap("n", "<Delete>", "dd", opts)
 
 -- PgUp/PgDn: enclosing block start/end
