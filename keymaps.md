@@ -22,20 +22,14 @@ Daftar isi:
 - `down` = turun 1 baris — mode normal & visual
 - `left` = kiri 1 karakter — mode normal & visual
 - `right` = kanan 1 karakter — mode normal & visual
-- `ctrl + left` = kata sebelumnya — mode normal & visual
-- `ctrl + right` = kata berikutnya — mode normal & visual
-- `ctrl + left` = kata sebelumnya — mode insert
-- `ctrl + right` = kata berikutnya — mode insert
+- `ctrl + left` = kata sebelumnya — mode normal, visual & insert
+- `ctrl + right` = kata berikutnya — mode normal, visual & insert
 - `ctrl + up` = lompat 50% total baris ke atas — mode normal & visual
 - `ctrl + down` = lompat 50% total baris ke bawah — mode normal & visual
-- `home` = awal baris — mode normal & visual
-- `end` = akhir baris — mode normal & visual
-- `home` = awal baris — mode insert
-- `end` = akhir baris — mode insert
+- `home` = awal baris — mode normal, visual & insert
+- `end` = akhir baris — mode normal, visual & insert
 - `insert` = masuk insert mode — mode normal
 - `delete` = hapus satu baris — mode normal
-
-> Arrow keys menjadi satu-satunya gerakan baris/karakter — huruf `h/j/k/l` dinonaktifkan (lihat [Keymaps Nonaktif](#3-keymaps-nonaktif)).
 
 ### 1.2 Lompat blok — `lua/config/keymaps.lua`
 
@@ -169,7 +163,6 @@ Berbasis treesitter. Jika sudah di tepi blok, keluar ke blok induknya; fallback:
 - `space + c + shift + s` = referensi/definisi (Trouble)
 - `space + c + m` = Mason
 - `space + shift + k` = keywordprg
-- `space + c + f` = format — mode normal & visual
 - `space + c + shift + f` = format bahasa-injeksi — mode normal & visual
 - `] d` = diagnosa berikutnya
 - `[ d` = diagnosa sebelumnya
@@ -179,8 +172,6 @@ Berbasis treesitter. Jika sudah di tepi blok, keluar ke blok induknya; fallback:
 - `[ w` = warning sebelumnya
 - `] q` = item trouble/quickfix berikutnya
 - `[ q` = item trouble/quickfix sebelumnya
-- `] t` = todo berikutnya
-- `[ t` = todo sebelumnya
 - `g + r + a` = code action
 - `g + r + n` = rename
 - `g + r + r` = referensi
@@ -198,29 +189,29 @@ Format otomatis saat simpan aktif (stylua/prettier/black).
 
 ### 1.10 Debug — nvim-dap + DAP UI (`lua/plugins/intelligence/debugging.lua`)
 
-- `space + d + b` = toggle breakpoint
-- `space + d + c` = mulai / lanjutkan debug
-- `space + d + o` = step over
-- `space + d + i` = step into
-- `space + d + u` = toggle DAP UI
+- `space + shift + d + b` = toggle breakpoint
+- `space + shift + d + c` = mulai / lanjutkan debug
+- `space + shift + d + o` = step over
+- `space + shift + d + i` = step into
+- `space + shift + d + u` = toggle DAP UI
 
 DAP UI terbuka otomatis saat attach/launch. Adapter: pwa-node (ts-node), python, codelldb.
 
 ### 1.11 Test — neotest (`lua/plugins/intelligence/testing.lua`)
 
-- `space + t + t` = jalankan test terdekat
-- `space + t + f` = jalankan semua test di file
-- `space + t + s` = toggle ringkasan
-- `space + t + o` = tampilkan output
+- `space + shift + t + t` = jalankan test terdekat
+- `space + shift + t + f` = jalankan semua test di file
+- `space + shift + t + s` = toggle ringkasan
+- `space + shift + t + o` = tampilkan output
 
 Adapter: python (pytest), jest, vitest.
 
 ### 1.12 Todo & gamifikasi
 
-- `space + t + d` = cari todo
+- `space + shift + t + d` = cari todo
 - `] t` = todo berikutnya
 - `[ t` = todo sebelumnya
-- `space + t + p` = profil Triforce (XP/level/achievement)
+- `space + shift + t + p` = profil Triforce (XP/level/achievement)
 
 ### 1.13 Buffer — BufferLine
 
@@ -325,8 +316,7 @@ Adapter: python (pytest), jest, vitest.
 - `rightmouse` = menu konteks
 - `space + ;` = pilih breadcrumb (dropbar)
 - `space + c + p` = color picker (ccc)
-- `space + /` = disable kode cerdas — mode normal (comment.lua)
-- `space + /` = toggle komentar — mode visual
+- `space + /` = disable kode cerdas (normal) / toggle komentar (visual)
 - `g + c + c` = toggle komentar baris
 - `g + c + o` = komentar kosong di bawah
 - `g + c + shift + o` = komentar kosong di atas
@@ -440,5 +430,3 @@ Semua keymap yang dinonaktifkan (`<Nop>`) karena sudah digantikan oleh keymap cu
 
 - `space + s + t` = todo komentar
 - `space + s + shift + t` = todo komentar (semua)
-- `space + x + t` = todo komentar
-- `space + x + shift + t` = todo komentar (semua)
