@@ -58,6 +58,16 @@
     "description": "early return guard clause",
     "luasnip": { "autotrigger": true }
   },
+  "if": {
+    "prefix": "if",
+    "body": [
+      "if (${1:yourCondition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "if statement",
+    "luasnip": { "autotrigger": false, "priority": 1001 }
+  },
   "tryc": {
     "prefix": "tryc",
     "body": [

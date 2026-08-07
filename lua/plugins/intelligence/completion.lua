@@ -43,13 +43,27 @@ return {
           })
           vim.filetype.add({ extension = { ino = "arduino", pde = "arduino" } })
 
-          local function drop_other_for()
+          local overrides = {
+            ["for"] = { prio = 1001 },
+            ["if"] = { prio = 1001 },
+            forof = {},
+            forin = {},
+            foreach = {},
+          }
+          local function drop_friendly_dupes()
             local luasnip = require("luasnip")
-            local ft_util = require("luasnip.util.util")
-            for _, ft in ipairs(ft_util.get_snippet_filetypes()) do
+            local ts_fts = { "typescript", "typescriptreact", "javascript", "javascriptreact" }
+            for _, ft in ipairs(ts_fts) do
               for _, x in ipairs(luasnip.get_snippets(ft)) do
-                if x.trigger == "for" and (x.effective_priority or 0) ~= 1001 then
-                  x:invalidate()
+                local ov = overrides[x.trigger]
+                if ov then
+                  if ov.prio then
+                    if (x.effective_priority or 0) ~= ov.prio then
+                      x:invalidate()
+                    end
+                  else
+                    x:invalidate()
+                  end
                 end
               end
             end
@@ -58,10 +72,10 @@ return {
           end
           vim.api.nvim_create_autocmd("FileType", {
             callback = function()
-              vim.schedule(function() pcall(drop_other_for) end)
+              vim.schedule(function() pcall(drop_friendly_dupes) end)
             end,
           })
-          vim.schedule(function() pcall(drop_other_for) end)
+          vim.schedule(function() pcall(drop_friendly_dupes) end)
         end,
       },
       "rafamadriz/friendly-snippets",
