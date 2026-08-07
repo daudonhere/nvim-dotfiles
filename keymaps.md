@@ -36,8 +36,6 @@ Daftar isi:
 - `pageup` = lompat ke awal blok yang menaungi (JSX tag, ekspresi JSX, fungsi, class) — mode normal
 - `pagedown` = lompat ke akhir blok yang menaungi — mode normal
 
-Berbasis treesitter. Jika sudah di tepi blok, keluar ke blok induknya; fallback: cari `{` terdekat. Scroll menyesuaikan (`^zz`).
-
 ### 1.3 Clipboard, undo/redo, seleksi — `lua/config/keymaps.lua`
 
 - `ctrl + c` = salin ke clipboard — mode normal & visual
@@ -116,8 +114,6 @@ Berbasis treesitter. Jika sudah di tepi blok, keluar ke blok induknya; fallback:
 - `ctrl + w` = pilihan sebelumnya
 - `ctrl + s` = pilihan berikutnya
 - `ctrl + v` = tempel isi clipboard ke kolom pencarian
-
-> Workflow cari & ganti ala VSCode: `space + f + p` (live_grep) → `ctrl + q` kirim hasil ke quickfix → `:cdo s/pola/ganti/ge | update`.
 
 ### 1.7 Git — `lua/plugins/equipment/git.lua` (fugitive + gitsigns)
 
