@@ -119,6 +119,7 @@ return {
       },
       keymaps = {
         replace = { i = "<C-enter>", n = "<localleader>r" },
+        close = { n = "<Esc>", i = "<Esc>" },
       },
     },
   },
