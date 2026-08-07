@@ -1,0 +1,61 @@
+{
+  "forof": {
+    "prefix": "forof",
+    "body": [
+      "for (const ${1:item} of ${2:array}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "for...of loop",
+    "luasnip": { "autotrigger": true }
+  },
+  "forin": {
+    "prefix": "forin",
+    "body": [
+      "for (const ${1:key} in ${2:object}) {",
+      "\tif (Object.hasOwn(${2:object}, ${1:key})) {",
+      "\t\t$0",
+      "\t}",
+      "}"
+    ],
+    "description": "for...in loop (own properties)",
+    "luasnip": { "autotrigger": true }
+  },
+  "foreach": {
+    "prefix": "foreach",
+    "body": [
+      "${1:array}.forEach((${2:item}) => {",
+      "\t$0",
+      "})"
+    ],
+    "description": "Array.forEach",
+    "luasnip": { "autotrigger": true }
+  },
+  "fori": {
+    "prefix": "fori",
+    "body": [
+      "for (let ${1:i} = 0; ${1:i} < ${2:array}.length; ${1:i}++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "index-based for loop"
+  },
+  "guard": {
+    "prefix": "guard",
+    "body": ["if (${1:!condition}) return;"],
+    "description": "early return guard clause",
+    "luasnip": { "autotrigger": true }
+  },
+  "tryc": {
+    "prefix": "tryc",
+    "body": [
+      "try {",
+      "\t$0",
+      "} catch (${1:err}) {",
+      "\t${2:console.error(err)}",
+      "}"
+    ],
+    "description": "try/catch block",
+    "luasnip": { "autotrigger": true }
+  }
+}

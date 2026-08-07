@@ -350,7 +350,7 @@
   "Express pg query": {
     "prefix": "expgq",
     "body": [
-      "const result = await pool.query('${1:SELECT * FROM things WHERE id = $1}', [${2:id}]);",
+      "const result = await pool.query('${1:SELECT * FROM things WHERE id = \\$1}', [${2:id}]);",
       "const rows = result.rows;"
     ],
     "description": "Express pg parameterized query"

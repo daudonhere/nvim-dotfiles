@@ -86,20 +86,28 @@ end
 local function start_indicator()
   if not spinner_timer:is_active() then
     place_indicator()
-    spinner_timer:start(0, 150, vim.schedule_wrap(function()
-      refresh_statusline()
-      update_indicator()
-    end))
+    spinner_timer:start(
+      0,
+      150,
+      vim.schedule_wrap(function()
+        refresh_statusline()
+        update_indicator()
+      end)
+    )
   end
-  stall_timer:start(300000, 0, vim.schedule_wrap(function()
-    active_requests = 0
-    current_label = nil
-    minuet_finished = 0
-    codegen_active = false
-    spinner_timer:stop()
-    clear_indicator()
-    refresh_statusline()
-  end))
+  stall_timer:start(
+    300000,
+    0,
+    vim.schedule_wrap(function()
+      active_requests = 0
+      current_label = nil
+      minuet_finished = 0
+      codegen_active = false
+      spinner_timer:stop()
+      clear_indicator()
+      refresh_statusline()
+    end)
+  )
 end
 
 local function stop_indicator()
@@ -221,18 +229,21 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
-function M.run(instruction, lnum)
-  local bufnr = vim.api.nvim_get_current_buf()
+function M.run_range(bufnr, sline, eline, instruction, include_lines)
   if vim.api.nvim_get_option_value("buftype", { buf = bufnr }) ~= "" then
     return
   end
   notify("AI codegen: " .. instruction, levels.INFO, { title = "Codegen" })
   local ok, inline = pcall(function()
     local ctx = require("codecompanion.utils.context").get(bufnr, {})
-    lnum = lnum or vim.api.nvim_win_get_cursor(0)[1]
-    local line = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, lnum, true)[1] or ""
-    ctx.start_line, ctx.end_line = lnum, lnum
-    ctx.start_col, ctx.end_col = 0, #line
+    ctx.start_line, ctx.end_line = sline, eline
+    local last = vim.api.nvim_buf_get_lines(bufnr, eline - 1, eline, true)[1] or ""
+    ctx.start_col, ctx.end_col = 0, #last
+    if include_lines then
+      ctx.lines = vim.api.nvim_buf_get_lines(bufnr, sline - 1, eline, false)
+      ctx.code = table.concat(ctx.lines, "\n")
+      ctx.is_visual = true
+    end
     return require("codecompanion.interactions.inline").new({
       buffer_context = ctx,
       placement = "replace",
@@ -245,6 +256,15 @@ function M.run(instruction, lnum)
   codegen_active = true
   M.request_start("codegen")
   inline:prompt(instruction)
+end
+
+function M.run(instruction, lnum)
+  local bufnr = vim.api.nvim_get_current_buf()
+  if vim.api.nvim_get_option_value("buftype", { buf = bufnr }) ~= "" then
+    return
+  end
+  lnum = lnum or vim.api.nvim_win_get_cursor(0)[1]
+  M.run_range(bufnr, lnum, lnum, instruction, false)
 end
 
 function M.trigger()
@@ -270,5 +290,27 @@ function M.trigger()
   end)
   return ""
 end
+
+function M.visual()
+  local bufnr = vim.api.nvim_get_current_buf()
+  if vim.api.nvim_get_option_value("buftype", { buf = bufnr }) ~= "" then
+    return
+  end
+  local sline = vim.fn.getpos("'<")[2]
+  local eline = vim.fn.getpos("'>")[2]
+  if not sline or sline == 0 then
+    return
+  end
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
+  local instruction = vim.fn.input("codegen (selection): ")
+  if instruction == "" then
+    return
+  end
+  M.run_range(bufnr, sline, eline, instruction, true)
+end
+
+vim.keymap.set("v", "<leader>g", function()
+  M.visual()
+end, { desc = "AI codegen (visual selection)" })
 
 return M

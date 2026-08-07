@@ -36,6 +36,7 @@ return {
         "L3MON4D3/LuaSnip",
         version = "v2.*",
         config = function()
+          require("luasnip.config").setup({ enable_autosnippets = true })
           require("luasnip.loaders.from_vscode").lazy_load()
           require("luasnip.loaders.from_vscode").lazy_load({
             paths = { vim.fn.stdpath("config") .. "/snippets" },
@@ -50,6 +51,7 @@ return {
         return not require("config.codegen").marker_active()
       end,
       snippets = { preset = "luasnip" },
+      signature = { enabled = true },
       keymap = {
         preset = "none",
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
@@ -60,8 +62,11 @@ return {
         ["<Down>"] = { "select_next", "fallback" },
         ["<Tab>"] = {
           function(cmp)
-            if cmp.snippet_active() then return cmp.accept()
-            else return cmp.select_next() end
+            if cmp.snippet_active() then
+              return cmp.accept()
+            else
+              return cmp.select_next()
+            end
           end,
           "snippet_forward",
           "fallback",

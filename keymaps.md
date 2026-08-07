@@ -313,6 +313,10 @@ Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanp
 
 - Ketik `//codegen: <instruksi>` (kursor di akhir baris) lalu `enter` = baris marker diganti kode yang dihasilkan. Saat baris diawali `//codegen`, saran blink/minuet dan snippet dinonaktifkan.
 
+#### Codegen (visual mode)
+
+- Seleksi beberapa baris, tekan `space + g`, lalu ketik instruksi = baris terseleksi diganti kode yang dihasilkan.
+
 ### 1.18 Lainnya
 
 - `rightmouse` = menu konteks
