@@ -337,7 +337,7 @@ Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanp
 - `shift + tab` = mundur tabstop snippet
 - `esc` = tutup popup (fallback keluar insert)
 
-Sumber: lsp, path, snippets, buffer, minuet. Snippet: LuaSnip (friendly-snippets + 516 snippet custom, lihat `snippets/`).
+Sumber: lsp (dot biru ●), path (hijau ●), snippets (kuning ●), buffer (ungu ●) — dot berwarna di kiri label menandai asal item. Snippet: LuaSnip (friendly-snippets + 516 snippet custom, lihat `snippets/`).
 
 #### Dashboard (hanya aktif di buffer dashboard)
 

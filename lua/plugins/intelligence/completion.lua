@@ -1,3 +1,18 @@
+local source_dot_colors = {
+  Lsp = "#61afef",
+  Path = "#98c379",
+  Snippets = "#e5c07b",
+  Buffer = "#c678dd",
+}
+
+local source_dot_hl = {}
+for src, color in pairs(source_dot_colors) do
+  local name = "BlinkSrcDot" .. src
+  source_dot_hl[src] = name
+  vim.api.nvim_set_hl(0, name, { fg = color })
+end
+vim.api.nvim_set_hl(0, "BlinkSrcDotDefault", { fg = "#8a8a8a" })
+
 return {
   {
     "saghen/blink.cmp",
@@ -42,6 +57,24 @@ return {
       },
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
+      },
+      completion = {
+        menu = {
+          draw = {
+            columns = { { "kind_icon", "source_dot" }, { "label", "label_description", gap = 1 } },
+            components = {
+              source_dot = {
+                ellipsis = false,
+                text = function()
+                  return "●"
+                end,
+                highlight = function(ctx)
+                  return { { group = source_dot_hl[ctx.source_name] or "BlinkSrcDotDefault", priority = 20000 } }
+                end,
+              },
+            },
+          },
+        },
       },
     },
   },
