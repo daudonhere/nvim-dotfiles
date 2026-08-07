@@ -14,22 +14,12 @@ local function draw_boxes(buf, win)
   local ns = vim.api.nvim_create_namespace(BOX_NS)
   vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
   local width = vim.api.nvim_win_get_width(win)
-  local bar = "│" .. string.rep("─", math.max(0, width - 2)) .. "│"
+  local bar = string.rep("─", math.max(0, width))
   for row = 0, 4 do
     vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
       hl_group = "GrugFarInputBox",
       end_row = row,
       hl_eol = true,
-    })
-    vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
-      virt_text = { { "│", "GrugFarInputBorder" } },
-      virt_text_pos = "inline",
-      right_gravity = false,
-    })
-    vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
-      virt_text = { { "│", "GrugFarInputBorder" } },
-      virt_text_pos = "overlay",
-      virt_text_win_col = width - 1,
     })
     vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
       virt_lines = { { { bar, "GrugFarInputBorder" } } },
