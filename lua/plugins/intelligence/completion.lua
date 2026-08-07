@@ -89,7 +89,7 @@ return {
       keymap = {
         preset = "none",
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<CR>"] = { "accept", "fallback" },
+        ["<Right>"] = { "accept", "fallback" },
         ["<C-[>"] = { "select_prev", "fallback" },
         ["<C-]>"] = { "select_next", "fallback" },
         ["<Up>"] = { "select_prev", "fallback" },

@@ -295,7 +295,7 @@ Adapter: python (pytest), jest, vitest.
 - `] ]` = header berikutnya
 - `[ [` = header sebelumnya
 
-#### AI suggestion (ghost text) — minuet-ai (localhost:20128/v1, model oc-flash)
+#### AI suggestion (ghost text) — minuet-ai (localhost:20128/v1, model cf-flash)
 
 Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanpa mengubah kode. Muncul otomatis setelah jeda mengetik; tersembunyi saat menu completion (blink) terbuka. Bekerja juga di atas kode hasil snippet/LSP — lanjut mengetik di dalam/blok setelah snippet untuk memicu saran.
 

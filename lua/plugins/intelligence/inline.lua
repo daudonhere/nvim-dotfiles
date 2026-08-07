@@ -1,5 +1,5 @@
 local combo_map = {
-  default = "oc-flash",
+  default = "cf-flash",
 }
 
 vim.api.nvim_set_hl(0, "MinuetVirtualText", { fg = "#8a8a8a", italic = true })
@@ -45,7 +45,6 @@ return {
           optional = {
             max_tokens = 256,
             temperature = 0.3,
-            reasoning_effort = "none",
           },
           transform = {
             function(transformed_data)
