@@ -30,6 +30,39 @@ return {
           })
           vim.api.nvim_win_close(win, true)
           vim.api.nvim_set_current_win(fwin)
+
+          local function form_height()
+            local inst = grug_far.get_instance(buf)
+            if not inst or not inst._context then
+              return nil
+            end
+            local ctx = inst._context
+            local ninputs = 0
+            for _ in pairs(ctx.engine and ctx.engine.inputs or {}) do
+              ninputs = ninputs + 1
+            end
+            local label_virt = ctx.options.showCompactInputs and 0 or ninputs
+            local top_pad = ctx.options.showInputsTopPadding and 1 or 0
+            local header_virt = (ctx.options.showInputsBottomPadding and 1 or 0) + 2
+            return top_pad + ninputs + label_virt + header_virt
+          end
+
+          vim.defer_fn(function()
+            if not vim.api.nvim_win_is_valid(fwin) then
+              return
+            end
+            local fh = form_height()
+            if fh then
+              local h = math.max(10, math.min(fh * 2 + 2, math.floor(vim.o.lines - 4)))
+              local r = math.max(1, math.floor((vim.o.lines - h) / 2))
+              vim.api.nvim_win_set_config(fwin, {
+                relative = "editor",
+                row = r,
+                col = math.max(2, math.floor((vim.o.columns - width) / 2)),
+                height = h,
+              })
+            end
+          end, 400)
         end,
         desc = "Find & Replace",
       },
@@ -37,9 +70,9 @@ return {
     },
     opts = {
       helpLine = { enabled = false },
-      showCompactInputs = true,
-      showInputsTopPadding = false,
-      showInputsBottomPadding = false,
+      showCompactInputs = false,
+      showInputsTopPadding = true,
+      showInputsBottomPadding = true,
       showStatusInfo = false,
       showEngineInfo = false,
       showStatusIcon = false,
