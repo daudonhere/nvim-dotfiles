@@ -8,7 +8,7 @@
       "",
       "@app.get('/')",
       "def root():",
-      "    return {'${1:message}': '${2:Hello World}'}"
+      "    return {'${1:yourMessage}': '${2:Hello World}'}"
     ],
     "description": "FastAPI app skeleton"
   },
@@ -17,10 +17,10 @@
     "body": [
       "from fastapi import APIRouter",
       "",
-      "router = APIRouter(prefix='/${1:route}', tags=['${1:route}'])",
+      "router = APIRouter(prefix='/${1:yourRoute}', tags=['${1:yourRoute}'])",
       "",
       "@router.get('/${2}')",
-      "def ${3:read_item}():",
+      "def ${3:yourRead_item}():",
       "    ${4}"
     ],
     "description": "FastAPI router module"
@@ -28,8 +28,8 @@
   "FastAPI GET": {
     "prefix": "fag",
     "body": [
-      "@${1:router}.get('${2:/path}')",
-      "def ${3:read_item}():",
+      "@${1:yourRouter}.get('${2:/path}')",
+      "def ${3:yourRead_item}():",
       "    ${4}"
     ],
     "description": "FastAPI GET endpoint"
@@ -37,8 +37,8 @@
   "FastAPI GET async": {
     "prefix": "fagasync",
     "body": [
-      "@${1:router}.get('${2:/path}')",
-      "async def ${3:read_item}():",
+      "@${1:yourRouter}.get('${2:/path}')",
+      "async def ${3:yourRead_item}():",
       "    ${4}"
     ],
     "description": "FastAPI async GET endpoint"
@@ -46,8 +46,8 @@
   "FastAPI POST": {
     "prefix": "fap",
     "body": [
-      "@${1:router}.post('${2:/path}', status_code=${3:201})",
-      "def ${4:create_item}(payload: ${5:Item}):",
+      "@${1:yourRouter}.post('${2:/path}', status_code=${3:201})",
+      "def ${4:yourCreate_item}(payload: ${5:yourItem}):",
       "    ${6}"
     ],
     "description": "FastAPI POST endpoint"
@@ -55,8 +55,8 @@
   "FastAPI POST async": {
     "prefix": "fapasync",
     "body": [
-      "@${1:router}.post('${2:/path}', status_code=${3:201})",
-      "async def ${4:create_item}(payload: ${5:Item}):",
+      "@${1:yourRouter}.post('${2:/path}', status_code=${3:201})",
+      "async def ${4:yourCreate_item}(payload: ${5:yourItem}):",
       "    ${6}"
     ],
     "description": "FastAPI async POST endpoint"
@@ -64,8 +64,8 @@
   "FastAPI PUT": {
     "prefix": "faput",
     "body": [
-      "@${1:router}.put('${2:/path}/{item_id}')",
-      "def ${3:update_item}(item_id: int, payload: ${4:Item}):",
+      "@${1:yourRouter}.put('${2:/path}/{item_id}')",
+      "def ${3:yourUpdate_item}(item_id: int, payload: ${4:yourItem}):",
       "    ${5}"
     ],
     "description": "FastAPI PUT endpoint"
@@ -73,8 +73,8 @@
   "FastAPI PATCH": {
     "prefix": "fapatch",
     "body": [
-      "@${1:router}.patch('${2:/path}/{item_id}')",
-      "def ${3:update_item}(item_id: int, payload: ${4:Item}):",
+      "@${1:yourRouter}.patch('${2:/path}/{item_id}')",
+      "def ${3:yourUpdate_item}(item_id: int, payload: ${4:yourItem}):",
       "    ${5}"
     ],
     "description": "FastAPI PATCH endpoint"
@@ -82,8 +82,8 @@
   "FastAPI DELETE": {
     "prefix": "fadel",
     "body": [
-      "@${1:router}.delete('${2:/path}/{item_id}', status_code=${3:204})",
-      "def ${4:delete_item}(item_id: int):",
+      "@${1:yourRouter}.delete('${2:/path}/{item_id}', status_code=${3:204})",
+      "def ${4:yourDelete_item}(item_id: int):",
       "    ${5}"
     ],
     "description": "FastAPI DELETE endpoint"
@@ -93,9 +93,9 @@
     "body": [
       "from pydantic import BaseModel",
       "",
-      "class ${1:Item}(BaseModel):",
-      "    ${2:name}: str",
-      "    ${3:price}: float"
+      "class ${1:yourItem}(BaseModel):",
+      "    ${2:yourName}: str",
+      "    ${3:yourPrice}: float"
     ],
     "description": "FastAPI Pydantic model"
   },
@@ -104,18 +104,18 @@
     "body": [
       "from pydantic import BaseModel, ConfigDict",
       "",
-      "class ${1:Item}(BaseModel):",
+      "class ${1:yourItem}(BaseModel):",
       "    model_config = ConfigDict(from_attributes=True)",
       "",
       "    id: int",
-      "    ${2:name}: str"
+      "    ${2:yourName}: str"
     ],
     "description": "FastAPI Pydantic response model"
   },
   "FastAPI response_model": {
     "prefix": "faresp",
     "body": [
-      "response_model=${1:Item}"
+      "response_model=${1:yourItem}"
     ],
     "description": "FastAPI response_model param"
   },
@@ -124,7 +124,7 @@
     "body": [
       "from pydantic import Field",
       "",
-      "${1:name}: str = Field(..., min_length=${2:1}, max_length=${3:255})"
+      "${1:yourName}: str = Field(..., min_length=${2:1}, max_length=${3:255})"
     ],
     "description": "FastAPI pydantic Field"
   },
@@ -133,9 +133,9 @@
     "body": [
       "from pydantic import field_validator",
       "",
-      "@field_validator('${1:name}')",
+      "@field_validator('${1:yourName}')",
       "@classmethod",
-      "def validate_${1:name}(cls, v):",
+      "def validate_${1:yourName}(cls, v):",
       "    if not v:",
       "        raise ValueError('${2:cannot be empty}')",
       "    return v"
@@ -145,7 +145,7 @@
   "FastAPI include_router": {
     "prefix": "fainclude",
     "body": [
-      "app.include_router(${1:router}, prefix='/${2:api}', tags=['${2:api}'])"
+      "app.include_router(${1:yourRouter}, prefix='/${2:yourApi}', tags=['${2:yourApi}'])"
     ],
     "description": "FastAPI app.include_router"
   },
@@ -168,7 +168,7 @@
     "prefix": "famid",
     "body": [
       "@app.middleware('http')",
-      "async def ${1:log_requests}(request: Request, call_next):",
+      "async def ${1:yourLog_requests}(request: Request, call_next):",
       "    response = await call_next(request)",
       "    return response"
     ],
@@ -192,7 +192,7 @@
   "FastAPI dependency function": {
     "prefix": "fadep",
     "body": [
-      "def ${1:get_dep}(request: Request):",
+      "def ${1:yourGet_dep}(request: Request):",
       "    ${2}"
     ],
     "description": "FastAPI dependency function"
@@ -202,7 +202,7 @@
     "body": [
       "from fastapi import Depends",
       "",
-      "${1:dep}: ${2:Type} = Depends(${3:get_dep})"
+      "${1:yourDep}: ${2:yourType} = Depends(${3:yourGet_dep})"
     ],
     "description": "FastAPI Depends usage"
   },
@@ -212,7 +212,7 @@
       "from pydantic_settings import BaseSettings",
       "",
       "class Settings(BaseSettings):",
-      "    ${1:api_key}: str = ''",
+      "    ${1:yourApi_key}: str = ''",
       "",
       "    class Config:",
       "        env_file = '.env'",
@@ -225,7 +225,7 @@
     "prefix": "fagetdb",
     "body": [
       "def get_db():",
-      "    db = ${1:SessionLocal}()",
+      "    db = ${1:yourSessionLocal}()",
       "    try:",
       "        yield db",
       "    finally:",
@@ -253,32 +253,32 @@
       "class Base(DeclarativeBase):",
       "    pass",
       "",
-      "class ${1:Thing}(Base):",
-      "    __tablename__ = '${2:things}'",
+      "class ${1:yourThing}(Base):",
+      "    __tablename__ = '${2:yourThings}'",
       "",
       "    id = Column(Integer, primary_key=True)",
-      "    ${3:name} = Column(String(${4:255}), nullable=False)"
+      "    ${3:yourName} = Column(String(${4:255}), nullable=False)"
     ],
     "description": "FastAPI SQLAlchemy 2.0 model"
   },
   "FastAPI Query": {
     "prefix": "faquery",
     "body": [
-      "${1:param}: str = Query(..., description='${2}')"
+      "${1:yourParam}: str = Query(..., description='${2}')"
     ],
     "description": "FastAPI Query parameter"
   },
   "FastAPI Path": {
     "prefix": "fapath",
     "body": [
-      "${1:item_id}: int = Path(..., ge=${2:1})"
+      "${1:yourItem_id}: int = Path(..., ge=${2:1})"
     ],
     "description": "FastAPI Path parameter"
   },
   "FastAPI Header": {
     "prefix": "faheader",
     "body": [
-      "${1:token}: str = Header(...)"
+      "${1:yourToken}: str = Header(...)"
     ],
     "description": "FastAPI Header parameter"
   },
@@ -295,7 +295,7 @@
     "body": [
       "from fastapi import File, UploadFile",
       "",
-      "async def ${1:upload_file}(file: UploadFile = File(...)):",
+      "async def ${1:yourUpload_file}(file: UploadFile = File(...)):",
       "    ${2}"
     ],
     "description": "FastAPI UploadFile"
@@ -305,7 +305,7 @@
     "body": [
       "from fastapi import Form",
       "",
-      "${1:name}: str = Form(...)"
+      "${1:yourName}: str = Form(...)"
     ],
     "description": "FastAPI Form field"
   },
@@ -314,7 +314,7 @@
     "body": [
       "from fastapi.security import OAuth2PasswordBearer",
       "",
-      "oauth2_scheme = OAuth2PasswordBearer(tokenUrl='${1:token}')"
+      "oauth2_scheme = OAuth2PasswordBearer(tokenUrl='${1:yourToken}')"
     ],
     "description": "FastAPI OAuth2PasswordBearer"
   },
@@ -329,7 +329,9 @@
       "        'sub': subject,",
       "        'exp': datetime.utcnow() + timedelta(hours=${1:24}),",
       "    }",
-      "    return jwt.encode(payload, ${2:settings.SECRET_KEY}, algorithm='HS256')"
+      "    token = jwt.encode(payload, ${2:settings.SECRET_KEY}, algorithm='HS256')",
+      "    print('Token:', token)",
+      "    return token"
     ],
     "description": "FastAPI JWT token creator"
   },
@@ -347,11 +349,11 @@
     "body": [
       "from fastapi import BackgroundTasks",
       "",
-      "def ${1:send_email}(email: str):",
+      "def ${1:yourSend_email}(email: str):",
       "    ${2}",
       "",
       "def endpoint(background_tasks: BackgroundTasks):",
-      "    background_tasks.add_task(${1:send_email}, '${3:user@example.com}')",
+      "    background_tasks.add_task(${1:yourSend_email}, '${3:user@example.com}')",
       "    return {'status': 'queued'}"
     ],
     "description": "FastAPI BackgroundTasks"
@@ -361,10 +363,10 @@
     "body": [
       "from fastapi.responses import StreamingResponse",
       "",
-      "def ${1:gen}():",
-      "    yield '${2:data}'",
+      "def ${1:yourGen}():",
+      "    yield '${2:yourData}'",
       "",
-      "return StreamingResponse(${1:gen}())"
+      "return StreamingResponse(${1:yourGen}())"
     ],
     "description": "FastAPI StreamingResponse"
   },
@@ -391,8 +393,8 @@
     "body": [
       "from fastapi import WebSocket, WebSocketDisconnect",
       "",
-      "@app.websocket('/${1:ws}')",
-      "async def ${2:ws}(websocket: WebSocket):",
+      "@app.websocket('/${1:yourWs}')",
+      "async def ${2:yourWs}(websocket: WebSocket):",
       "    await websocket.accept()",
       "    try:",
       "        while True:",
@@ -408,7 +410,7 @@
     "body": [
       "from fastapi.staticfiles import StaticFiles",
       "",
-      "app.mount('/${1:static}', StaticFiles(directory='${1:static}'), name='${1:static}')"
+      "app.mount('/${1:yourStatic}', StaticFiles(directory='${1:yourStatic}'), name='${1:yourStatic}')"
     ],
     "description": "FastAPI StaticFiles mount"
   },
@@ -417,7 +419,7 @@
     "body": [
       "from fastapi.responses import JSONResponse",
       "",
-      "@app.exception_handler(${1:ValueError})",
+      "@app.exception_handler(${1:yourValueError})",
       "async def value_error_handler(request, exc):",
       "    return JSONResponse(status_code=${2:400}, content={'detail': str(exc)})"
     ],
@@ -428,9 +430,9 @@
     "body": [
       "from fastapi.testclient import TestClient",
       "",
-      "client = TestClient(${1:app})",
+      "client = TestClient(${1:yourApp})",
       "",
-      "def test_${2:root}():",
+      "def test_${2:yourRoot}():",
       "    response = client.get('${3:/}')",
       "    assert response.status_code == ${4:200}"
     ],
@@ -441,28 +443,28 @@
     "body": [
       "from fastapi import Cookie",
       "",
-      "${1:session_id}: str = Cookie(...)"
+      "${1:yourSession_id}: str = Cookie(...)"
     ],
     "description": "FastAPI Cookie parameter"
   },
   "FastAPI Body embed": {
     "prefix": "faembed",
     "body": [
-      "payload: ${1:Item} = Body(embed=True)"
+      "payload: ${1:yourItem} = Body(embed=True)"
     ],
     "description": "FastAPI Body embed"
   },
   "FastAPI Query alias": {
     "prefix": "faalias",
     "body": [
-      "${1:name}: str = Query(..., alias='${2:name_alias}')"
+      "${1:yourName}: str = Query(..., alias='${2:yourName_alias}')"
     ],
     "description": "FastAPI Query alias"
   },
   "FastAPI response list": {
     "prefix": "falist",
     "body": [
-      "response_model=list[${1:Item}]"
+      "response_model=list[${1:yourItem}]"
     ],
     "description": "FastAPI list response model"
   },
@@ -471,7 +473,7 @@
     "body": [
       "from typing import Optional",
       "",
-      "${1:name}: Optional[str] = None"
+      "${1:yourName}: Optional[str] = None"
     ],
     "description": "FastAPI Optional field"
   },
@@ -480,14 +482,14 @@
     "body": [
       "from typing import Union",
       "",
-      "${1:value}: Union[str, int] = ${2:None}"
+      "${1:yourValue}: Union[str, int] = ${2:yourNone}"
     ],
     "description": "FastAPI Union field"
   },
   "FastAPI default_factory": {
     "prefix": "fafactory",
     "body": [
-      "${1:tags}: list[str] = Field(default_factory=list)"
+      "${1:yourTags}: list[str] = Field(default_factory=list)"
     ],
     "description": "FastAPI Field default_factory"
   },
@@ -498,7 +500,7 @@
       "",
       "@computed_field",
       "@property",
-      "def ${1:total}(self) -> float:",
+      "def ${1:yourTotal}(self) -> float:",
       "    return ${2:self.price} * ${3:self.qty}"
     ],
     "description": "FastAPI computed_field"
@@ -506,7 +508,7 @@
   "FastAPI class dependency": {
     "prefix": "fadepclass",
     "body": [
-      "class ${1:CommonQueryParams}:",
+      "class ${1:yourCommonQueryParams}:",
       "    def __init__(self, q: str = Query(None), page: int = Query(1, ge=1)):",
       "        self.q = q",
       "        self.page = page"
@@ -516,12 +518,12 @@
   "FastAPI get_current_user": {
     "prefix": "facurrent",
     "body": [
-      "def get_current_user(token: str = Depends(oauth2_scheme)) -> ${1:User}:",
+      "def get_current_user(token: str = Depends(oauth2_scheme)) -> ${1:yourUser}:",
       "    ${2}",
       "    return user",
       "",
       "# usage",
-      "user: ${1:User} = Depends(get_current_user)"
+      "user: ${1:yourUser} = Depends(get_current_user)"
     ],
     "description": "FastAPI current user dependency"
   },
@@ -531,6 +533,7 @@
       "def verify_token(token: str = Depends(oauth2_scheme)) -> dict:",
       "    try:",
       "        payload = jwt.decode(token, ${1:settings.SECRET_KEY}, algorithms=['HS256'])",
+      "        print('Payload:', payload)",
       "        return payload",
       "    except jwt.ExpiredSignatureError:",
       "        raise HTTPException(status_code=401, detail='token expired')"
@@ -545,7 +548,9 @@
       "pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')",
       "",
       "def hash_password(password: str) -> str:",
-      "    return pwd_context.hash(password)",
+      "    hashed = pwd_context.hash(password)",
+      "    print('Hash:', hashed)",
+      "    return hashed",
       "",
       "def verify_password(plain: str, hashed: str) -> bool:",
       "    return pwd_context.verify(plain, hashed)"
@@ -570,7 +575,7 @@
       "    title='${1:My API}',",
       "    version='${2:1.0.0}',",
       "    docs_url='${3:/docs}',",
-      "    redoc_url=${4:None},",
+      "    redoc_url=${4:yourNone},",
       ")"
     ],
     "description": "FastAPI swagger metadata"
@@ -580,7 +585,7 @@
     "body": [
       "from httpx import AsyncClient",
       "",
-      "async with AsyncClient(app=${1:app}, base_url='http://test') as client:",
+      "async with AsyncClient(app=${1:yourApp}, base_url='http://test') as client:",
       "    r = await client.get('${2:/}')",
       "    assert r.status_code == ${3:200}"
     ],
@@ -613,7 +618,7 @@
       "import redis.asyncio as aioredis",
       "",
       "redis_client = aioredis.from_url('${1:redis://localhost:6379}')",
-      "await redis_client.set('${2:key}', '${3:value}')"
+      "await redis_client.set('${2:yourKey}', '${3:yourValue}')"
     ],
     "description": "FastAPI redis asyncio"
   },
@@ -622,7 +627,7 @@
     "body": [
       "from pydantic import EmailStr",
       "",
-      "${1:email}: EmailStr"
+      "${1:yourEmail}: EmailStr"
     ],
     "description": "FastAPI EmailStr"
   },
@@ -631,7 +636,7 @@
     "body": [
       "from pydantic import HttpUrl",
       "",
-      "${1:url}: HttpUrl"
+      "${1:yourUrl}: HttpUrl"
     ],
     "description": "FastAPI HttpUrl"
   },
@@ -640,7 +645,7 @@
     "body": [
       "from datetime import datetime",
       "",
-      "${1:created_at}: datetime"
+      "${1:yourCreated_at}: datetime"
     ],
     "description": "FastAPI datetime field"
   },
@@ -649,20 +654,20 @@
     "body": [
       "from enum import Enum",
       "",
-      "class ${1:Status}(str, Enum):",
-      "    ${2:active} = '${2:active}'",
-      "    ${3:inactive} = '${3:inactive}'"
+      "class ${1:yourStatus}(str, Enum):",
+      "    ${2:yourActive} = '${2:yourActive}'",
+      "    ${3:yourInactive} = '${3:yourInactive}'"
     ],
     "description": "FastAPI string enum"
   },
   "FastAPI nested model": {
     "prefix": "fanested",
     "body": [
-      "class ${1:Owner}(BaseModel):",
-      "    ${2:name}: str",
+      "class ${1:yourOwner}(BaseModel):",
+      "    ${2:yourName}: str",
       "",
-      "class ${3:Thing}(BaseModel):",
-      "    ${4:owner}: ${1:Owner}"
+      "class ${3:yourThing}(BaseModel):",
+      "    ${4:yourOwner}: ${1:yourOwner}"
     ],
     "description": "FastAPI nested model"
   }

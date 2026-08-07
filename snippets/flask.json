@@ -6,12 +6,12 @@
       "",
       "app = Flask(__name__)",
       "",
-      "@app.route('/${1:route}')",
-      "def ${2:index}():",
-      "    return jsonify({'${3:message}': '${4:Hello World}'})",
+      "@app.route('/${1:yourRoute}')",
+      "def ${2:yourIndex}():",
+      "    return jsonify({'${3:yourMessage}': '${4:Hello World}'})",
       "",
       "if __name__ == '__main__':",
-      "    app.run(debug=${5:True})"
+      "    app.run(debug=${5:yourTrue})"
     ],
     "description": "Flask app skeleton"
   },
@@ -24,8 +24,8 @@
       "    app = Flask(__name__)",
       "    app.config.from_object('${1:config.Config}')",
       "",
-      "    from .${2:views} import ${2:views}_bp",
-      "    app.register_blueprint(${2:views}_bp)",
+      "    from .${2:yourViews} import ${2:yourViews}_bp",
+      "    app.register_blueprint(${2:yourViews}_bp)",
       "",
       "    return app"
     ],
@@ -35,7 +35,7 @@
     "prefix": "flg",
     "body": [
       "@app.route('${1:/route}')",
-      "def ${2:view}():",
+      "def ${2:yourView}():",
       "    ${3}"
     ],
     "description": "Flask GET route"
@@ -44,7 +44,7 @@
     "prefix": "flp",
     "body": [
       "@app.route('${1:/route}', methods=['POST'])",
-      "def ${2:view}():",
+      "def ${2:yourView}():",
       "    data = request.json",
       "    ${3}"
     ],
@@ -54,7 +54,7 @@
     "prefix": "flgp",
     "body": [
       "@app.route('${1:/route}', methods=['GET', 'POST'])",
-      "def ${2:view}():",
+      "def ${2:yourView}():",
       "    ${3}"
     ],
     "description": "Flask GET+POST route"
@@ -62,8 +62,8 @@
   "Flask route dynamic": {
     "prefix": "flgdyn",
     "body": [
-      "@app.route('${1:/route}/<int:${2:id}>')",
-      "def ${3:view}(${2:id}):",
+      "@app.route('${1:/route}/<int:${2:yourId}>')",
+      "def ${3:yourView}(${2:yourId}):",
       "    ${4}"
     ],
     "description": "Flask dynamic route"
@@ -73,10 +73,10 @@
     "body": [
       "from flask import Blueprint",
       "",
-      "${1:bp} = Blueprint('${1:bp}', __name__)",
+      "${1:yourBp} = Blueprint('${1:yourBp}', __name__)",
       "",
-      "@${1:bp}.route('${2:/route}')",
-      "def ${3:view}():",
+      "@${1:yourBp}.route('${2:/route}')",
+      "def ${3:yourView}():",
       "    ${4}"
     ],
     "description": "Flask blueprint"
@@ -84,7 +84,7 @@
   "Flask register blueprint": {
     "prefix": "flreg",
     "body": [
-      "app.register_blueprint(${1:bp}, url_prefix='/${2:prefix}')"
+      "app.register_blueprint(${1:yourBp}, url_prefix='/${2:yourPrefix}')"
     ],
     "description": "Flask register_blueprint"
   },
@@ -98,21 +98,21 @@
   "Flask render template": {
     "prefix": "flrender",
     "body": [
-      "return render_template('${1:index}.html', ${2:name=name})"
+      "return render_template('${1:yourIndex}.html', ${2:name=name})"
     ],
     "description": "Flask render_template"
   },
   "Flask redirect": {
     "prefix": "flredir",
     "body": [
-      "return redirect(url_for('${1:view}'))"
+      "return redirect(url_for('${1:yourView}'))"
     ],
     "description": "Flask redirect + url_for"
   },
   "Flask url_for": {
     "prefix": "flurl",
     "body": [
-      "url_for('${1:view}')"
+      "url_for('${1:yourView}')"
     ],
     "description": "Flask url_for"
   },
@@ -126,7 +126,7 @@
   "Flask flash": {
     "prefix": "flflash",
     "body": [
-      "flash('${1:message}', '${2:success}')"
+      "flash('${1:yourMessage}', '${2:yourSuccess}')"
     ],
     "description": "Flask flash message"
   },
@@ -144,7 +144,7 @@
     "body": [
       "from flask import get_or_404",
       "",
-      "${1:thing} = get_or_404(${2:Thing}, id=${3:id})"
+      "${1:yourThing} = get_or_404(${2:yourThing}, id=${3:yourId})"
     ],
     "description": "Flask get_or_404"
   },
@@ -152,7 +152,7 @@
     "prefix": "fl404",
     "body": [
       "@app.errorhandler(${1:404})",
-      "def ${2:not_found}(error):",
+      "def ${2:yourNot_found}(error):",
       "    return jsonify({'error': '${3:Not found}'}), ${1:404}"
     ],
     "description": "Flask errorhandler"
@@ -160,14 +160,14 @@
   "Flask request args": {
     "prefix": "flargs",
     "body": [
-      "${1:query} = request.args.get('${2:q}', '')"
+      "${1:yourQuery} = request.args.get('${2:yourQ}', '')"
     ],
     "description": "Flask request.args.get"
   },
   "Flask request form": {
     "prefix": "flform",
     "body": [
-      "${1:name} = request.form.get('${2:name}')"
+      "${1:yourName} = request.form.get('${2:yourName}')"
     ],
     "description": "Flask request.form.get"
   },
@@ -175,7 +175,7 @@
     "prefix": "fljsonreq",
     "body": [
       "data = request.get_json() or {}",
-      "${1:name} = data.get('${2:name}')"
+      "${1:yourName} = data.get('${2:yourName}')"
     ],
     "description": "Flask request.get_json"
   },
@@ -184,7 +184,7 @@
     "body": [
       "from flask import session",
       "",
-      "session['${1:user_id}'] = ${2:user_id}"
+      "session['${1:yourUser_id}'] = ${2:yourUser_id}"
     ],
     "description": "Flask session"
   },
@@ -202,7 +202,7 @@
     "body": [
       "from flask_sqlalchemy import SQLAlchemy",
       "",
-      "app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///${1:app}.db'",
+      "app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///${1:yourApp}.db'",
       "db = SQLAlchemy(app)"
     ],
     "description": "Flask SQLAlchemy setup"
@@ -210,30 +210,31 @@
   "Flask model": {
     "prefix": "flmodel",
     "body": [
-      "class ${1:User}(db.Model):",
+      "class ${1:yourUser}(db.Model):",
       "    id = db.Column(db.Integer, primary_key=True)",
-      "    ${2:name} = db.Column(db.String(${3:80}), nullable=False)"
+      "    ${2:yourName} = db.Column(db.String(${3:80}), nullable=False)"
     ],
     "description": "Flask SQLAlchemy model"
   },
   "Flask relationship": {
     "prefix": "flrel",
     "body": [
-      "${1:things} = db.relationship('${2:Thing}', backref='${3:owner}', lazy=True)"
+      "${1:yourThings} = db.relationship('${2:yourThing}', backref='${3:yourOwner}', lazy=True)"
     ],
     "description": "Flask SQLAlchemy relationship"
   },
   "Flask query": {
     "prefix": "flquery",
     "body": [
-      "${1:Thing}.query.filter_by(${2:field}=${3:value}).all()"
+      "results = ${1:yourThing}.query.filter_by(${2:yourField}=${3:yourValue}).all()",
+      "print(results)"
     ],
     "description": "Flask query filter_by"
   },
   "Flask first_or_404": {
     "prefix": "flfirst",
     "body": [
-      "${1:Thing}.query.get_or_404(${2:id})"
+      "${1:yourThing}.query.get_or_404(${2:yourId})"
     ],
     "description": "Flask query get_or_404"
   },
@@ -253,7 +254,7 @@
       "",
       "class Config:",
       "    SECRET_KEY = os.environ.get('SECRET_KEY') or '${1:dev-key}'",
-      "    ${2:SQLALCHEMY_DATABASE_URI} = os.environ.get('${2:DATABASE_URL}')"
+      "    ${2:yourSQLALCHEMY_DATABASE_URI} = os.environ.get('${2:yourDATABASE_URL}')"
     ],
     "description": "Flask config class"
   },
@@ -261,7 +262,7 @@
     "prefix": "flbefore",
     "body": [
       "@app.before_request",
-      "def ${1:before}():",
+      "def ${1:yourBefore}():",
       "    ${2}"
     ],
     "description": "Flask before_request hook"
@@ -270,7 +271,7 @@
     "prefix": "flteardown",
     "body": [
       "@app.teardown_appcontext",
-      "def ${1:cleanup}(exception):",
+      "def ${1:yourCleanup}(exception):",
       "    ${2}"
     ],
     "description": "Flask teardown_appcontext"
@@ -281,7 +282,7 @@
       "from flask import make_response",
       "",
       "response = make_response(${1:jsonify({})}, ${2:200})",
-      "response.headers['${3:X-Custom}'] = '${4:value}'"
+      "response.headers['${3:X-Custom}'] = '${4:yourValue}'"
     ],
     "description": "Flask make_response"
   },
@@ -299,9 +300,9 @@
       "import click",
       "from flask.cli import with_appcontext",
       "",
-      "@app.cli.command('${1:cmd}')",
+      "@app.cli.command('${1:yourCmd}')",
       "@with_appcontext",
-      "def ${1:cmd}_command():",
+      "def ${1:yourCmd}_command():",
       "    ${2}"
     ],
     "description": "Flask Click CLI command"
@@ -310,14 +311,14 @@
     "prefix": "flrun",
     "body": [
       "if __name__ == '__main__':",
-      "    app.run(host='${1:0.0.0.0}', port=${2:5000}, debug=${3:True})"
+      "    app.run(host='${1:0.0.0.0}', port=${2:5000}, debug=${3:yourTrue})"
     ],
     "description": "Flask app.run"
   },
   "Flask template for": {
     "prefix": "fltplfor",
     "body": [
-      "{% for ${1:item} in ${2:items} %}",
+      "{% for ${1:yourItem} in ${2:yourItems} %}",
       "  ${3}",
       "{% endfor %}"
     ],
@@ -326,7 +327,7 @@
   "Flask template if": {
     "prefix": "fltplif",
     "body": [
-      "{% if ${1:condition} %}",
+      "{% if ${1:yourCondition} %}",
       "  ${2}",
       "{% endif %}"
     ],
@@ -335,9 +336,9 @@
   "Flask template extends": {
     "prefix": "fltplext",
     "body": [
-      "{% extends '${1:base}.html' %}",
+      "{% extends '${1:yourBase}.html' %}",
       "",
-      "{% block ${2:content} %}",
+      "{% block ${2:yourContent} %}",
       "{% endblock %}"
     ],
     "description": "Flask Jinja extends"
@@ -354,7 +355,7 @@
   "Flask upload file": {
     "prefix": "flfiles",
     "body": [
-      "file = request.files['${1:file}']",
+      "file = request.files['${1:yourFile}']",
       "file.save('${2:uploads/}' + file.filename)"
     ],
     "description": "Flask request.files save"
@@ -369,14 +370,14 @@
   "Flask session get": {
     "prefix": "flsessionget",
     "body": [
-      "user_id = session.get('${1:user_id}')"
+      "user_id = session.get('${1:yourUser_id}')"
     ],
     "description": "Flask session.get"
   },
   "Flask session pop": {
     "prefix": "flsessionpop",
     "body": [
-      "session.pop('${1:user_id}', None)"
+      "session.pop('${1:yourUser_id}', None)"
     ],
     "description": "Flask session.pop"
   },
@@ -398,7 +399,7 @@
       "def stream():",
       "    @stream_with_context",
       "    def gen():",
-      "        yield '${2:chunk}'",
+      "        yield '${2:yourChunk}'",
       "    return Response(gen())"
     ],
     "description": "Flask streaming response"
@@ -408,7 +409,7 @@
     "body": [
       "from flask.views import MethodView",
       "",
-      "class ${1:Thing}API(MethodView):",
+      "class ${1:yourThing}API(MethodView):",
       "    def get(self):",
       "        ${2}",
       "        return jsonify(${3:{}})"
@@ -420,7 +421,7 @@
     "body": [
       "@app.context_processor",
       "def inject_globals():",
-      "    return {'${1:app_name}': '${2:MyApp}'}"
+      "    return {'${1:yourApp_name}': '${2:yourMyApp}'}"
     ],
     "description": "Flask context_processor"
   },
@@ -431,8 +432,8 @@
       "from wtforms import StringField, SubmitField",
       "from wtforms.validators import DataRequired",
       "",
-      "class ${1:Thing}Form(FlaskForm):",
-      "    ${2:name} = StringField('${2:Name}', validators=[DataRequired()])",
+      "class ${1:yourThing}Form(FlaskForm):",
+      "    ${2:yourName} = StringField('${2:yourName}', validators=[DataRequired()])",
       "    submit = SubmitField('Save')"
     ],
     "description": "Flask WTForms form"
@@ -440,7 +441,7 @@
   "Flask validate_on_submit": {
     "prefix": "flwtfvalidate",
     "body": [
-      "if ${1:form}.validate_on_submit():",
+      "if ${1:yourForm}.validate_on_submit():",
       "    ${2}"
     ],
     "description": "Flask WTForms validate"
@@ -448,45 +449,50 @@
   "Flask query filter": {
     "prefix": "flqueryfilter",
     "body": [
-      "${1:Thing}.query.filter(${1:Thing}.${2:field} == ${3:value}).all()"
+      "results = ${1:yourThing}.query.filter(${1:yourThing}.${2:yourField} == ${3:yourValue}).all()",
+      "print(results)"
     ],
     "description": "Flask query filter"
   },
   "Flask query order": {
     "prefix": "flqueryorder",
     "body": [
-      "${1:Thing}.query.order_by(${1:Thing}.${2:created_at}.desc()).all()"
+      "results = ${1:yourThing}.query.order_by(${1:yourThing}.${2:yourCreated_at}.desc()).all()",
+      "print(results)"
     ],
     "description": "Flask query order_by"
   },
   "Flask query first": {
     "prefix": "flqueryfirst",
     "body": [
-      "${1:thing} = ${2:Thing}.query.filter_by(${3:field}=${4:value}).first()"
+      "${1:yourThing} = ${2:yourThing}.query.filter_by(${3:yourField}=${4:yourValue}).first()",
+      "print(${1:yourThing})"
     ],
     "description": "Flask query first"
   },
   "Flask paginate": {
     "prefix": "flquerypaginate",
     "body": [
-      "${1:page} = ${2:Thing}.query.paginate(page=${3:page}, per_page=${4:10}, error_out=False)"
+      "${1:yourPage} = ${2:yourThing}.query.paginate(page=${3:yourPage}, per_page=${4:10}, error_out=False)",
+      "print(${1:yourPage}.items)"
     ],
     "description": "Flask paginate"
   },
   "Flask count": {
     "prefix": "flquerycount",
     "body": [
-      "count = ${1:Thing}.query.count()"
+      "count = ${1:yourThing}.query.count()",
+      "print(count)"
     ],
     "description": "Flask query count"
   },
   "Flask config classes": {
     "prefix": "flconfigdev",
     "body": [
-      "class ${1:Development}Config(Config):",
+      "class ${1:yourDevelopment}Config(Config):",
       "    DEBUG = True",
       "",
-      "class ${2:Production}Config(Config):",
+      "class ${2:yourProduction}Config(Config):",
       "    DEBUG = False"
     ],
     "description": "Flask dev/prod config"
@@ -494,8 +500,8 @@
   "Flask app.logger": {
     "prefix": "fllogger",
     "body": [
-      "app.logger.info('${1:message}')",
-      "app.logger.error('${2:error}')"
+      "app.logger.info('${1:yourMessage}')",
+      "app.logger.error('${2:yourError}')"
     ],
     "description": "Flask app.logger"
   },
@@ -522,7 +528,7 @@
   "Flask macro": {
     "prefix": "fltplmacro",
     "body": [
-      "{% macro ${1:input}(name) %}",
+      "{% macro ${1:yourInput}(name) %}",
       "<input type=\"text\" name=\"{{ name }}\">",
       "{% endmacro %}"
     ],
@@ -531,21 +537,21 @@
   "Flask template include": {
     "prefix": "fltplinclude",
     "body": [
-      "{% include '${1:partial}.html' %}"
+      "{% include '${1:yourPartial}.html' %}"
     ],
     "description": "Flask Jinja include"
   },
   "Flask template url": {
     "prefix": "fltplurl",
     "body": [
-      "href=\"{{ url_for('${1:view}') }}\""
+      "href=\"{{ url_for('${1:yourView}') }}\""
     ],
     "description": "Flask Jinja url_for"
   },
   "Flask template set": {
     "prefix": "fltplset",
     "body": [
-      "{% set ${1:total} = ${2:a} + ${3:b} %}"
+      "{% set ${1:yourTotal} = ${2:yourA} + ${3:yourB} %}"
     ],
     "description": "Flask Jinja set"
   }

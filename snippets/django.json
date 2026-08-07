@@ -4,12 +4,12 @@
     "body": [
       "from django.db import models",
       "",
-      "class ${1:Thing}(models.Model):",
-      "    ${2:name} = models.CharField(max_length=${3:255})",
-      "    ${4:created_at} = models.DateTimeField(auto_now_add=True)",
+      "class ${1:yourThing}(models.Model):",
+      "    ${2:yourName} = models.CharField(max_length=${3:255})",
+      "    ${4:yourCreated_at} = models.DateTimeField(auto_now_add=True)",
       "",
       "    def __str__(self):",
-      "        return self.${2:name}"
+      "        return self.${2:yourName}"
     ],
     "description": "Django model"
   },
@@ -18,41 +18,41 @@
     "body": [
       "class Meta:",
       "    ordering = ['${1:-created_at}']",
-      "    verbose_name = '${2:Thing}'"
+      "    verbose_name = '${2:yourThing}'"
     ],
     "description": "Django model Meta class"
   },
   "Django field FK": {
     "prefix": "djfk",
     "body": [
-      "${1:owner} = models.ForeignKey(${2:User}, on_delete=models.CASCADE${3:, related_name='${1:owner}s'})"
+      "${1:yourOwner} = models.ForeignKey(${2:yourUser}, on_delete=models.CASCADE${3:, related_name='${1:yourOwner}s'})"
     ],
     "description": "Django ForeignKey field"
   },
   "Django field MTM": {
     "prefix": "djmtm",
     "body": [
-      "${1:tags} = models.ManyToManyField(${2:Tag}, blank=True)"
+      "${1:yourTags} = models.ManyToManyField(${2:yourTag}, blank=True)"
     ],
     "description": "Django ManyToManyField"
   },
   "Django field slug": {
     "prefix": "djslug",
     "body": [
-      "${1:slug} = models.SlugField(unique=True, max_length=${2:100})"
+      "${1:yourSlug} = models.SlugField(unique=True, max_length=${2:100})"
     ],
     "description": "Django SlugField"
   },
   "Django field choices": {
     "prefix": "djchoices",
     "body": [
-      "STATUS_${1:PENDING} = '${1:pending}'",
-      "STATUS_${2:DONE} = '${2:done}'",
+      "STATUS_${1:yourPENDING} = '${1:yourPending}'",
+      "STATUS_${2:yourDONE} = '${2:yourDone}'",
       "STATUS_CHOICES = [",
-      "    (STATUS_${1:PENDING}, '${3:Pending}'),",
-      "    (STATUS_${2:DONE}, '${4:Done}'),",
+      "    (STATUS_${1:yourPENDING}, '${3:yourPending}'),",
+      "    (STATUS_${2:yourDONE}, '${4:yourDone}'),",
       "]",
-      "${5:status} = models.CharField(max_length=${6:20}, choices=STATUS_CHOICES, default=STATUS_${1:PENDING})"
+      "${5:yourStatus} = models.CharField(max_length=${6:20}, choices=STATUS_CHOICES, default=STATUS_${1:yourPENDING})"
     ],
     "description": "Django choices field"
   },
@@ -61,20 +61,20 @@
     "body": [
       "from django.shortcuts import render",
       "",
-      "def ${1:view}(request):",
+      "def ${1:yourView}(request):",
       "    ${2}",
-      "    return render(request, '${3:template}.html', {${4:'ctx': ctx}})"
+      "    return render(request, '${3:yourTemplate}.html', {${4:'ctx': ctx}})"
     ],
     "description": "Django function-based view"
   },
   "Django view POST": {
     "prefix": "djvp",
     "body": [
-      "def ${1:view}(request):",
+      "def ${1:yourView}(request):",
       "    if request.method == 'POST':",
       "        ${2}",
-      "        return redirect('${3:name}')",
-      "    return render(request, '${4:template}.html')"
+      "        return redirect('${3:yourName}')",
+      "    return render(request, '${4:yourTemplate}.html')"
     ],
     "description": "Django FBV with POST"
   },
@@ -84,7 +84,7 @@
       "from django.contrib.auth.decorators import login_required",
       "",
       "@login_required",
-      "def ${1:view}(request):",
+      "def ${1:yourView}(request):",
       "    ${2}"
     ],
     "description": "Django @login_required"
@@ -94,9 +94,9 @@
     "body": [
       "from django.views.generic import ListView",
       "",
-      "class ${1:Thing}ListView(ListView):",
-      "    model = ${1:Thing}",
-      "    template_name = '${2:things}.html'",
+      "class ${1:yourThing}ListView(ListView):",
+      "    model = ${1:yourThing}",
+      "    template_name = '${2:yourThings}.html'",
       "    paginate_by = ${3:10}"
     ],
     "description": "Django ListView"
@@ -106,9 +106,9 @@
     "body": [
       "from django.views.generic import DetailView",
       "",
-      "class ${1:Thing}DetailView(DetailView):",
-      "    model = ${1:Thing}",
-      "    template_name = '${2:thing_detail}.html'"
+      "class ${1:yourThing}DetailView(DetailView):",
+      "    model = ${1:yourThing}",
+      "    template_name = '${2:yourThing_detail}.html'"
     ],
     "description": "Django DetailView"
   },
@@ -118,10 +118,10 @@
       "from django.views.generic import CreateView",
       "from django.urls import reverse_lazy",
       "",
-      "class ${1:Thing}CreateView(CreateView):",
-      "    model = ${1:Thing}",
-      "    fields = ['${2:name}']",
-      "    success_url = reverse_lazy('${3:list}')"
+      "class ${1:yourThing}CreateView(CreateView):",
+      "    model = ${1:yourThing}",
+      "    fields = ['${2:yourName}']",
+      "    success_url = reverse_lazy('${3:yourList}')"
     ],
     "description": "Django generic CreateView"
   },
@@ -131,10 +131,10 @@
       "from django.views.generic import UpdateView",
       "from django.urls import reverse_lazy",
       "",
-      "class ${1:Thing}UpdateView(UpdateView):",
-      "    model = ${1:Thing}",
-      "    fields = ['${2:name}']",
-      "    success_url = reverse_lazy('${3:detail}', args=['${4:self.object.pk}'])"
+      "class ${1:yourThing}UpdateView(UpdateView):",
+      "    model = ${1:yourThing}",
+      "    fields = ['${2:yourName}']",
+      "    success_url = reverse_lazy('${3:yourDetail}', args=['${4:self.object.pk}'])"
     ],
     "description": "Django UpdateView"
   },
@@ -144,9 +144,9 @@
       "from django.views.generic import DeleteView",
       "from django.urls import reverse_lazy",
       "",
-      "class ${1:Thing}DeleteView(DeleteView):",
-      "    model = ${1:Thing}",
-      "    success_url = reverse_lazy('${2:list}')"
+      "class ${1:yourThing}DeleteView(DeleteView):",
+      "    model = ${1:yourThing}",
+      "    success_url = reverse_lazy('${2:yourList}')"
     ],
     "description": "Django DeleteView"
   },
@@ -155,7 +155,7 @@
     "body": [
       "from django.shortcuts import get_object_or_404",
       "",
-      "${1:thing} = get_object_or_404(${2:Thing}, pk=${3:pk})"
+      "${1:yourThing} = get_object_or_404(${2:yourThing}, pk=${3:yourPk})"
     ],
     "description": "Django get_object_or_404"
   },
@@ -198,35 +198,35 @@
   "Django queryset": {
     "prefix": "djqs",
     "body": [
-      "${1:Thing}.objects.all()"
+      "print(${1:yourThing}.objects.all())"
     ],
     "description": "Django queryset all"
   },
   "Django filter": {
     "prefix": "djfilter",
     "body": [
-      "${1:Thing}.objects.filter(${2:field}=${3:value})"
+      "${1:yourThing}.objects.filter(${2:yourField}=${3:yourValue})"
     ],
     "description": "Django queryset filter"
   },
   "Django exclude": {
     "prefix": "djexclude",
     "body": [
-      "${1:Thing}.objects.exclude(${2:field}=${3:value})"
+      "${1:yourThing}.objects.exclude(${2:yourField}=${3:yourValue})"
     ],
     "description": "Django queryset exclude"
   },
   "Django select_related": {
     "prefix": "djselect",
     "body": [
-      "${1:Thing}.objects.select_related('${2:owner}').all()"
+      "print(${1:yourThing}.objects.select_related('${2:yourOwner}').all())"
     ],
     "description": "Django select_related"
   },
   "Django prefetch_related": {
     "prefix": "djprefetch",
     "body": [
-      "${1:Thing}.objects.prefetch_related('${2:things}').all()"
+      "print(${1:yourThing}.objects.prefetch_related('${2:yourThings}').all())"
     ],
     "description": "Django prefetch_related"
   },
@@ -235,7 +235,7 @@
     "body": [
       "from django.db.models import Count",
       "",
-      "${1:Thing}.objects.annotate(${2:total}=Count('${3:things}'))"
+      "${1:yourThing}.objects.annotate(${2:yourTotal}=Count('${3:yourThings}'))"
     ],
     "description": "Django annotate Count"
   },
@@ -244,7 +244,7 @@
     "body": [
       "from django.db.models import Sum",
       "",
-      "${1:Thing}.objects.aggregate(${2:total}=Sum('${3:amount}'))"
+      "${1:yourThing}.objects.aggregate(${2:yourTotal}=Sum('${3:yourAmount}'))"
     ],
     "description": "Django aggregate Sum"
   },
@@ -263,7 +263,7 @@
     "body": [
       "from django.core.paginator import Paginator",
       "",
-      "paginator = Paginator(${1:qs}, ${2:10})",
+      "paginator = Paginator(${1:yourQs}, ${2:10})",
       "page = paginator.get_page(request.GET.get('page'))"
     ],
     "description": "Django Paginator"
@@ -272,13 +272,13 @@
     "prefix": "djadm",
     "body": [
       "from django.contrib import admin",
-      "from .models import ${1:Thing}",
+      "from .models import ${1:yourThing}",
       "",
-      "@admin.register(${1:Thing})",
-      "class ${1:Thing}Admin(admin.ModelAdmin):",
-      "    list_display = ['${2:id}', '${3:name}']",
-      "    list_filter = ['${4:field}']",
-      "    search_fields = ['${3:name}']"
+      "@admin.register(${1:yourThing})",
+      "class ${1:yourThing}Admin(admin.ModelAdmin):",
+      "    list_display = ['${2:yourId}', '${3:yourName}']",
+      "    list_filter = ['${4:yourField}']",
+      "    search_fields = ['${3:yourName}']"
     ],
     "description": "Django admin ModelAdmin"
   },
@@ -286,12 +286,12 @@
     "prefix": "djform",
     "body": [
       "from django import forms",
-      "from .models import ${1:Thing}",
+      "from .models import ${1:yourThing}",
       "",
-      "class ${1:Thing}Form(forms.ModelForm):",
+      "class ${1:yourThing}Form(forms.ModelForm):",
       "    class Meta:",
-      "        model = ${1:Thing}",
-      "        fields = ['${2:name}', '${3:field}']"
+      "        model = ${1:yourThing}",
+      "        fields = ['${2:yourName}', '${3:yourField}']"
     ],
     "description": "Django ModelForm"
   },
@@ -302,7 +302,7 @@
       "from . import views",
       "",
       "urlpatterns = [",
-      "    path('${1:route}/', views.${2:view}, name='${2:view}'),",
+      "    path('${1:yourRoute}/', views.${2:yourView}, name='${2:yourView}'),",
       "]"
     ],
     "description": "Django app urlpatterns"
@@ -313,7 +313,7 @@
       "from django.urls import path, include",
       "",
       "urlpatterns = [",
-      "    path('${1:api}/', include('${2:app}.urls')),",
+      "    path('${1:yourApi}/', include('${2:yourApp}.urls')),",
       "]"
     ],
     "description": "Django include urls"
@@ -321,7 +321,7 @@
   "Django url int": {
     "prefix": "djurlint",
     "body": [
-      "path('${1:thing}/<int:${2:pk}>/', views.${3:detail}, name='${3:detail}')"
+      "path('${1:yourThing}/<int:${2:yourPk}>/', views.${3:yourDetail}, name='${3:yourDetail}')"
     ],
     "description": "Django path with int converter"
   },
@@ -331,8 +331,8 @@
       "from django.db.models.signals import post_save",
       "from django.dispatch import receiver",
       "",
-      "@receiver(post_save, sender=${1:Thing})",
-      "def ${2:on_save}(instance, created, **kwargs):",
+      "@receiver(post_save, sender=${1:yourThing})",
+      "def ${2:yourOn_save}(instance, created, **kwargs):",
       "    if created:",
       "        ${3}"
     ],
@@ -343,11 +343,11 @@
     "body": [
       "from django.test import TestCase",
       "",
-      "class ${1:Thing}TestCase(TestCase):",
+      "class ${1:yourThing}TestCase(TestCase):",
       "    def setUp(self):",
       "        ${2}",
       "",
-      "    def test_${3:thing}(self):",
+      "    def test_${3:yourThing}(self):",
       "        ${4}"
     ],
     "description": "Django TestCase"
@@ -382,7 +382,7 @@
       "    'django.contrib.sessions',",
       "    'django.contrib.messages',",
       "    'django.contrib.staticfiles',",
-      "    '${1:app}',",
+      "    '${1:yourApp}',",
       "]"
     ],
     "description": "Django INSTALLED_APPS"
@@ -391,12 +391,12 @@
     "prefix": "djdrfser",
     "body": [
       "from rest_framework import serializers",
-      "from .models import ${1:Thing}",
+      "from .models import ${1:yourThing}",
       "",
-      "class ${1:Thing}Serializer(serializers.ModelSerializer):",
+      "class ${1:yourThing}Serializer(serializers.ModelSerializer):",
       "    class Meta:",
-      "        model = ${1:Thing}",
-      "        fields = ['${2:id}', '${3:name}']"
+      "        model = ${1:yourThing}",
+      "        fields = ['${2:yourId}', '${3:yourName}']"
     ],
     "description": "DRF ModelSerializer"
   },
@@ -406,7 +406,7 @@
       "from rest_framework.views import APIView",
       "from rest_framework.response import Response",
       "",
-      "class ${1:Thing}View(APIView):",
+      "class ${1:yourThing}View(APIView):",
       "    def get(self, request):",
       "        ${2}",
       "        return Response(${3})"
@@ -417,12 +417,12 @@
     "prefix": "djdrfset",
     "body": [
       "from rest_framework import viewsets",
-      "from .models import ${1:Thing}",
-      "from .serializers import ${1:Thing}Serializer",
+      "from .models import ${1:yourThing}",
+      "from .serializers import ${1:yourThing}Serializer",
       "",
-      "class ${1:Thing}ViewSet(viewsets.ModelViewSet):",
-      "    queryset = ${1:Thing}.objects.all()",
-      "    serializer_class = ${1:Thing}Serializer"
+      "class ${1:yourThing}ViewSet(viewsets.ModelViewSet):",
+      "    queryset = ${1:yourThing}.objects.all()",
+      "    serializer_class = ${1:yourThing}Serializer"
     ],
     "description": "DRF ModelViewSet"
   },
@@ -432,7 +432,7 @@
       "from rest_framework.routers import DefaultRouter",
       "",
       "router = DefaultRouter()",
-      "router.register('${1:things}', views.${2:Thing}ViewSet)",
+      "router.register('${1:yourThings}', views.${2:yourThing}ViewSet)",
       "",
       "urlpatterns = router.urls"
     ],
@@ -443,7 +443,7 @@
     "body": [
       "from rest_framework.permissions import IsAuthenticated, IsAdminUser",
       "",
-      "permission_classes = [${1:IsAuthenticated}]"
+      "permission_classes = [${1:yourIsAuthenticated}]"
     ],
     "description": "DRF permission_classes"
   },
@@ -460,9 +460,9 @@
   "Django template extends": {
     "prefix": "djtplext",
     "body": [
-      "{% extends '${1:base}.html' %}",
+      "{% extends '${1:yourBase}.html' %}",
       "",
-      "{% block ${2:content} %}",
+      "{% block ${2:yourContent} %}",
       "{% endblock %}"
     ],
     "description": "Django template extends"
@@ -470,8 +470,8 @@
   "Django template for": {
     "prefix": "djtplfor",
     "body": [
-      "{% for ${1:item} in ${2:items} %}",
-      "  {{ ${1:item} }}",
+      "{% for ${1:yourItem} in ${2:yourItems} %}",
+      "  {{ ${1:yourItem} }}",
       "{% empty %}",
       "  {{ '${3:No items}' }}",
       "{% endfor %}"
@@ -481,7 +481,7 @@
   "Django template if": {
     "prefix": "djtplif",
     "body": [
-      "{% if ${1:condition} %}",
+      "{% if ${1:yourCondition} %}",
       "  ${2}",
       "{% else %}",
       "  ${3}",
@@ -501,44 +501,44 @@
   "Django qs first": {
     "prefix": "djqsfirst",
     "body": [
-      "${1:Thing}.objects.first()"
+      "print(${1:yourThing}.objects.first())"
     ],
     "description": "Django queryset first"
   },
   "Django qs last": {
     "prefix": "djqslast",
     "body": [
-      "${1:Thing}.objects.last()"
+      "${1:yourThing}.objects.last()"
     ],
     "description": "Django queryset last"
   },
   "Django qs count": {
     "prefix": "djqscount",
     "body": [
-      "${1:Thing}.objects.count()"
+      "print(${1:yourThing}.objects.count())"
     ],
     "description": "Django queryset count"
   },
   "Django qs get": {
     "prefix": "djqsget",
     "body": [
-      "${1:thing} = ${2:Thing}.objects.get(${3:field}=${4:value})"
+      "${1:yourThing} = ${2:yourThing}.objects.get(${3:yourField}=${4:yourValue})"
     ],
     "description": "Django queryset get"
   },
   "Django qs create": {
     "prefix": "djqscreate",
     "body": [
-      "${1:thing} = ${2:Thing}.objects.create(${3:field}=${4:value})"
+      "${1:yourThing} = ${2:yourThing}.objects.create(${3:yourField}=${4:yourValue})"
     ],
     "description": "Django queryset create"
   },
   "Django bulk_create": {
     "prefix": "djqsbulk",
     "body": [
-      "${1:Thing}.objects.bulk_create([",
-      "    ${1:Thing}(${2:name}='${3:a}'),",
-      "    ${1:Thing}(${2:name}='${4:b}'),",
+      "${1:yourThing}.objects.bulk_create([",
+      "    ${1:yourThing}(${2:yourName}='${3:yourA}'),",
+      "    ${1:yourThing}(${2:yourName}='${4:yourB}'),",
       "])"
     ],
     "description": "Django bulk_create"
@@ -546,28 +546,28 @@
   "Django qs order": {
     "prefix": "djqsorder",
     "body": [
-      "${1:Thing}.objects.order_by('${2:-created_at}')"
+      "${1:yourThing}.objects.order_by('${2:-created_at}')"
     ],
     "description": "Django order_by"
   },
   "Django qs distinct": {
     "prefix": "djqsdistinct",
     "body": [
-      "${1:Thing}.objects.values_list('${2:field}', flat=True).distinct()"
+      "${1:yourThing}.objects.values_list('${2:yourField}', flat=True).distinct()"
     ],
     "description": "Django values_list distinct"
   },
   "Django qs values": {
     "prefix": "djqsvalues",
     "body": [
-      "${1:Thing}.objects.values('${2:id}', '${3:name}')"
+      "${1:yourThing}.objects.values('${2:yourId}', '${3:yourName}')"
     ],
     "description": "Django values"
   },
   "Django qs exists": {
     "prefix": "djqsexists",
     "body": [
-      "if ${1:Thing}.objects.filter(${2:field}=${3:value}).exists():",
+      "if ${1:yourThing}.objects.filter(${2:yourField}=${3:yourValue}).exists():",
       "    ${4}"
     ],
     "description": "Django exists check"
@@ -575,7 +575,7 @@
   "Django qs slice": {
     "prefix": "djqsslice",
     "body": [
-      "${1:Thing}.objects.all()[:${2:10}]"
+      "print(${1:yourThing}.objects.all()[:${2:10}])"
     ],
     "description": "Django queryset slicing"
   },
@@ -584,7 +584,7 @@
     "body": [
       "from django.db.models import F",
       "",
-      "${1:Thing}.objects.filter(pk=${2:1}).update(${3:count}=F('${3:count}') + 1)"
+      "${1:yourThing}.objects.filter(pk=${2:1}).update(${3:yourCount}=F('${3:yourCount}') + 1)"
     ],
     "description": "Django F expression"
   },
@@ -593,7 +593,7 @@
     "body": [
       "from django.db.models import Q",
       "",
-      "${1:Thing}.objects.filter(Q(${2:field}=${3:value}) | Q(${4:other}=${5:value}))"
+      "${1:yourThing}.objects.filter(Q(${2:yourField}=${3:yourValue}) | Q(${4:yourOther}=${5:yourValue}))"
     ],
     "description": "Django Q objects"
   },
@@ -603,9 +603,9 @@
       "from django.db.models import Case, When, Value, CharField",
       "",
       "queryset.annotate(",
-      "    ${1:status}=Case(",
-      "        When(${2:paid}=True, then=Value('${3:paid}')),",
-      "        default=Value('${4:pending}'),",
+      "    ${1:yourStatus}=Case(",
+      "        When(${2:yourPaid}=True, then=Value('${3:yourPaid}')),",
+      "        default=Value('${4:yourPending}'),",
       "        output_field=CharField(),",
       "    )",
       ")"
@@ -615,30 +615,30 @@
   "Django qs update": {
     "prefix": "djupdate",
     "body": [
-      "${1:Thing}.objects.filter(${2:field}=${3:value}).update(${4:name}='${5:x}')"
+      "${1:yourThing}.objects.filter(${2:yourField}=${3:yourValue}).update(${4:yourName}='${5:yourX}')"
     ],
     "description": "Django queryset update"
   },
   "Django qs delete": {
     "prefix": "djdelete",
     "body": [
-      "${1:Thing}.objects.filter(${2:field}=${3:value}).delete()"
+      "${1:yourThing}.objects.filter(${2:yourField}=${3:yourValue}).delete()"
     ],
     "description": "Django queryset delete"
   },
   "Django get_or_create": {
     "prefix": "djgetorcreate",
     "body": [
-      "${1:thing}, created = ${2:Thing}.objects.get_or_create(${3:field}=${4:value})"
+      "${1:yourThing}, created = ${2:yourThing}.objects.get_or_create(${3:yourField}=${4:yourValue})"
     ],
     "description": "Django get_or_create"
   },
   "Django update_or_create": {
     "prefix": "djupdateorcreate",
     "body": [
-      "${1:thing}, created = ${2:Thing}.objects.update_or_create(",
-      "    ${3:field}=${4:value},",
-      "    defaults={'${5:name}': '${6:x}'},",
+      "${1:yourThing}, created = ${2:yourThing}.objects.update_or_create(",
+      "    ${3:yourField}=${4:yourValue},",
+      "    defaults={'${5:yourName}': '${6:yourX}'},",
       ")"
     ],
     "description": "Django update_or_create"
@@ -646,11 +646,11 @@
   "Django form clean": {
     "prefix": "djformclean",
     "body": [
-      "def clean_${1:name}(self):",
-      "    ${1:name} = self.cleaned_data['${1:name}']",
-      "    if ${2:condition}:",
-      "        raise forms.ValidationError('${3:error}')",
-      "    return ${1:name}"
+      "def clean_${1:yourName}(self):",
+      "    ${1:yourName} = self.cleaned_data['${1:yourName}']",
+      "    if ${2:yourCondition}:",
+      "        raise forms.ValidationError('${3:yourError}')",
+      "    return ${1:yourName}"
     ],
     "description": "Django form clean_<field>"
   },
@@ -671,8 +671,8 @@
     "body": [
       "from django.contrib import messages",
       "",
-      "messages.success(request, '${1:message}')",
-      "messages.error(request, '${2:error}')"
+      "messages.success(request, '${1:yourMessage}')",
+      "messages.error(request, '${2:yourError}')"
     ],
     "description": "Django contrib messages"
   },
@@ -717,14 +717,14 @@
   "Django template url": {
     "prefix": "djtplurl",
     "body": [
-      "<a href=\"{% url '${1:view}' %}\">${2:Link}</a>"
+      "<a href=\"{% url '${1:yourView}' %}\">${2:yourLink}</a>"
     ],
     "description": "Django template url tag"
   },
   "Django template include": {
     "prefix": "djtplinclude",
     "body": [
-      "{% include '${1:partial}.html' %}"
+      "{% include '${1:yourPartial}.html' %}"
     ],
     "description": "Django template include"
   },
@@ -732,7 +732,7 @@
     "prefix": "djadminfields",
     "body": [
       "fieldsets = [",
-      "    ('${1:Main}', {'fields': ['${2:name}', '${3:field}']}),",
+      "    ('${1:yourMain}', {'fields': ['${2:yourName}', '${3:yourField}']}),",
       "]"
     ],
     "description": "Django admin fieldsets"
@@ -742,7 +742,7 @@
     "body": [
       "@admin.action(description='${1:Set as featured}')",
       "def mark_featured(self, request, queryset):",
-      "    queryset.update(${2:featured}=True)"
+      "    queryset.update(${2:yourFeatured}=True)"
     ],
     "description": "Django admin custom action"
   },
@@ -750,8 +750,8 @@
     "prefix": "djmodelproperty",
     "body": [
       "@property",
-      "def ${1:full_name}(self):",
-      "    return f'{self.${2:first}} {self.${3:last}}'"
+      "def ${1:yourFull_name}(self):",
+      "    return f'{self.${2:yourFirst}} {self.${3:yourLast}}'"
     ],
     "description": "Django model @property"
   },
@@ -760,7 +760,7 @@
     "body": [
       "from django.core.mail import send_mail",
       "",
-      "send_mail('${1:subject}', '${2:message}', '${3:from@example.com}', ['${4:to@example.com}'])"
+      "send_mail('${1:yourSubject}', '${2:yourMessage}', '${3:from@example.com}', ['${4:to@example.com}'])"
     ],
     "description": "Django send_mail"
   },

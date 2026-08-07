@@ -32,7 +32,7 @@
   "Express GET route": {
     "prefix": "exg",
     "body": [
-      "${1:router}.get('${2:/path}', async (req, res) => {",
+      "${1:yourRouter}.get('${2:/path}', async (req, res) => {",
       "  ${3}",
       "});"
     ],
@@ -41,7 +41,7 @@
   "Express POST route": {
     "prefix": "exp",
     "body": [
-      "${1:router}.post('${2:/path}', async (req, res) => {",
+      "${1:yourRouter}.post('${2:/path}', async (req, res) => {",
       "  const { ${3} } = req.body;",
       "  ${4}",
       "});"
@@ -51,7 +51,7 @@
   "Express PUT route": {
     "prefix": "exput",
     "body": [
-      "${1:router}.put('${2:/path/:id}', async (req, res) => {",
+      "${1:yourRouter}.put('${2:/path/:id}', async (req, res) => {",
       "  const { id } = req.params;",
       "  ${3}",
       "});"
@@ -61,7 +61,7 @@
   "Express PATCH route": {
     "prefix": "expatch",
     "body": [
-      "${1:router}.patch('${2:/path/:id}', async (req, res) => {",
+      "${1:yourRouter}.patch('${2:/path/:id}', async (req, res) => {",
       "  const { id } = req.params;",
       "  ${3}",
       "});"
@@ -71,7 +71,7 @@
   "Express DELETE route": {
     "prefix": "exdel",
     "body": [
-      "${1:router}.delete('${2:/path/:id}', async (req, res) => {",
+      "${1:yourRouter}.delete('${2:/path/:id}', async (req, res) => {",
       "  const { id } = req.params;",
       "  ${3}",
       "});"
@@ -81,7 +81,7 @@
   "Express app route": {
     "prefix": "exapp",
     "body": [
-      "app.${1:get}('${2:/path}', async (req, res) => {",
+      "app.${1:yourGet}('${2:/path}', async (req, res) => {",
       "  ${3}",
       "});"
     ],
@@ -90,28 +90,28 @@
   "Express params": {
     "prefix": "exparam",
     "body": [
-      "const { ${1:id} } = req.params;"
+      "const { ${1:yourId} } = req.params;"
     ],
     "description": "Express destructure req.params"
   },
   "Express query": {
     "prefix": "exquery",
     "body": [
-      "const { ${1:page} } = req.query;"
+      "const { ${1:yourPage} } = req.query;"
     ],
     "description": "Express destructure req.query"
   },
   "Express body": {
     "prefix": "exbody",
     "body": [
-      "const { ${1:name}, ${2:email} } = req.body;"
+      "const { ${1:yourName}, ${2:yourEmail} } = req.body;"
     ],
     "description": "Express destructure req.body"
   },
   "Express middleware": {
     "prefix": "exm",
     "body": [
-      "const ${1:name} = (req, res, next) => {",
+      "const ${1:yourName} = (req, res, next) => {",
       "  ${2}",
       "  next();",
       "};"
@@ -140,7 +140,7 @@
   "Express static": {
     "prefix": "exstatic",
     "body": [
-      "app.use(express.static('${1:public}'));"
+      "app.use(express.static('${1:yourPublic}'));"
     ],
     "description": "Express static files"
   },
@@ -171,7 +171,7 @@
     "prefix": "exmorgan",
     "body": [
       "const morgan = require('morgan');",
-      "app.use(morgan('${1:dev}'));"
+      "app.use(morgan('${1:yourDev}'));"
     ],
     "description": "Express morgan logger"
   },
@@ -194,7 +194,7 @@
       "const multer = require('multer');",
       "",
       "const upload = multer({ dest: '${1:uploads/}' });",
-      "app.post('${2:/upload}', upload.single('${3:file}'), (req, res) => {",
+      "app.post('${2:/upload}', upload.single('${3:yourFile}'), (req, res) => {",
       "  res.json({ file: req.file });",
       "});"
     ],
@@ -207,7 +207,7 @@
       "",
       "app.post(",
       "  '${1:/route}',",
-      "  [body('${2:name}').isLength({ min: ${3:3} })],",
+      "  [body('${2:yourName}').isLength({ min: ${3:3} })],",
       "  (req, res) => {",
       "    const errors = validationResult(req);",
       "    if (!errors.isEmpty()) {",
@@ -224,14 +224,14 @@
     "body": [
       "const jwt = require('jsonwebtoken');",
       "",
-      "const token = jwt.sign({ ${1:id} }, process.env.JWT_SECRET, { expiresIn: '${2:7d}' });"
+      "const token = jwt.sign({ ${1:yourId} }, process.env.JWT_SECRET, { expiresIn: '${2:7d}' });"
     ],
     "description": "Express jwt.sign"
   },
   "Express JWT verify": {
     "prefix": "exjwtv",
     "body": [
-      "const decoded = jwt.verify(${1:token}, process.env.JWT_SECRET);"
+      "const decoded = jwt.verify(${1:yourToken}, process.env.JWT_SECRET);"
     ],
     "description": "Express jwt.verify"
   },
@@ -258,8 +258,8 @@
     "body": [
       "const bcrypt = require('bcrypt');",
       "",
-      "const hash = await bcrypt.hash(${1:password}, ${2:10});",
-      "const match = await bcrypt.compare(${1:password}, hash);"
+      "const hash = await bcrypt.hash(${1:yourPassword}, ${2:10});",
+      "const match = await bcrypt.compare(${1:yourPassword}, hash);"
     ],
     "description": "Express bcrypt hash/compare"
   },
@@ -269,10 +269,10 @@
       "const session = require('express-session');",
       "",
       "app.use(session({",
-      "  secret: process.env.${1:SESSION_SECRET},",
+      "  secret: process.env.${1:yourSESSION_SECRET},",
       "  resave: false,",
       "  saveUninitialized: false,",
-      "  cookie: { secure: ${2:false} },",
+      "  cookie: { secure: ${2:yourFalse} },",
       "}));"
     ],
     "description": "Express session middleware"
@@ -308,7 +308,7 @@
       "  }",
       "}",
       "",
-      "throw new AppError('${1:message}', ${2:400});"
+      "throw new AppError('${1:yourMessage}', ${2:400});"
     ],
     "description": "Express custom error class"
   },
@@ -328,11 +328,11 @@
     "body": [
       "const mongoose = require('mongoose');",
       "",
-      "const ${1:thing}Schema = new mongoose.Schema({",
-      "  ${2:name}: { type: String, required: true },",
+      "const ${1:yourThing}Schema = new mongoose.Schema({",
+      "  ${2:yourName}: { type: String, required: true },",
       "}, { timestamps: true });",
       "",
-      "module.exports = mongoose.model('${3:Thing}', ${1:thing}Schema);"
+      "module.exports = mongoose.model('${3:yourThing}', ${1:yourThing}Schema);"
     ],
     "description": "Express mongoose schema/model"
   },
@@ -342,7 +342,7 @@
       "const { Pool } = require('pg');",
       "",
       "const pool = new Pool({",
-      "  connectionString: process.env.${1:DATABASE_URL},",
+      "  connectionString: process.env.${1:yourDATABASE_URL},",
       "});"
     ],
     "description": "Express pg Pool setup"
@@ -350,8 +350,9 @@
   "Express pg query": {
     "prefix": "expgq",
     "body": [
-      "const result = await pool.query('${1:SELECT * FROM things WHERE id = \\$1}', [${2:id}]);",
-      "const rows = result.rows;"
+      "const result = await pool.query('${1:SELECT * FROM things WHERE id = \\$1}', [${2:yourId}]);",
+      "const rows = result.rows;",
+      "console.log(rows);"
     ],
     "description": "Express pg parameterized query"
   },
@@ -373,7 +374,7 @@
   "Express route chaining": {
     "prefix": "exroute",
     "body": [
-      "${1:router}.route('${2:/path}')",
+      "${1:yourRouter}.route('${2:/path}')",
       "  .get((req, res) => {",
       "    ${3}",
       "  })",
@@ -386,7 +387,7 @@
   "Express router.all": {
     "prefix": "exall",
     "body": [
-      "${1:router}.all('${2:/path}', (req, res) => {",
+      "${1:yourRouter}.all('${2:/path}', (req, res) => {",
       "  res.json({ method: req.method });",
       "});"
     ],
@@ -395,14 +396,14 @@
   "Express mount router": {
     "prefix": "exuse",
     "body": [
-      "app.use('${1:/api}', ${2:router});"
+      "app.use('${1:/api}', ${2:yourRouter});"
     ],
     "description": "Express app.use router"
   },
   "Express route with middleware": {
     "prefix": "exmwroute",
     "body": [
-      "${1:router}.get('${2:/path}', ${3:auth}, async (req, res) => {",
+      "${1:yourRouter}.get('${2:/path}', ${3:yourAuth}, async (req, res) => {",
       "  ${4}",
       "});"
     ],
@@ -411,7 +412,7 @@
   "Express res.cookie": {
     "prefix": "excookie",
     "body": [
-      "res.cookie('${1:name}', ${2:value}, { httpOnly: true, maxAge: ${3:86400000} });"
+      "res.cookie('${1:yourName}', ${2:yourValue}, { httpOnly: true, maxAge: ${3:86400000} });"
     ],
     "description": "Express res.cookie"
   },
@@ -420,14 +421,14 @@
     "body": [
       "const cookieParser = require('cookie-parser');",
       "app.use(cookieParser());",
-      "const ${1:name} = req.cookies.${1:name};"
+      "const ${1:yourName} = req.cookies.${1:yourName};"
     ],
     "description": "Express cookie-parser"
   },
   "Express clear cookie": {
     "prefix": "exclearcookie",
     "body": [
-      "res.clearCookie('${1:name}');"
+      "res.clearCookie('${1:yourName}');"
     ],
     "description": "Express res.clearCookie"
   },
@@ -450,15 +451,15 @@
     "prefix": "exrender",
     "body": [
       "app.set('view engine', 'ejs');",
-      "app.set('views', '${1:views}');",
-      "res.render('${2:index}', { ${3:name} });"
+      "app.set('views', '${1:yourViews}');",
+      "res.render('${2:yourIndex}', { ${3:yourName} });"
     ],
     "description": "Express EJS view render"
   },
   "Express res.locals": {
     "prefix": "exlocals",
     "body": [
-      "res.locals.${1:user} = ${2:req.user};"
+      "res.locals.${1:yourUser} = ${2:req.user};"
     ],
     "description": "Express res.locals"
   },
@@ -468,10 +469,10 @@
       "const winston = require('winston');",
       "",
       "const logger = winston.createLogger({",
-      "  level: '${1:info}',",
+      "  level: '${1:yourInfo}',",
       "  transports: [new winston.transports.Console()],",
       "});",
-      "logger.info('${2:message}');"
+      "logger.info('${2:yourMessage}');"
     ],
     "description": "Express winston logger"
   },
@@ -504,7 +505,7 @@
     "body": [
       "const config = {",
       "  port: process.env.PORT || 3000,",
-      "  ${1:databaseUrl}: process.env.${2:DATABASE_URL},",
+      "  ${1:yourDatabaseUrl}: process.env.${2:yourDATABASE_URL},",
       "};"
     ],
     "description": "Express env config object"
@@ -521,35 +522,40 @@
   "Express mongoose find": {
     "prefix": "exmgfind",
     "body": [
-      "const docs = await ${1:Model}.find(${2:{}}).skip(skip).limit(limit);"
+      "const docs = await ${1:yourModel}.find(${2:{}}).skip(skip).limit(limit);",
+      "console.log(docs);"
     ],
     "description": "Express mongoose find"
   },
   "Express mongoose create": {
     "prefix": "exmgcreate",
     "body": [
-      "const doc = await ${1:Model}.create(${2:{ name }});"
+      "const doc = await ${1:yourModel}.create(${2:{ name }});",
+      "console.log(doc);"
     ],
     "description": "Express mongoose create"
   },
   "Express mongoose update": {
     "prefix": "exmgupdate",
     "body": [
-      "const doc = await ${1:Model}.findByIdAndUpdate(${2:id}, ${3:update}, { new: true });"
+      "const doc = await ${1:yourModel}.findByIdAndUpdate(${2:yourId}, ${3:yourUpdate}, { new: true });",
+      "console.log(doc);"
     ],
     "description": "Express mongoose findByIdAndUpdate"
   },
   "Express mongoose delete": {
     "prefix": "exmgdel",
     "body": [
-      "const doc = await ${1:Model}.findByIdAndDelete(${2:id});"
+      "const doc = await ${1:yourModel}.findByIdAndDelete(${2:yourId});",
+      "console.log(doc);"
     ],
     "description": "Express mongoose findByIdAndDelete"
   },
   "Express mongoose populate": {
     "prefix": "exmgpop",
     "body": [
-      "const docs = await ${1:Model}.find().populate('${2:refField}');"
+      "const docs = await ${1:yourModel}.find().populate('${2:yourRefField}');",
+      "console.log(docs);"
     ],
     "description": "Express mongoose populate"
   },
@@ -560,7 +566,7 @@
       "const app = require('${1:../app}');",
       "",
       "describe('${2:GET /}', () => {",
-      "  it('${3:works}', async () => {",
+      "  it('${3:yourWorks}', async () => {",
       "    const res = await request(app).get('/').expect(200);",
       "  });",
       "});"
@@ -570,7 +576,7 @@
   "Express error json": {
     "prefix": "exerrjson",
     "body": [
-      "res.status(${1:400}).json({ error: '${2:message}' });"
+      "res.status(${1:400}).json({ error: '${2:yourMessage}' });"
     ],
     "description": "Express error response"
   }

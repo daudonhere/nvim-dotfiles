@@ -343,7 +343,9 @@ Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanp
 - `shift + tab` = mundur tabstop snippet
 - `esc` = tutup popup (fallback keluar insert)
 
-Sumber: lsp (dot biru ●), path (hijau ●), snippets (kuning ●), buffer (ungu ●) — dot berwarna di kiri label menandai asal item. Snippet: LuaSnip (friendly-snippets + 516 snippet custom, lihat `snippets/`).
+Sumber: lsp (dot biru ●), path (hijau ●), snippets (kuning ●), buffer (ungu ●) — dot berwarna di kiri label menandai asal item. Snippet: LuaSnip (friendly-snippets + snippet custom di `snippets/`).
+
+Konvensi placeholder snippet custom: identifier yang wajib diganti memakai awalan `your` (contoh: `yourData`, `yourItem`, `yourIndex`, `yourCondition`, `yourErr`, `yourRoute`, `yourThing`). Placeholder berisi statement/kode lengkap (query SQL, `{ name }`, angka port, `115200`) dibiarkan sesuai aslinya. Snippet penghasil data menyertakan log bawaan agar bisa dicek langsung: TS/JS `console.log(...)`, Python `print(...)`, Arduino `Serial.println(...)`, Solidity `console2.log(...)` (+ `import {console2} from 'forge-std/console2.sol';` otomatis di snippet test/script). Loop TS (`forof`/`forin`/`foreach`/`guard`/`tryc`) adalah autosnippet; `for` (versi `your*` + `console.log`) meng-override friendly-snippets via priority 1001.
 
 Dropdown popup: border rounded + background `TelescopeNormal`/`TelescopeBorder` (sama dengan popup Find & Replace), group hl dibuat ulang lewat autocmd `ColorScheme`.
 

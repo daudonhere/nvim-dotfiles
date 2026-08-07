@@ -3,11 +3,11 @@
     "prefix": "nc",
     "body": [
       "import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';",
-      "import { ${1:Thing}Service } from './${2:thing}.service';",
+      "import { ${1:yourThing}Service } from './${2:yourThing}.service';",
       "",
-      "@Controller('${3:route}')",
-      "export class ${1:Thing}Controller {",
-      "  constructor(private readonly ${1:Thing}Service: ${1:Thing}Service) {}",
+      "@Controller('${3:yourRoute}')",
+      "export class ${1:yourThing}Controller {",
+      "  constructor(private readonly ${1:yourThing}Service: ${1:yourThing}Service) {}",
       "}"
     ],
     "description": "NestJS controller skeleton"
@@ -22,7 +22,7 @@
       "  controllers: [],",
       "  providers: [],",
       "})",
-      "export class ${1:App}Module {}"
+      "export class ${1:yourApp}Module {}"
     ],
     "description": "NestJS module skeleton"
   },
@@ -32,7 +32,7 @@
       "import { Injectable } from '@nestjs/common';",
       "",
       "@Injectable()",
-      "export class ${1:Thing}Service {",
+      "export class ${1:yourThing}Service {",
       "  ${2}",
       "}"
     ],
@@ -41,9 +41,11 @@
   "NestJS GET": {
     "prefix": "ng",
     "body": [
-      "@Get('${1:route}')",
-      "${2:findAll}() {",
-      "  return this.${3:service}.${2:findAll}();",
+      "@Get('${1:yourRoute}')",
+      "${2:yourFindAll}() {",
+      "  const ${4:yourResult} = this.${3:yourService}.${2:yourFindAll}();",
+      "  console.log(${4:yourResult});",
+      "  return ${4:yourResult};",
       "}"
     ],
     "description": "NestJS @Get handler"
@@ -51,9 +53,11 @@
   "NestJS POST": {
     "prefix": "np",
     "body": [
-      "@Post('${1:route}')",
-      "create(@Body() ${2:createDto}: Create${3:Thing}Dto) {",
-      "  return this.${4:service}.create(${2:createDto});",
+      "@Post('${1:yourRoute}')",
+      "create(@Body() ${2:yourCreateDto}: Create${3:yourThing}Dto) {",
+      "  const ${5:yourResult} = this.${4:yourService}.create(${2:yourCreateDto});",
+      "  console.log(${5:yourResult});",
+      "  return ${5:yourResult};",
       "}"
     ],
     "description": "NestJS @Post handler"
@@ -61,9 +65,11 @@
   "NestJS PUT": {
     "prefix": "nput",
     "body": [
-      "@Put('${1:id}')",
-      "update(@Param('${1:id}') ${1:id}: string, @Body() ${2:updateDto}: Update${3:Thing}Dto) {",
-      "  return this.${4:service}.update(${1:id}, ${2:updateDto});",
+      "@Put('${1:yourId}')",
+      "update(@Param('${1:yourId}') ${1:yourId}: string, @Body() ${2:yourUpdateDto}: Update${3:yourThing}Dto) {",
+      "  const ${5:yourResult} = this.${4:yourService}.update(${1:yourId}, ${2:yourUpdateDto});",
+      "  console.log(${5:yourResult});",
+      "  return ${5:yourResult};",
       "}"
     ],
     "description": "NestJS @Put handler"
@@ -71,9 +77,11 @@
   "NestJS PATCH": {
     "prefix": "npatch",
     "body": [
-      "@Patch('${1:id}')",
-      "update(@Param('${1:id}') ${1:id}: string, @Body() ${2:updateDto}: Update${3:Thing}Dto) {",
-      "  return this.${4:service}.update(${1:id}, ${2:updateDto});",
+      "@Patch('${1:yourId}')",
+      "update(@Param('${1:yourId}') ${1:yourId}: string, @Body() ${2:yourUpdateDto}: Update${3:yourThing}Dto) {",
+      "  const ${5:yourResult} = this.${4:yourService}.update(${1:yourId}, ${2:yourUpdateDto});",
+      "  console.log(${5:yourResult});",
+      "  return ${5:yourResult};",
       "}"
     ],
     "description": "NestJS @Patch handler"
@@ -81,9 +89,11 @@
   "NestJS DELETE": {
     "prefix": "ndel",
     "body": [
-      "@Delete('${1:id}')",
-      "remove(@Param('${1:id}') ${1:id}: string) {",
-      "  return this.${2:service}.remove(${1:id});",
+      "@Delete('${1:yourId}')",
+      "remove(@Param('${1:yourId}') ${1:yourId}: string) {",
+      "  const ${3:yourResult} = this.${2:yourService}.remove(${1:yourId});",
+      "  console.log(${3:yourResult});",
+      "  return ${3:yourResult};",
       "}"
     ],
     "description": "NestJS @Delete handler"
@@ -91,21 +101,21 @@
   "NestJS Param": {
     "prefix": "nparam",
     "body": [
-      "@Param('${1:id}') ${1:id}: string"
+      "@Param('${1:yourId}') ${1:yourId}: string"
     ],
     "description": "NestJS @Param argument"
   },
   "NestJS Query": {
     "prefix": "nquery",
     "body": [
-      "@Query('${1:page}') ${1:page}: string"
+      "@Query('${1:yourPage}') ${1:yourPage}: string"
     ],
     "description": "NestJS @Query argument"
   },
   "NestJS Body": {
     "prefix": "nbody",
     "body": [
-      "@Body() ${1:body}: ${2:Type}"
+      "@Body() ${1:yourBody}: ${2:yourType}"
     ],
     "description": "NestJS @Body argument"
   },
@@ -126,7 +136,7 @@
   "NestJS DTO": {
     "prefix": "ndto",
     "body": [
-      "export class Create${1:Thing}Dto {",
+      "export class Create${1:yourThing}Dto {",
       "  ${2}",
       "}"
     ],
@@ -135,14 +145,14 @@
   "NestJS Inject": {
     "prefix": "ninj",
     "body": [
-      "@Inject('${1:TOKEN}') private readonly ${2:dependency}: ${3:Type},"
+      "@Inject('${1:yourTOKEN}') private readonly ${2:yourDependency}: ${3:yourType},"
     ],
     "description": "NestJS @Inject token"
   },
   "NestJS Guards": {
     "prefix": "nguard",
     "body": [
-      "@UseGuards(${1:AuthGuard})"
+      "@UseGuards(${1:yourAuthGuard})"
     ],
     "description": "NestJS @UseGuards"
   },
@@ -152,7 +162,7 @@
       "import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';",
       "",
       "@Injectable()",
-      "export class ${1:Role}Guard implements CanActivate {",
+      "export class ${1:yourRole}Guard implements CanActivate {",
       "  canActivate(context: ExecutionContext): boolean {",
       "    const request = context.switchToHttp().getRequest();",
       "    ${2}",
@@ -186,7 +196,7 @@
   "NestJS Roles decorator": {
     "prefix": "nroles",
     "body": [
-      "@Roles('${1:admin}')"
+      "@Roles('${1:yourAdmin}')"
     ],
     "description": "NestJS @Roles usage"
   },
@@ -209,14 +219,14 @@
   "NestJS ParseIntPipe": {
     "prefix": "nparseint",
     "body": [
-      "@Param('${1:id}', ParseIntPipe) ${1:id}: number"
+      "@Param('${1:yourId}', ParseIntPipe) ${1:yourId}: number"
     ],
     "description": "NestJS ParseIntPipe"
   },
   "NestJS ParseUUIDPipe": {
     "prefix": "npuuid",
     "body": [
-      "@Param('${1:id}', ParseUUIDPipe) ${1:id}: string"
+      "@Param('${1:yourId}', ParseUUIDPipe) ${1:yourId}: string"
     ],
     "description": "NestJS ParseUUIDPipe"
   },
@@ -233,7 +243,7 @@
       "import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';",
       "",
       "@Catch(HttpException)",
-      "export class ${1:Http}ExceptionFilter implements ExceptionFilter {",
+      "export class ${1:yourHttp}ExceptionFilter implements ExceptionFilter {",
       "  catch(exception: HttpException, host: ArgumentsHost) {",
       "    const response = host.switchToHttp().getResponse();",
       "    const status = exception.getStatus();",
@@ -249,28 +259,28 @@
   "NestJS throw BadRequest": {
     "prefix": "nbad",
     "body": [
-      "throw new BadRequestException('${1:message}');"
+      "throw new BadRequestException('${1:yourMessage}');"
     ],
     "description": "NestJS BadRequestException"
   },
   "NestJS throw NotFound": {
     "prefix": "n404",
     "body": [
-      "throw new NotFoundException('${1:message}');"
+      "throw new NotFoundException('${1:yourMessage}');"
     ],
     "description": "NestJS NotFoundException"
   },
   "NestJS throw Unauthorized": {
     "prefix": "n401",
     "body": [
-      "throw new UnauthorizedException('${1:message}');"
+      "throw new UnauthorizedException('${1:yourMessage}');"
     ],
     "description": "NestJS UnauthorizedException"
   },
   "NestJS throw Forbidden": {
     "prefix": "n403",
     "body": [
-      "throw new ForbiddenException('${1:message}');"
+      "throw new ForbiddenException('${1:yourMessage}');"
     ],
     "description": "NestJS ForbiddenException"
   },
@@ -292,7 +302,7 @@
     "prefix": "ncsrv",
     "body": [
       "constructor(private configService: ConfigService) {}",
-      "this.configService.get<string>('${1:KEY}')"
+      "this.configService.get<string>('${1:yourKEY}')"
     ],
     "description": "NestJS ConfigService get"
   },
@@ -302,7 +312,7 @@
       "import { Injectable, NestMiddleware } from '@nestjs/common';",
       "",
       "@Injectable()",
-      "export class ${1:Logger}Middleware implements NestMiddleware {",
+      "export class ${1:yourLogger}Middleware implements NestMiddleware {",
       "  use(req: any, res: any, next: () => void) {",
       "    ${2}",
       "    next();",
@@ -314,8 +324,8 @@
   "NestJS Logger": {
     "prefix": "nlogger",
     "body": [
-      "private readonly logger = new Logger(${1:ClassName}.name);",
-      "this.logger.log('${2:message}');"
+      "private readonly logger = new Logger(${1:yourClassName}.name);",
+      "this.logger.log('${2:yourMessage}');"
     ],
     "description": "NestJS Logger usage"
   },
@@ -326,10 +336,10 @@
       "import { Server, Socket } from 'socket.io';",
       "",
       "@WebSocketGateway({ cors: true })",
-      "export class ${1:Events}Gateway {",
+      "export class ${1:yourEvents}Gateway {",
       "  @WebSocketServer() server: Server;",
       "",
-      "  @SubscribeMessage('${2:message}')",
+      "  @SubscribeMessage('${2:yourMessage}')",
       "  handleMessage(client: Socket, payload: any): void {",
       "    ${3}",
       "  }",
@@ -342,13 +352,13 @@
     "body": [
       "import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';",
       "",
-      "@Entity('${1:things}')",
-      "export class ${2:Thing} {",
+      "@Entity('${1:yourThings}')",
+      "export class ${2:yourThing} {",
       "  @PrimaryGeneratedColumn('uuid')",
       "  id: string;",
       "",
       "  @Column()",
-      "  ${3:name}: string;",
+      "  ${3:yourName}: string;",
       "}"
     ],
     "description": "NestJS TypeORM entity"
@@ -360,7 +370,7 @@
       "import { Repository } from 'typeorm';",
       "",
       "constructor(",
-      "  @InjectRepository(${1:Thing}) private readonly repo: Repository<${1:Thing}>,",
+      "  @InjectRepository(${1:yourThing}) private readonly repo: Repository<${1:yourThing}>,",
       ") {}"
     ],
     "description": "NestJS InjectRepository"
@@ -368,8 +378,8 @@
   "NestJS ManyToOne": {
     "prefix": "nmanytoone",
     "body": [
-      "@ManyToOne(() => ${1:User}, (${1:user}) => ${1:user}.${2:things})",
-      "${1:user}: ${1:User};"
+      "@ManyToOne(() => ${1:yourUser}, (${1:yourUser}) => ${1:yourUser}.${2:yourThings})",
+      "${1:yourUser}: ${1:yourUser};"
     ],
     "description": "NestJS TypeORM ManyToOne"
   },
@@ -377,7 +387,7 @@
     "prefix": "nprisma",
     "body": [
       "constructor(private prisma: PrismaService) {}",
-      "await this.prisma.${1:thing}.${2:findMany}();"
+      "await this.prisma.${1:yourThing}.${2:yourFindMany}();"
     ],
     "description": "NestJS inject PrismaService"
   },
@@ -388,7 +398,7 @@
       "",
       "@IsString()",
       "@IsNotEmpty()",
-      "${1:name}: string;"
+      "${1:yourName}: string;"
     ],
     "description": "NestJS class-validator decorators"
   },
@@ -399,7 +409,7 @@
       "",
       "@IsNumber()",
       "@Min(${1:0})",
-      "${2:price}: number;"
+      "${2:yourPrice}: number;"
     ],
     "description": "NestJS numeric validation"
   },
@@ -409,7 +419,7 @@
       "import { IsEmail } from 'class-validator';",
       "",
       "@IsEmail()",
-      "${1:email}: string;"
+      "${1:yourEmail}: string;"
     ],
     "description": "NestJS email validation"
   },
@@ -418,15 +428,15 @@
     "body": [
       "import { ApiTags, ApiOperation, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';",
       "",
-      "@ApiTags('${1:things}')"
+      "@ApiTags('${1:yourThings}')"
     ],
     "description": "NestJS Swagger @ApiTags"
   },
   "NestJS Swagger operation": {
     "prefix": "nswagop",
     "body": [
-      "@ApiOperation({ summary: '${1:summary}' })",
-      "@ApiResponse({ status: ${2:200}, description: '${3:ok}' })"
+      "@ApiOperation({ summary: '${1:yourSummary}' })",
+      "@ApiResponse({ status: ${2:200}, description: '${3:yourOk}' })"
     ],
     "description": "NestJS Swagger operation"
   },
@@ -454,38 +464,42 @@
     "prefix": "ncrud",
     "body": [
       "import { Controller, Get, Post, Body, Param, Patch, Delete, HttpCode, Query } from '@nestjs/common';",
-      "import { ${1:Thing}Service } from './${2:thing}.service';",
-      "import { Create${1:Thing}Dto } from './dto/create-${2:thing}.dto';",
-      "import { Update${1:Thing}Dto } from './dto/update-${2:thing}.dto';",
+      "import { ${1:yourThing}Service } from './${2:yourThing}.service';",
+      "import { Create${1:yourThing}Dto } from './dto/create-${2:yourThing}.dto';",
+      "import { Update${1:yourThing}Dto } from './dto/update-${2:yourThing}.dto';",
       "",
-      "@Controller('${3:route}')",
-      "export class ${1:Thing}Controller {",
-      "  constructor(private readonly ${1:Thing}Service: ${1:Thing}Service) {}",
+      "@Controller('${3:yourRoute}')",
+      "export class ${1:yourThing}Controller {",
+      "  constructor(private readonly ${1:yourThing}Service: ${1:yourThing}Service) {}",
       "",
       "  @Post()",
-      "  create(@Body() dto: Create${1:Thing}Dto) {",
-      "    return this.${1:Thing}Service.create(dto);",
+      "  create(@Body() dto: Create${1:yourThing}Dto) {",
+      "    const result = this.${1:yourThing}Service.create(dto);",
+      "    console.log(result);",
+      "    return result;",
       "  }",
       "",
       "  @Get()",
       "  findAll(@Query('page') page?: string) {",
-      "    return this.${1:Thing}Service.findAll(page);",
+      "    const result = this.${1:yourThing}Service.findAll(page);",
+      "    console.log(result);",
+      "    return result;",
       "  }",
       "",
       "  @Get(':id')",
       "  findOne(@Param('id') id: string) {",
-      "    return this.${1:Thing}Service.findOne(id);",
+      "    return this.${1:yourThing}Service.findOne(id);",
       "  }",
       "",
       "  @Patch(':id')",
-      "  update(@Param('id') id: string, @Body() dto: Update${1:Thing}Dto) {",
-      "    return this.${1:Thing}Service.update(id, dto);",
+      "  update(@Param('id') id: string, @Body() dto: Update${1:yourThing}Dto) {",
+      "    return this.${1:yourThing}Service.update(id, dto);",
       "  }",
       "",
       "  @Delete(':id')",
       "  @HttpCode(204)",
       "  remove(@Param('id') id: string) {",
-      "    return this.${1:Thing}Service.remove(id);",
+      "    return this.${1:yourThing}Service.remove(id);",
       "  }",
       "}"
     ],
@@ -497,7 +511,7 @@
       "import { IsInt } from 'class-validator';",
       "",
       "@IsInt()",
-      "${1:count}: number;"
+      "${1:yourCount}: number;"
     ],
     "description": "NestJS @IsInt"
   },
@@ -507,7 +521,7 @@
       "import { IsBoolean } from 'class-validator';",
       "",
       "@IsBoolean()",
-      "${1:active}: boolean;"
+      "${1:yourActive}: boolean;"
     ],
     "description": "NestJS @IsBoolean"
   },
@@ -518,7 +532,7 @@
       "",
       "@IsArray()",
       "@IsString({ each: true })",
-      "${1:tags}: string[];"
+      "${1:yourTags}: string[];"
     ],
     "description": "NestJS @IsArray of strings"
   },
@@ -528,7 +542,7 @@
       "import { IsDateString } from 'class-validator';",
       "",
       "@IsDateString()",
-      "${1:date}: string;"
+      "${1:yourDate}: string;"
     ],
     "description": "NestJS @IsDateString"
   },
@@ -539,7 +553,7 @@
       "",
       "@MinLength(${1:3})",
       "@MaxLength(${2:50})",
-      "${3:name}: string;"
+      "${3:yourName}: string;"
     ],
     "description": "NestJS string length validation"
   },
@@ -549,7 +563,7 @@
       "import { IsOptional } from 'class-validator';",
       "",
       "@IsOptional()",
-      "${1:field}?: ${2:string};"
+      "${1:yourField}?: ${2:yourString};"
     ],
     "description": "NestJS @IsOptional"
   },
@@ -559,7 +573,7 @@
       "import { ArgumentMetadata, Injectable, PipeTransform, BadRequestException } from '@nestjs/common';",
       "",
       "@Injectable()",
-      "export class ${1:Parse}Pipe implements PipeTransform {",
+      "export class ${1:yourParse}Pipe implements PipeTransform {",
       "  transform(value: any, metadata: ArgumentMetadata) {",
       "    ${2}",
       "    return value;",
@@ -575,7 +589,7 @@
       "import { Observable } from 'rxjs';",
       "",
       "@Injectable()",
-      "export class ${1:Log}Interceptor implements NestInterceptor {",
+      "export class ${1:yourLog}Interceptor implements NestInterceptor {",
       "  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {",
       "    ${2}",
       "    return next.handle();",
@@ -590,8 +604,8 @@
       "import { FileInterceptor } from '@nestjs/platform-express';",
       "import { UploadedFile } from '@nestjs/common';",
       "",
-      "@Post('${1:upload}')",
-      "@UseInterceptors(FileInterceptor('${2:file}'))",
+      "@Post('${1:yourUpload}')",
+      "@UseInterceptors(FileInterceptor('${2:yourFile}'))",
       "uploadFile(@UploadedFile() file: Express.Multer.File) {",
       "  return { file: file.originalname };",
       "}"
@@ -625,7 +639,7 @@
       "import { OnEvent } from '@nestjs/event-emitter';",
       "",
       "@OnEvent('${1:event.name}')",
-      "handleEvent(payload: ${2:any}) {",
+      "handleEvent(payload: ${2:yourAny}) {",
       "  ${3}",
       "}"
     ],
@@ -636,7 +650,7 @@
     "body": [
       "import { forwardRef } from '@nestjs/common';",
       "",
-      "forwardRef(() => ${1:Module})"
+      "forwardRef(() => ${1:yourModule})"
     ],
     "description": "NestJS forwardRef"
   },
@@ -645,7 +659,7 @@
     "body": [
       "import { OnModuleInit } from '@nestjs/common';",
       "",
-      "export class ${1:Service} implements OnModuleInit {",
+      "export class ${1:yourService} implements OnModuleInit {",
       "  async onModuleInit() {",
       "    ${2}",
       "  }",
@@ -656,7 +670,7 @@
   "NestJS TypeOrmModule.forFeature": {
     "prefix": "nmoduletypeorm",
     "body": [
-      "TypeOrmModule.forFeature([${1:Thing}]),"
+      "TypeOrmModule.forFeature([${1:yourThing}]),"
     ],
     "description": "NestJS TypeOrmModule.forFeature"
   },
@@ -664,7 +678,7 @@
     "prefix": "nmodulejwt",
     "body": [
       "JwtModule.register({",
-      "  secret: process.env.${1:JWT_SECRET},",
+      "  secret: process.env.${1:yourJWT_SECRET},",
       "  signOptions: { expiresIn: '${2:7d}' },",
       "}),"
     ],
@@ -684,12 +698,14 @@
       "import { Injectable, UnauthorizedException } from '@nestjs/common';",
       "",
       "@Injectable()",
-      "export class ${1:AuthService} {",
+      "export class ${1:yourAuthService} {",
       "  constructor(private jwtService: JwtService) {}",
       "",
       "  async login(user: { id: string; role: string }) {",
       "    const payload = { sub: user.id, role: user.role };",
-      "    return { access_token: await this.jwtService.signAsync(payload) };",
+      "    const token = await this.jwtService.signAsync(payload);",
+      "    console.log('Token:', token);",
+      "    return { access_token: token };",
       "  }",
       "}"
     ],
@@ -699,17 +715,17 @@
     "prefix": "nestest",
     "body": [
       "import { Test, TestingModule } from '@nestjs/testing';",
-      "import { ${1:Thing}Service } from './${2:thing}.service';",
+      "import { ${1:yourThing}Service } from './${2:yourThing}.service';",
       "",
-      "describe('${1:Thing}Service', () => {",
-      "  let service: ${1:Thing}Service;",
+      "describe('${1:yourThing}Service', () => {",
+      "  let service: ${1:yourThing}Service;",
       "",
       "  beforeEach(async () => {",
       "    const module: TestingModule = await Test.createTestingModule({",
-      "      providers: [${1:Thing}Service],",
+      "      providers: [${1:yourThing}Service],",
       "    }).compile();",
       "",
-      "    service = module.get(${1:Thing}Service);",
+      "    service = module.get(${1:yourThing}Service);",
       "  });",
       "",
       "  it('should be defined', () => {",
@@ -725,21 +741,21 @@
       "import { Test, TestingModule } from '@nestjs/testing';",
       "import { INestApplication } from '@nestjs/common';",
       "import * as request from 'supertest';",
-      "import { ${1:AppModule} } from './../src/app.module';",
+      "import { ${1:yourAppModule} } from './../src/app.module';",
       "",
-      "describe('${2:AppController} (e2e)', () => {",
+      "describe('${2:yourAppController} (e2e)', () => {",
       "  let app: INestApplication;",
       "",
       "  beforeEach(async () => {",
       "    const moduleFixture: TestingModule = await Test.createTestingModule({",
-      "      imports: [${1:AppModule}],",
+      "      imports: [${1:yourAppModule}],",
       "    }).compile();",
       "",
       "    app = moduleFixture.createNestApplication();",
       "    await app.init();",
       "  });",
       "",
-      "  it('${3:works} (GET /)', () => {",
+      "  it('${3:yourWorks} (GET /)', () => {",
       "    return request(app.getHttpServer()).get('/').expect(200);",
       "  });",
       "});"
@@ -772,7 +788,7 @@
   "NestJS global prefix": {
     "prefix": "nglobalprefix",
     "body": [
-      "app.setGlobalPrefix('${1:api}');"
+      "app.setGlobalPrefix('${1:yourApi}');"
     ],
     "description": "NestJS app.setGlobalPrefix"
   },

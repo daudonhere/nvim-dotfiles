@@ -8,13 +8,13 @@
       "const config: HardhatUserConfig = {",
       "  solidity: '${1:0.8.24}',",
       "  networks: {",
-      "    ${2:sepolia}: {",
-      "      url: process.env.${3:RPC_URL} as string,",
-      "      accounts: [process.env.${4:PRIVATE_KEY} as string],",
+      "    ${2:yourSepolia}: {",
+      "      url: process.env.${3:yourRPC_URL} as string,",
+      "      accounts: [process.env.${4:yourPRIVATE_KEY} as string],",
       "    },",
       "  },",
       "  etherscan: {",
-      "    apiKey: process.env.${5:ETHERSCAN_API_KEY},",
+      "    apiKey: process.env.${5:yourETHERSCAN_API_KEY},",
       "  },",
       "};",
       "",
@@ -28,10 +28,10 @@
       "import { ethers } from 'hardhat';",
       "",
       "async function main() {",
-      "  const ${1:Token} = await ethers.getContractFactory('${1:Token}');",
-      "  const token = await ${1:Token}.deploy(${2});",
+      "  const ${1:yourToken} = await ethers.getContractFactory('${1:yourToken}');",
+      "  const token = await ${1:yourToken}.deploy(${2});",
       "  await token.waitForDeployment();",
-      "  console.log('${1:Token} deployed to:', await token.getAddress());",
+      "  console.log('${1:yourToken} deployed to:', await token.getAddress());",
       "}",
       "",
       "main().catch((error) => {",
@@ -61,15 +61,15 @@
       "const { expect } = require('chai');",
       "const { ethers } = require('hardhat');",
       "",
-      "describe('${1:Thing}', function () {",
-      "  let ${2:thing};",
-      "  let ${3:owner};",
+      "describe('${1:yourThing}', function () {",
+      "  let ${2:yourThing};",
+      "  let ${3:yourOwner};",
       "",
       "  beforeEach(async function () {",
-      "    [${3:owner}] = await ethers.getSigners();",
-      "    const ${4:Factory} = await ethers.getContractFactory('${1:Thing}');",
-      "    ${2:thing} = await ${4:Factory}.deploy();",
-      "    await ${2:thing}.waitForDeployment();",
+      "    [${3:yourOwner}] = await ethers.getSigners();",
+      "    const ${4:yourFactory} = await ethers.getContractFactory('${1:yourThing}');",
+      "    ${2:yourThing} = await ${4:yourFactory}.deploy();",
+      "    await ${2:yourThing}.waitForDeployment();",
       "  });",
       "",
       "  it('${5:should work}', async function () {",
@@ -84,9 +84,9 @@
     "body": [
       "import { task } from 'hardhat/config';",
       "",
-      "task('${1:name}', '${2:description}')",
-      "  .addParam('${3:param}', '${4}')",
-      "  .setAction(async ({ ${3:param} }, hre) => {",
+      "task('${1:yourName}', '${2:yourDescription}')",
+      "  .addParam('${3:yourParam}', '${4}')",
+      "  .setAction(async ({ ${3:yourParam} }, hre) => {",
       "    ${5}",
       "  });"
     ],
@@ -105,21 +105,21 @@
   "Hardhat getContractFactory": {
     "prefix": "hhcf",
     "body": [
-      "const ${1:Token} = await ethers.getContractFactory('${1:Token}');"
+      "const ${1:yourToken} = await ethers.getContractFactory('${1:yourToken}');"
     ],
     "description": "Hardhat getContractFactory"
   },
   "Hardhat getContractAt": {
     "prefix": "hhget",
     "body": [
-      "const ${1:token} = await ethers.getContractAt('${2:Token}', '${3:0x...}');"
+      "const ${1:yourToken} = await ethers.getContractAt('${2:yourToken}', '${3:0x...}');"
     ],
     "description": "Hardhat getContractAt"
   },
   "Hardhat signers": {
     "prefix": "hhsigner",
     "body": [
-      "const [${1:deployer}, ${2:user}] = await ethers.getSigners();"
+      "const [${1:yourDeployer}, ${2:yourUser}] = await ethers.getSigners();"
     ],
     "description": "Hardhat getSigners"
   },
@@ -148,14 +148,14 @@
   "Hardhat formatUnits": {
     "prefix": "hhfmt",
     "body": [
-      "ethers.formatUnits(${1:value}, ${2:18})"
+      "ethers.formatUnits(${1:yourValue}, ${2:18})"
     ],
     "description": "Hardhat ethers.formatUnits"
   },
   "Hardhat console.log": {
     "prefix": "hhcon",
     "body": [
-      "console.log('${1:label}:', ${2:value});"
+      "console.log('${1:yourLabel}:', ${2:yourValue});"
     ],
     "description": "Hardhat console.log"
   },
@@ -164,8 +164,8 @@
     "body": [
       "import { upgrades } from 'hardhat';",
       "",
-      "const ${1:V1} = await ethers.getContractFactory('${1:V1}');",
-      "const proxy = await upgrades.deployProxy(${1:V1}, [${2}], { initializer: 'initialize' });",
+      "const ${1:yourV1} = await ethers.getContractFactory('${1:yourV1}');",
+      "const proxy = await upgrades.deployProxy(${1:yourV1}, [${2}], { initializer: 'initialize' });",
       "await proxy.waitForDeployment();"
     ],
     "description": "Hardhat OpenZeppelin upgrades deployProxy"
@@ -173,15 +173,15 @@
   "Hardhat expect revert": {
     "prefix": "hhexpect",
     "body": [
-      "await expect(${1:tx}).to.be.revertedWith('${2:reason}');"
+      "await expect(${1:yourTx}).to.be.revertedWith('${2:yourReason}');"
     ],
     "description": "Hardhat chai expect revert"
   },
   "Hardhat expect emit": {
     "prefix": "hhemit",
     "body": [
-      "await expect(${1:tx})",
-      "  .to.emit(${2:contract}, '${3:Event}')",
+      "await expect(${1:yourTx})",
+      "  .to.emit(${2:yourContract}, '${3:yourEvent}')",
       "  .withArgs(${4});"
     ],
     "description": "Hardhat chai expect emit"
@@ -189,8 +189,8 @@
   "Hardhat expect increase": {
     "prefix": "hhinc",
     "body": [
-      "await expect(${1:tx})",
-      "  .to.changeTokenBalance(${2:token}, ${3:addr}, ${4:ethers.parseEther('1')});"
+      "await expect(${1:yourTx})",
+      "  .to.changeTokenBalance(${2:yourToken}, ${3:yourAddr}, ${4:ethers.parseEther('1')});"
     ],
     "description": "Hardhat chai changeTokenBalance"
   },
@@ -205,35 +205,39 @@
   "Hardhat gas estimate": {
     "prefix": "hhgas",
     "body": [
-      "const gas = await ${1:contract}.${2:method}.estimateGas(${3});"
+      "const gas = await ${1:yourContract}.${2:yourMethod}.estimateGas(${3});",
+      "console.log('Gas:', gas.toString());"
     ],
     "description": "Hardhat estimateGas"
   },
   "Hardhat balanceOf": {
     "prefix": "hhbalof",
     "body": [
-      "const balance = await ${1:token}.balanceOf(${2:addr});"
+      "const balance = await ${1:yourToken}.balanceOf(${2:yourAddr});",
+      "console.log('Balance:', ethers.formatUnits(balance, 18));"
     ],
     "description": "Hardhat ERC20 balanceOf"
   },
   "Hardhat provider block": {
     "prefix": "hhblock",
     "body": [
-      "const block = await ethers.provider.getBlock('${1:latest}');"
+      "const block = await ethers.provider.getBlock('${1:yourLatest}');",
+      "console.log(block);"
     ],
     "description": "Hardhat getBlock"
   },
   "Hardhat getAddress": {
     "prefix": "hhaddr",
     "body": [
-      "await ${1:contract}.getAddress()"
+      "await ${1:yourContract}.getAddress()"
     ],
     "description": "Hardhat contract getAddress"
   },
   "Hardhat chainId": {
     "prefix": "hhchainid",
     "body": [
-      "const chainId = (await ethers.provider.getNetwork()).chainId;"
+      "const chainId = (await ethers.provider.getNetwork()).chainId;",
+      "console.log('Chain ID:', chainId);"
     ],
     "description": "Hardhat chainId"
   },
@@ -241,42 +245,43 @@
     "prefix": "hhprovider",
     "body": [
       "const provider = hre.network.provider;",
-      "const blockNumber = await provider.send('eth_blockNumber', []);"
+      "const blockNumber = await provider.send('eth_blockNumber', []);",
+      "console.log('Block number:', blockNumber);"
     ],
     "description": "Hardhat network provider"
   },
   "Hardhat approve": {
     "prefix": "hhapprove",
     "body": [
-      "await ${1:token}.connect(${2:owner}).approve(${3:spender}, ${4:ethers.parseEther('100')});"
+      "await ${1:yourToken}.connect(${2:yourOwner}).approve(${3:yourSpender}, ${4:ethers.parseEther('100')});"
     ],
     "description": "Hardhat ERC20 approve"
   },
   "Hardhat transfer": {
     "prefix": "hhtransfer",
     "body": [
-      "await ${1:token}.connect(${2:owner}).transfer(${3:to}, ${4:ethers.parseEther('1')});"
+      "await ${1:yourToken}.connect(${2:yourOwner}).transfer(${3:yourTo}, ${4:ethers.parseEther('1')});"
     ],
     "description": "Hardhat ERC20 transfer"
   },
   "Hardhat allowance": {
     "prefix": "hhallowance",
     "body": [
-      "const allowance = await ${1:token}.allowance(${2:owner}, ${3:spender});"
+      "const allowance = await ${1:yourToken}.allowance(${2:yourOwner}, ${3:yourSpender});"
     ],
     "description": "Hardhat ERC20 allowance"
   },
   "Hardhat connect signer": {
     "prefix": "hhconnect",
     "body": [
-      "const ${1:signed} = ${2:contract}.connect(${3:signer});"
+      "const ${1:yourSigned} = ${2:yourContract}.connect(${3:yourSigner});"
     ],
     "description": "Hardhat contract.connect"
   },
   "Hardhat attach": {
     "prefix": "hhattach",
     "body": [
-      "const ${1:token} = await ${2:factory}.attach('${3:0x...}');"
+      "const ${1:yourToken} = await ${2:yourFactory}.attach('${3:0x...}');"
     ],
     "description": "Hardhat contract.attach"
   },
@@ -287,12 +292,12 @@
       "",
       "async function deployFixture() {",
       "  const [owner] = await ethers.getSigners();",
-      "  const ${1:Factory} = await ethers.getContractFactory('${2:Thing}');",
-      "  const ${3:thing} = await ${1:Factory}.deploy();",
-      "  return { owner, ${3:thing} };",
+      "  const ${1:yourFactory} = await ethers.getContractFactory('${2:yourThing}');",
+      "  const ${3:yourThing} = await ${1:yourFactory}.deploy();",
+      "  return { owner, ${3:yourThing} };",
       "}",
       "",
-      "const { owner, ${3:thing} } = await loadFixture(deployFixture);"
+      "const { owner, ${3:yourThing} } = await loadFixture(deployFixture);"
     ],
     "description": "Hardhat loadFixture pattern"
   },
@@ -307,7 +312,7 @@
     "prefix": "hhassert",
     "body": [
       "const { assert } = require('chai');",
-      "assert.equal(${1:actual}, ${2:expected});"
+      "assert.equal(${1:yourActual}, ${2:yourExpected});"
     ],
     "description": "Hardhat chai assert.equal"
   },
@@ -321,24 +326,26 @@
   "Hardhat token name/symbol": {
     "prefix": "hhname",
     "body": [
-      "const name = await ${1:token}.name();",
-      "const symbol = await ${1:token}.symbol();"
+      "const name = await ${1:yourToken}.name();",
+      "const symbol = await ${1:yourToken}.symbol();",
+      "console.log(name, symbol);"
     ],
     "description": "Hardhat ERC20 name/symbol"
   },
   "Hardhat tx wait": {
     "prefix": "hhtxwait",
     "body": [
-      "const tx = await ${1:contract}.${2:method}(${3});",
-      "await tx.wait();"
+      "const tx = await ${1:yourContract}.${2:yourMethod}(${3});",
+      "await tx.wait();",
+      "console.log('Tx hash:', tx.hash);"
     ],
     "description": "Hardhat send tx + wait"
   },
   "Hardhat env check": {
     "prefix": "hhenv",
     "body": [
-      "const ${1:PRIVATE_KEY} = process.env.${1:PRIVATE_KEY};",
-      "if (!${1:PRIVATE_KEY}) throw new Error('missing env ${1:PRIVATE_KEY}');"
+      "const ${1:yourPRIVATE_KEY} = process.env.${1:yourPRIVATE_KEY};",
+      "if (!${1:yourPRIVATE_KEY}) throw new Error('missing env ${1:yourPRIVATE_KEY}');"
     ],
     "description": "Hardhat env variable check"
   },
@@ -346,7 +353,7 @@
     "prefix": "hhwallet",
     "body": [
       "const { Wallet } = ethers;",
-      "const wallet = new Wallet(process.env.${1:PRIVATE_KEY});"
+      "const wallet = new Wallet(process.env.${1:yourPRIVATE_KEY});"
     ],
     "description": "Hardhat new Wallet"
   },
@@ -362,8 +369,8 @@
     "prefix": "hhdeployhelper",
     "body": [
       "async function deployContract(name, args = []) {",
-      "  const ${1:Factory} = await ethers.getContractFactory(name);",
-      "  const contract = await ${1:Factory}.deploy(...args);",
+      "  const ${1:yourFactory} = await ethers.getContractFactory(name);",
+      "  const contract = await ${1:yourFactory}.deploy(...args);",
       "  await contract.waitForDeployment();",
       "  return contract;",
       "}"

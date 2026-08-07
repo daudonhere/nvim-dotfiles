@@ -1,9 +1,20 @@
 {
+  "for": {
+    "prefix": "for",
+    "body": [
+      "for (let ${2:yourIndex} = 0; ${2:yourIndex} < ${1:yourData}.length; ${2:yourIndex}++) {",
+      "\tconst ${3:yourElement} = ${1:yourData}[${2:yourIndex}];",
+      "\tconsole.log(${3:yourElement});",
+      "}"
+    ],
+    "description": "index-based for loop",
+    "luasnip": { "autotrigger": false, "priority": 1001 }
+  },
   "forof": {
     "prefix": "forof",
     "body": [
-      "for (const ${1:item} of ${2:array}) {",
-      "\t$0",
+      "for (const ${1:yourItem} of ${2:yourData}) {",
+      "\tconsole.log(${1:yourItem});",
       "}"
     ],
     "description": "for...of loop",
@@ -12,9 +23,9 @@
   "forin": {
     "prefix": "forin",
     "body": [
-      "for (const ${1:key} in ${2:object}) {",
-      "\tif (Object.hasOwn(${2:object}, ${1:key})) {",
-      "\t\t$0",
+      "for (const ${1:yourKey} in ${2:yourObject}) {",
+      "\tif (Object.hasOwn(${2:yourObject}, ${1:yourKey})) {",
+      "\t\tconsole.log(${1:yourKey});",
       "\t}",
       "}"
     ],
@@ -24,8 +35,8 @@
   "foreach": {
     "prefix": "foreach",
     "body": [
-      "${1:array}.forEach((${2:item}) => {",
-      "\t$0",
+      "${1:yourData}.forEach((${2:yourItem}) => {",
+      "\tconsole.log(${2:yourItem});",
       "})"
     ],
     "description": "Array.forEach",
@@ -34,15 +45,16 @@
   "fori": {
     "prefix": "fori",
     "body": [
-      "for (let ${1:i} = 0; ${1:i} < ${2:array}.length; ${1:i}++) {",
-      "\t$0",
+      "for (let ${1:yourIndex} = 0; ${1:yourIndex} < ${2:yourData}.length; ${1:yourIndex}++) {",
+      "\tconsole.log(${2:yourData}[${1:yourIndex}]);",
       "}"
     ],
-    "description": "index-based for loop"
+    "description": "index-based for loop (short)",
+    "luasnip": { "autotrigger": false }
   },
   "guard": {
     "prefix": "guard",
-    "body": ["if (${1:!condition}) return;"],
+    "body": ["if (!${1:yourCondition}) return;"],
     "description": "early return guard clause",
     "luasnip": { "autotrigger": true }
   },
@@ -51,8 +63,8 @@
     "body": [
       "try {",
       "\t$0",
-      "} catch (${1:err}) {",
-      "\t${2:console.error(err)}",
+      "} catch (${1:yourErr}) {",
+      "\tconsole.error(${1:yourErr});",
       "}"
     ],
     "description": "try/catch block",

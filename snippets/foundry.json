@@ -5,7 +5,7 @@
       "// SPDX-License-Identifier: MIT",
       "pragma solidity ^${1:0.8.24};",
       "",
-      "contract ${2:MyContract} {",
+      "contract ${2:yourMyContract} {",
       "    ${3}",
       "}"
     ],
@@ -23,7 +23,7 @@
   "Foundry modifier": {
     "prefix": "fgmod",
     "body": [
-      "modifier ${1:onlyOwner}() {",
+      "modifier ${1:yourOnlyOwner}() {",
       "    require(msg.sender == owner, '${2:not owner}');",
       "    _;",
       "}"
@@ -33,14 +33,14 @@
   "Foundry error": {
     "prefix": "fger",
     "body": [
-      "error ${1:Unauthorized}(address ${2:caller});"
+      "error ${1:yourUnauthorized}(address ${2:yourCaller});"
     ],
     "description": "Foundry custom error"
   },
   "Foundry event": {
     "prefix": "fgevent",
     "body": [
-      "event ${1:Transfer}(address indexed ${2:from}, address indexed ${3:to}, uint256 ${4:value});"
+      "event ${1:yourTransfer}(address indexed ${2:yourFrom}, address indexed ${3:yourTo}, uint256 ${4:yourValue});"
     ],
     "description": "Foundry event"
   },
@@ -65,15 +65,15 @@
   "Foundry mapping": {
     "prefix": "fgmap",
     "body": [
-      "mapping(address => ${1:uint256}) public ${2:balances};"
+      "mapping(address => ${1:yourUint256}) public ${2:yourBalances};"
     ],
     "description": "Foundry mapping"
   },
   "Foundry struct": {
     "prefix": "fgstruct",
     "body": [
-      "struct ${1:Thing} {",
-      "    ${2:uint256} ${3:amount};",
+      "struct ${1:yourThing} {",
+      "    ${2:yourUint256} ${3:yourAmount};",
       "}"
     ],
     "description": "Foundry struct"
@@ -81,9 +81,9 @@
   "Foundry enum": {
     "prefix": "fgenum",
     "body": [
-      "enum ${1:Status} {",
-      "    ${2:PENDING},",
-      "    ${3:ACTIVE},",
+      "enum ${1:yourStatus} {",
+      "    ${2:yourPENDING},",
+      "    ${3:yourACTIVE},",
       "}"
     ],
     "description": "Foundry enum"
@@ -91,8 +91,8 @@
   "Foundry interface": {
     "prefix": "fginterface",
     "body": [
-      "interface I${1:Thing} {",
-      "    function ${2:doThing}(uint256 ${3:amount}) external returns (${4:bool});",
+      "interface I${1:yourThing} {",
+      "    function ${2:yourDoThing}(uint256 ${3:yourAmount}) external returns (${4:yourBool});",
       "}"
     ],
     "description": "Foundry interface"
@@ -109,7 +109,7 @@
     "body": [
       "import {console2} from 'forge-std/console2.sol';",
       "",
-      "console2.log('${1:label}', ${2:value});"
+      "console2.log('${1:yourLabel}', ${2:yourValue});"
     ],
     "description": "Foundry console2"
   },
@@ -120,10 +120,11 @@
       "pragma solidity ^${1:0.8.24};",
       "",
       "import {Test} from 'forge-std/Test.sol';",
-      "import {${2:MyContract}} from '../src/${2:MyContract}.sol';",
+      "import {console2} from 'forge-std/console2.sol';",
+      "import {${2:yourMyContract}} from '../src/${2:yourMyContract}.sol';",
       "",
-      "contract ${2:MyContract}Test is Test {",
-      "    ${2:MyContract} internal ${3:contract_} = new ${2:MyContract}();",
+      "contract ${2:yourMyContract}Test is Test {",
+      "    ${2:yourMyContract} internal ${3:yourContract_} = new ${2:yourMyContract}();",
       "",
       "    function setUp() public {",
       "        ${4}",
@@ -135,7 +136,8 @@
   "Foundry test normal": {
     "prefix": "fgtest",
     "body": [
-      "function test_${1:name}() public {",
+      "function test_${1:yourName}() public {",
+      "    console2.log('test ${1:yourName}');",
       "    ${2}",
       "}"
     ],
@@ -144,8 +146,9 @@
   "Foundry test fuzz": {
     "prefix": "fgfuzz",
     "body": [
-      "function testFuzz_${1:name}(uint256 ${2:amount}) public {",
-      "    vm.assume(${2:amount} > ${3:0});",
+      "function testFuzz_${1:yourName}(uint256 ${2:yourAmount}) public {",
+      "    vm.assume(${2:yourAmount} > ${3:0});",
+      "    console2.log('${2:yourAmount}', ${2:yourAmount});",
       "    ${4}",
       "}"
     ],
@@ -158,11 +161,13 @@
       "pragma solidity ^${1:0.8.24};",
       "",
       "import {Script} from 'forge-std/Script.sol';",
+      "import {console2} from 'forge-std/console2.sol';",
       "",
-      "contract ${2:Deploy} is Script {",
+      "contract ${2:yourDeploy} is Script {",
       "    function run() external {",
       "        vm.startBroadcast();",
       "        ${3}",
+      "        console2.log('${2:yourDeploy} deployed');",
       "        vm.stopBroadcast();",
       "    }",
       "}"
@@ -172,14 +177,14 @@
   "Foundry vm.prank": {
     "prefix": "fgprank",
     "body": [
-      "vm.prank(${1:address});"
+      "vm.prank(${1:yourAddress});"
     ],
     "description": "Foundry vm.prank"
   },
   "Foundry vm.startPrank": {
     "prefix": "fgpranks",
     "body": [
-      "vm.startPrank(${1:address});",
+      "vm.startPrank(${1:yourAddress});",
       "${2}",
       "vm.stopPrank();"
     ],
@@ -188,70 +193,70 @@
   "Foundry assertEq": {
     "prefix": "fgaeq",
     "body": [
-      "assertEq(${1:actual}, ${2:expected}${3:, '${4:reason}'});"
+      "assertEq(${1:yourActual}, ${2:yourExpected}${3:, '${4:yourReason}'});"
     ],
     "description": "Foundry assertEq"
   },
   "Foundry assertEqDecimal": {
     "prefix": "fgadec",
     "body": [
-      "assertEqDecimal(${1:actual}, ${2:expected}, ${3:18}${4:, '${5:reason}'});"
+      "assertEqDecimal(${1:yourActual}, ${2:yourExpected}, ${3:18}${4:, '${5:yourReason}'});"
     ],
     "description": "Foundry assertEqDecimal"
   },
   "Foundry assertApproxEqAbs": {
     "prefix": "fgapprox",
     "body": [
-      "assertApproxEqAbs(${1:actual}, ${2:expected}, ${3:1e9}${4:, '${5:reason}'});"
+      "assertApproxEqAbs(${1:yourActual}, ${2:yourExpected}, ${3:1e9}${4:, '${5:yourReason}'});"
     ],
     "description": "Foundry assertApproxEqAbs"
   },
   "Foundry assertApproxEqRel": {
     "prefix": "fgapproxs",
     "body": [
-      "assertApproxEqRel(${1:actual}, ${2:expected}, ${3:1e16}${4:, '${5:reason}'});"
+      "assertApproxEqRel(${1:yourActual}, ${2:yourExpected}, ${3:1e16}${4:, '${5:yourReason}'});"
     ],
     "description": "Foundry assertApproxEqRel"
   },
   "Foundry assertSum": {
     "prefix": "fgassum",
     "body": [
-      "assertSum(${1:actual}, ${2:expected}, ${3:precision}${4:, '${5:reason}'});"
+      "assertSum(${1:yourActual}, ${2:yourExpected}, ${3:yourPrecision}${4:, '${5:yourReason}'});"
     ],
     "description": "Foundry assertSum"
   },
   "Foundry assertGt": {
     "prefix": "fgagt",
     "body": [
-      "assertGt(${1:a}, ${2:b}${3:, '${4:reason}'});"
+      "assertGt(${1:yourA}, ${2:yourB}${3:, '${4:yourReason}'});"
     ],
     "description": "Foundry assertGt"
   },
   "Foundry assertLt": {
     "prefix": "fgalt",
     "body": [
-      "assertLt(${1:a}, ${2:b}${3:, '${4:reason}'});"
+      "assertLt(${1:yourA}, ${2:yourB}${3:, '${4:yourReason}'});"
     ],
     "description": "Foundry assertLt"
   },
   "Foundry assertGe": {
     "prefix": "fgage",
     "body": [
-      "assertGe(${1:a}, ${2:b}${3:, '${4:reason}'});"
+      "assertGe(${1:yourA}, ${2:yourB}${3:, '${4:yourReason}'});"
     ],
     "description": "Foundry assertGe"
   },
   "Foundry assertLe": {
     "prefix": "fgale",
     "body": [
-      "assertLe(${1:a}, ${2:b}${3:, '${4:reason}'});"
+      "assertLe(${1:yourA}, ${2:yourB}${3:, '${4:yourReason}'});"
     ],
     "description": "Foundry assertLe"
   },
   "Foundry assertAbsEq": {
     "prefix": "fgabs",
     "body": [
-      "assertAbsEq(${1:actual}, ${2:expected}, ${3:precision}${4:, '${5:reason}'});"
+      "assertAbsEq(${1:yourActual}, ${2:yourExpected}, ${3:yourPrecision}${4:, '${5:yourReason}'});"
     ],
     "description": "Foundry assertAbsEq"
   },
@@ -265,14 +270,14 @@
   "Foundry expectRevert string": {
     "prefix": "fgexpects",
     "body": [
-      "vm.expectRevert('${1:reason}');"
+      "vm.expectRevert('${1:yourReason}');"
     ],
     "description": "Foundry vm.expectRevert string"
   },
   "Foundry expectCall": {
     "prefix": "fgexpectcall",
     "body": [
-      "vm.expectCall(address(${1:target}), abi.encodeCall(${1:target}.${2:method}, (${3:args})));"
+      "vm.expectCall(address(${1:yourTarget}), abi.encodeCall(${1:yourTarget}.${2:yourMethod}, (${3:yourArgs})));"
     ],
     "description": "Foundry vm.expectCall"
   },
@@ -280,49 +285,49 @@
     "prefix": "fgemit",
     "body": [
       "vm.expectEmit();",
-      "emit ${1:Event}(${2:args});"
+      "emit ${1:yourEvent}(${2:yourArgs});"
     ],
     "description": "Foundry vm.expectEmit"
   },
   "Foundry deal": {
     "prefix": "fgdeal",
     "body": [
-      "deal(address(${1:token}), ${2:user}, ${3:1 ether});"
+      "deal(address(${1:yourToken}), ${2:yourUser}, ${3:1 ether});"
     ],
     "description": "Foundry deal tokens"
   },
   "Foundry vm.deal": {
     "prefix": "fgmint",
     "body": [
-      "vm.deal(${1:user}, ${2:1 ether});"
+      "vm.deal(${1:yourUser}, ${2:1 ether});"
     ],
     "description": "Foundry vm.deal ETH"
   },
   "Foundry makeAddr": {
     "prefix": "fgaddr",
     "body": [
-      "address ${1:user} = makeAddr('${1:user}');"
+      "address ${1:yourUser} = makeAddr('${1:yourUser}');"
     ],
     "description": "Foundry makeAddr"
   },
   "Foundry label": {
     "prefix": "fglabel",
     "body": [
-      "vm.label(${1:address}, '${2:label}');"
+      "vm.label(${1:yourAddress}, '${2:yourLabel}');"
     ],
     "description": "Foundry vm.label"
   },
   "Foundry warp": {
     "prefix": "fgwarp",
     "body": [
-      "vm.warp(${1:block_timestamp});"
+      "vm.warp(${1:yourBlock_timestamp});"
     ],
     "description": "Foundry vm.warp"
   },
   "Foundry roll": {
     "prefix": "fgroll",
     "body": [
-      "vm.roll(${1:block_number});"
+      "vm.roll(${1:yourBlock_number});"
     ],
     "description": "Foundry vm.roll"
   },
@@ -338,14 +343,14 @@
   "Foundry vm.etch": {
     "prefix": "fgetch",
     "body": [
-      "vm.etch(${1:address}, ${2:code});"
+      "vm.etch(${1:yourAddress}, ${2:yourCode});"
     ],
     "description": "Foundry vm.etch"
   },
   "Foundry vm.store": {
     "prefix": "fgstore",
     "body": [
-      "vm.store(address(${1:contract}), ${2:bytes32(uint256(${3:slot}))}, ${4:value});"
+      "vm.store(address(${1:yourContract}), ${2:bytes32(uint256(${3:yourSlot}))}, ${4:yourValue});"
     ],
     "description": "Foundry vm.store"
   },
@@ -353,8 +358,8 @@
     "prefix": "fgffi",
     "body": [
       "string[] memory args = new string[](${1:2});",
-      "args[0] = '${2:cat}';",
-      "args[1] = '${3:file}';",
+      "args[0] = '${2:yourCat}';",
+      "args[1] = '${3:yourFile}';",
       "string memory out = vm.ffi(args);"
     ],
     "description": "Foundry vm.ffi"
@@ -370,7 +375,7 @@
   "Foundry create2 deploy": {
     "prefix": "fgcreate",
     "body": [
-      "address impl = address(new ${1:MyContract}{salt: ${2:salt}}());"
+      "address impl = address(new ${1:yourMyContract}{salt: ${2:yourSalt}}());"
     ],
     "description": "Foundry create2 deploy"
   },
@@ -395,7 +400,7 @@
   "Foundry try/catch call": {
     "prefix": "fgtry",
     "body": [
-      "try ${1:target}.${2:method}() returns (${3:uint256} ret) {",
+      "try ${1:yourTarget}.${2:yourMethod}() returns (${3:yourUint256} ret) {",
       "    ${4}",
       "} catch Error(string memory reason) {",
       "    ${5}",
@@ -408,8 +413,8 @@
   "Foundry payable claim": {
     "prefix": "fgpayable",
     "body": [
-      "function ${1:claim}() external payable {",
-      "    require(msg.value == ${2:price}, '${3:wrong price}');",
+      "function ${1:yourClaim}() external payable {",
+      "    require(msg.value == ${2:yourPrice}, '${3:wrong price}');",
       "    ${4}",
       "}"
     ],
@@ -430,28 +435,28 @@
   "Foundry assertTrue": {
     "prefix": "fgasserttrue",
     "body": [
-      "assertTrue(${1:cond}${2:, '${3:reason}'});"
+      "assertTrue(${1:yourCond}${2:, '${3:yourReason}'});"
     ],
     "description": "Foundry assertTrue"
   },
   "Foundry assertFalse": {
     "prefix": "fgassertfalse",
     "body": [
-      "assertFalse(${1:cond}${2:, '${3:reason}'});"
+      "assertFalse(${1:yourCond}${2:, '${3:yourReason}'});"
     ],
     "description": "Foundry assertFalse"
   },
   "Foundry assertNotEq": {
     "prefix": "fgnot",
     "body": [
-      "assertNotEq(${1:a}, ${2:b}${3:, '${4:reason}'});"
+      "assertNotEq(${1:yourA}, ${2:yourB}${3:, '${4:yourReason}'});"
     ],
     "description": "Foundry assertNotEq"
   },
   "Foundry assertEq address": {
     "prefix": "fgeqaddr",
     "body": [
-      "assertEq(address(${1:a}), ${2:b});"
+      "assertEq(address(${1:yourA}), ${2:yourB});"
     ],
     "description": "Foundry assertEq address"
   },
@@ -474,42 +479,42 @@
   "Foundry vm.setEnv": {
     "prefix": "fgsetenv",
     "body": [
-      "vm.setEnv('${1:KEY}', '${2:value}');"
+      "vm.setEnv('${1:yourKEY}', '${2:yourValue}');"
     ],
     "description": "Foundry vm.setEnv"
   },
   "Foundry vm.envString": {
     "prefix": "fggetenv",
     "body": [
-      "string memory val = vm.envString('${1:KEY}');"
+      "string memory val = vm.envString('${1:yourKEY}');"
     ],
     "description": "Foundry vm.envString"
   },
   "Foundry createWallet": {
     "prefix": "fgcreatewallet",
     "body": [
-      "(address alice, uint256 aliceKey) = vm.createWallet('${1:alice}');"
+      "(address alice, uint256 aliceKey) = vm.createWallet('${1:yourAlice}');"
     ],
     "description": "Foundry vm.createWallet"
   },
   "Foundry deriveKey": {
     "prefix": "fgderive",
     "body": [
-      "uint256 key = vm.deriveKey('${1:mnemonic}', ${2:0});"
+      "uint256 key = vm.deriveKey('${1:yourMnemonic}', ${2:0});"
     ],
     "description": "Foundry vm.deriveKey"
   },
   "Foundry createSelectFork": {
     "prefix": "fgselectfork",
     "body": [
-      "uint256 fork = vm.createSelectFork('${1:rpcUrl}', ${2:blockNumber});"
+      "uint256 fork = vm.createSelectFork('${1:yourRpcUrl}', ${2:yourBlockNumber});"
     ],
     "description": "Foundry vm.createSelectFork"
   },
   "Foundry rpcUrl fork": {
     "prefix": "fgrpc",
     "body": [
-      "uint256 forkId = vm.createFork(vm.rpcUrl('${1:mainnet}'));",
+      "uint256 forkId = vm.createFork(vm.rpcUrl('${1:yourMainnet}'));",
       "vm.selectFork(forkId);"
     ],
     "description": "Foundry rpcUrl + createFork"
@@ -517,43 +522,43 @@
   "Foundry code length check": {
     "prefix": "fgcodecheck",
     "body": [
-      "require(${1:addr}.code.length > 0, '${2:not a contract}');"
+      "require(${1:yourAddr}.code.length > 0, '${2:not a contract}');"
     ],
     "description": "Foundry is-contract check"
   },
   "Foundry vm.load": {
     "prefix": "fgsload",
     "body": [
-      "bytes32 val = vm.load(address(${1:target}), ${2:slot});"
+      "bytes32 val = vm.load(address(${1:yourTarget}), ${2:yourSlot});"
     ],
     "description": "Foundry vm.load"
   },
   "Foundry vm.breakpoint": {
     "prefix": "fgbreak",
     "body": [
-      "vm.breakpoint('${1:tag}');"
+      "vm.breakpoint('${1:yourTag}');"
     ],
     "description": "Foundry vm.breakpoint"
   },
   "Foundry expectCallCount": {
     "prefix": "fgexpectcallcount",
     "body": [
-      "vm.expectCallCount(address(${1:target}), abi.encodeCall(${1:target}.${2:method}, ()), ${3:1});"
+      "vm.expectCallCount(address(${1:yourTarget}), abi.encodeCall(${1:yourTarget}.${2:yourMethod}, ()), ${3:1});"
     ],
     "description": "Foundry vm.expectCallCount"
   },
   "Foundry vm.sign": {
     "prefix": "fgsign",
     "body": [
-      "(uint8 v, bytes32 r, bytes32 s) = vm.sign(${1:key}, ${2:digest});"
+      "(uint8 v, bytes32 r, bytes32 s) = vm.sign(${1:yourKey}, ${2:yourDigest});"
     ],
     "description": "Foundry vm.sign"
   },
   "Foundry skip test": {
     "prefix": "fgskip",
     "body": [
-      "function test_${1:name}() public {",
-      "    skip(${2:true});",
+      "function test_${1:yourName}() public {",
+      "    skip(${2:yourTrue});",
       "    ${3}",
       "}"
     ],
@@ -562,28 +567,28 @@
   "Foundry console2.logUint": {
     "prefix": "fgconsole2u",
     "body": [
-      "console2.logUint(${1:value});"
+      "console2.logUint(${1:yourValue});"
     ],
     "description": "Foundry console2.logUint"
   },
   "Foundry assertEq string": {
     "prefix": "fgassertstring",
     "body": [
-      "assertEq(${1:str}, '${2:expected}');"
+      "assertEq(${1:yourStr}, '${2:yourExpected}');"
     ],
     "description": "Foundry assertEq string"
   },
   "Foundry bound": {
     "prefix": "fgbound",
     "body": [
-      "${1:x} = bound(${1:x}, ${2:1}, ${3:1e18});"
+      "${1:yourX} = bound(${1:yourX}, ${2:1}, ${3:1e18});"
     ],
     "description": "Foundry bound"
   },
   "Foundry vm.broadcast": {
     "prefix": "fgbroadcast",
     "body": [
-      "vm.broadcast(${1:privateKey});",
+      "vm.broadcast(${1:yourPrivateKey});",
       "${2}"
     ],
     "description": "Foundry vm.broadcast"
@@ -591,7 +596,7 @@
   "Foundry vm.accesses": {
     "prefix": "fgaccesses",
     "body": [
-      "(address[] memory addrs, bytes32[] memory slots) = vm.accesses(${1:address});"
+      "(address[] memory addrs, bytes32[] memory slots) = vm.accesses(${1:yourAddress});"
     ],
     "description": "Foundry vm.accesses"
   },
@@ -605,7 +610,7 @@
   "Foundry vm.addr": {
     "prefix": "fgvmaddr",
     "body": [
-      "address derived = vm.addr(${1:privateKey});"
+      "address derived = vm.addr(${1:yourPrivateKey});"
     ],
     "description": "Foundry vm.addr"
   }
