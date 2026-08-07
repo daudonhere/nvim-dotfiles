@@ -98,6 +98,7 @@ return {
           style = "terminal",
           width = 0.8,
           height = 0.2,
+          wo = { winbar = "" },
         },
       },
       picker = {

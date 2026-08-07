@@ -60,6 +60,9 @@ return {
             path = 1,
             color = { bg = "#f1c40f", fg = "#282C34", gui = "bold" },
             separator = { right = "" },
+            cond = function()
+              return vim.bo.buftype ~= "terminal"
+            end,
           },
         },
         lualine_x = {
