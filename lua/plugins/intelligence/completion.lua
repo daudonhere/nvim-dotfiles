@@ -42,6 +42,26 @@ return {
             paths = { vim.fn.stdpath("config") .. "/snippets" },
           })
           vim.filetype.add({ extension = { ino = "arduino", pde = "arduino" } })
+
+          local function drop_other_for()
+            local luasnip = require("luasnip")
+            local ft_util = require("luasnip.util.util")
+            for _, ft in ipairs(ft_util.get_snippet_filetypes()) do
+              for _, x in ipairs(luasnip.get_snippets(ft)) do
+                if x.trigger == "for" and (x.effective_priority or 0) ~= 1001 then
+                  x:invalidate()
+                end
+              end
+            end
+            luasnip.clean_invalidated()
+            vim.api.nvim_exec_autocmds("User", { pattern = "LuasnipSnippetsAdded" })
+          end
+          vim.api.nvim_create_autocmd("FileType", {
+            callback = function()
+              vim.schedule(function() pcall(drop_other_for) end)
+            end,
+          })
+          vim.schedule(function() pcall(drop_other_for) end)
         end,
       },
       "rafamadriz/friendly-snippets",
