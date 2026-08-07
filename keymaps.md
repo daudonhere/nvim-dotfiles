@@ -93,7 +93,7 @@ Daftar isi:
 - `space + f + f` = cari file
 - `space + f + b` = cari di buffer aktif
 - `space + f + p` = cari teks di proyek (live_grep)
-- `space + r` = find & replace (grug-far, popup) — dua form input: search (daftar file live) + replacement (preview diff). Apply: `ctrl + enter` di field pengganti atau `\r`; buka dengan blok visual → kata terpilih terisi otomatis di search
+- `space + r` = find & replace (grug-far, popup) — lima form input (Search, Replace, Files Filter, Flags, Paths) masing-masing berpagar `│…│` + separator `─`, bg popup senada Telescope live grep (`space + f + p`). Apply: `ctrl + enter` di field pengganti; buka dengan blok visual → kata terpilih terisi otomatis di search
 - `space + f + c` = cari file konfigurasi — *lihat [Conflict](#2-keymaps-conflict)*
 - `space + f + e` = Explorer (root)
 - `space + f + shift + e` = Explorer (cwd)

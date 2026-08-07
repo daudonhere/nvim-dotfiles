@@ -1,3 +1,46 @@
+local BOX_NS = "grug_far_boxes"
+
+local function ensure_hl()
+  local function link_or(dst, src, fallback)
+    vim.api.nvim_set_hl(0, dst, { link = vim.fn.hlexists(src) == 1 and src or fallback })
+  end
+  link_or("GrugFarFloatNormal", "TelescopeNormal", "NormalFloat")
+  link_or("GrugFarFloatBorder", "TelescopeBorder", "FloatBorder")
+  vim.api.nvim_set_hl(0, "GrugFarInputBox", { link = "GrugFarFloatNormal" })
+  vim.api.nvim_set_hl(0, "GrugFarInputBorder", { link = "GrugFarFloatBorder" })
+end
+
+local function draw_boxes(buf, win)
+  local ns = vim.api.nvim_create_namespace(BOX_NS)
+  vim.api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+  local width = vim.api.nvim_win_get_width(win)
+  local bar = "│" .. string.rep("─", math.max(0, width - 2)) .. "│"
+  for row = 0, 4 do
+    vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
+      hl_group = "GrugFarInputBox",
+      end_row = row,
+      hl_eol = true,
+    })
+    vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
+      virt_text = { { "│", "GrugFarInputBorder" } },
+      virt_text_pos = "inline",
+      right_gravity = false,
+    })
+    vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
+      virt_text = { { "│", "GrugFarInputBorder" } },
+      virt_text_pos = "overlay",
+      virt_text_win_col = width - 1,
+    })
+    vim.api.nvim_buf_set_extmark(buf, ns, row, 0, {
+      virt_lines = { { { bar, "GrugFarInputBorder" } } },
+      virt_lines_above = true,
+    })
+  end
+  vim.api.nvim_buf_set_extmark(buf, ns, 4, 0, {
+    virt_lines = { { { bar, "GrugFarInputBorder" } } },
+  })
+end
+
 return {
   {
     "MagicDuck/grug-far.nvim",
@@ -5,6 +48,7 @@ return {
       {
         "<leader>r",
         function()
+          ensure_hl()
           local grug_far = require("grug-far")
           grug_far.open()
           local win = vim.api.nvim_get_current_win()
@@ -28,6 +72,7 @@ return {
             title_pos = "center",
             zindex = 60,
           })
+          vim.api.nvim_win_set_option(fwin, "winhighlight", "Normal:GrugFarFloatNormal,FloatBorder:GrugFarFloatBorder")
           vim.api.nvim_win_close(win, true)
           vim.api.nvim_set_current_win(fwin)
 
@@ -62,6 +107,7 @@ return {
                 height = h,
               })
             end
+            draw_boxes(buf, fwin)
           end, 400)
         end,
         desc = "Find & Replace",
@@ -76,6 +122,11 @@ return {
       showStatusInfo = false,
       showEngineInfo = false,
       showStatusIcon = false,
+      engines = {
+        ripgrep = {
+          placeholders = { enabled = false },
+        },
+      },
       keymaps = {
         replace = { i = "<C-enter>", n = "<localleader>r" },
       },
