@@ -12,8 +12,8 @@ return {
           if vim.bo[buf].filetype ~= "grug-far" or vim.api.nvim_win_get_config(win).relative ~= "" then
             return
           end
-          local width = math.min(118, vim.o.columns - 8)
-          local height = math.min(30, math.floor(vim.o.lines * 0.6))
+          local width = math.min(120, vim.o.columns - 6)
+          local height = math.min(36, math.floor(vim.o.lines * 0.7))
           local col = math.max(2, math.floor((vim.o.columns - width) / 2))
           local row = math.max(1, math.floor((vim.o.lines - height) / 2))
           local fwin = vim.api.nvim_open_win(buf, true, {
@@ -36,6 +36,13 @@ return {
       { "<leader>sr", "<Nop>", mode = { "n", "x" }, desc = "disabled" },
     },
     opts = {
+      helpLine = { enabled = false },
+      showCompactInputs = true,
+      showInputsTopPadding = false,
+      showInputsBottomPadding = false,
+      showStatusInfo = false,
+      showEngineInfo = false,
+      showStatusIcon = false,
       keymaps = {
         replace = { i = "<C-enter>", n = "<localleader>r" },
       },
