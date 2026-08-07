@@ -76,11 +76,19 @@ local function jump_half(back)
   vim.api.nvim_win_set_cursor(0, { line, vim.fn.col(".") - 1 })
 end
 
--- Arrow: line/character movement
-keymap({ "n", "v" }, "<Up>", "k", opts)
-keymap({ "n", "v" }, "<Down>", "j", opts)
-keymap({ "n", "v" }, "<Left>", "h", opts)
-keymap({ "n", "v" }, "<Right>", "l", opts)
+-- Arrow: line/character movement (custom menggantikan default hjkl)
+keymap({ "n", "v", "x", "s", "o" }, "<Up>", "k", opts)
+keymap({ "n", "v", "x", "s", "o" }, "<Down>", "j", opts)
+keymap({ "n", "v", "x", "s", "o" }, "<Left>", "h", opts)
+keymap({ "n", "v", "x", "s", "o" }, "<Right>", "l", opts)
+
+-- Nonaktifkan default hjkl: sudah digantikan arrow keys.
+-- (buffer-plugin seperti trouble/neotest/telescope tetap punya j/k buffer-local)
+for _, mode in ipairs({ "n", "v", "x", "s", "o" }) do
+  for _, key in ipairs({ "h", "j", "k", "l" }) do
+    keymap(mode, key, "<Nop>", { desc = "disabled: navigasi pakai arrow" })
+  end
+end
 
 -- Home/End: start/end of line
 keymap({ "n", "v" }, "<Home>", "^", opts)
