@@ -15,12 +15,6 @@ return {
     },
   },
   {
-    "MagicDuck/grug-far.nvim",
-    keys = {
-      { "<leader>sr", "<Nop>", mode = { "n", "x" }, desc = "disabled" },
-    },
-  },
-  {
     "folke/noice.nvim",
     keys = {
       { "<leader>sna", "<Nop>", desc = "disabled" },

@@ -93,6 +93,7 @@ Daftar isi:
 - `space + f + f` = cari file
 - `space + f + b` = cari di buffer aktif
 - `space + f + p` = cari teks di proyek (live_grep)
+- `space + r` = find & replace (grug-far) — dua form input: search (daftar file live) + replacement (preview diff). Apply: `ctrl + enter` di field pengganti atau `\r`; buka dengan blok visual → kata terpilih terisi otomatis di search
 - `space + f + c` = cari file konfigurasi — *lihat [Conflict](#2-keymaps-conflict)*
 - `space + f + e` = Explorer (root)
 - `space + f + shift + e` = Explorer (cwd)
@@ -408,7 +409,7 @@ Semua keymap yang dinonaktifkan (`<Nop>`) karena sudah digantikan oleh keymap cu
 
 ### Search & replace (`space + s` = fokus window bawah)
 
-- `space + s + r` = ganti di proyek (grug-far) — mode normal & visual
+- `space + s + r` = ganti di proyek (grug-far) — digantikan `space + r` — mode normal & visual
 
 ### Noice notification (`space + s` = fokus window bawah)
 
