@@ -76,6 +76,7 @@ return {
         menu = {
           border = "rounded",
           winblend = 0,
+          scrollbar = false,
           winhighlight = "Normal:BlinkMenuNormal,FloatBorder:BlinkMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
           draw = {
             columns = { { "kind_icon", "source_dot" }, { "label", "label_description", gap = 1 } },
@@ -97,6 +98,7 @@ return {
           window = {
             border = "rounded",
             winblend = 0,
+            scrollbar = false,
             winhighlight = "Normal:BlinkMenuNormal,FloatBorder:BlinkMenuBorder,EndOfBuffer:BlinkMenuNormal",
           },
         },
