@@ -99,6 +99,13 @@ return {
           width = 0.8,
           height = 0.2,
           wo = { winbar = "" },
+          on_buf = function(self)
+            vim.schedule(function()
+              if vim.api.nvim_buf_is_valid(self.buf) then
+                vim.api.nvim_buf_set_name(self.buf, "term")
+              end
+            end)
+          end,
         },
       },
       picker = {
