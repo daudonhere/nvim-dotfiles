@@ -29,7 +29,7 @@ return {
     opts = {
       provider = "openai",
       n_completions = 1,
-      context_window = 8192,
+      context_window = 16000,
       request_timeout = 30,
       stream = true,
       enable_predicates = {
