@@ -297,7 +297,9 @@ Adapter: python (pytest), jest, vitest.
 
 #### AI suggestion (ghost text) — minuet-ai (localhost:20128/v1, model oc-flash)
 
-Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanpa mengubah kode. Muncul otomatis setelah jeda mengetik; tersembunyi saat menu completion (blink) terbuka.
+Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanpa mengubah kode. Muncul otomatis setelah jeda mengetik; tersembunyi saat menu completion (blink) terbuka. Bekerja juga di atas kode hasil snippet/LSP — lanjut mengetik di dalam/blok setelah snippet untuk memicu saran.
+
+> Indikator loading: saat minuet/AI/codegen sedang bekerja, muncul **spinner kuning animasi + label** (`⠋ minuet`) di ujung baris (virt_text) dan di statusline kanan. Hilang otomatis setelah respons selesai.
 
 - `ctrl + y` = terima saran
 - `ctrl + l` = terima 1 baris

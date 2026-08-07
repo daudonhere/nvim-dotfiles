@@ -5,6 +5,16 @@ local levels = vim.log.levels
 
 local group = vim.api.nvim_create_augroup("codegen_feedback", { clear = true })
 
+local IND_NS = vim.api.nvim_create_namespace("ai_loading_indicator")
+local indicator_buf = nil
+local indicator_extmark = nil
+vim.api.nvim_set_hl(0, "AILoadingIndicator", { fg = "#f1c40f", bold = true })
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    vim.api.nvim_set_hl(0, "AILoadingIndicator", { fg = "#f1c40f", bold = true })
+  end,
+})
+
 local active_requests = 0
 local current_label = nil
 local codegen_active = false
@@ -33,9 +43,53 @@ local function refresh_statusline()
   end)
 end
 
+local function place_indicator()
+  indicator_buf = vim.api.nvim_get_current_buf()
+  if vim.api.nvim_get_option_value("buftype", { buf = indicator_buf }) ~= "" then
+    indicator_buf = nil
+    return
+  end
+  local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+  indicator_extmark = vim.api.nvim_buf_set_extmark(indicator_buf, IND_NS, line, 0, {
+    virt_text_pos = "eol",
+    virt_text = { { "", "AILoadingIndicator" } },
+    hl_mode = "combine",
+  })
+end
+
+local function update_indicator()
+  if active_requests <= 0 then
+    return
+  end
+  if not indicator_buf or not vim.api.nvim_buf_is_valid(indicator_buf) or indicator_extmark == nil then
+    return
+  end
+  local text = " " .. M.spinner() .. " " .. M.label()
+  pcall(function()
+    vim.api.nvim_buf_set_extmark(indicator_buf, IND_NS, 0, 0, {
+      id = indicator_extmark,
+      virt_text_pos = "eol",
+      virt_text = { { text, "AILoadingIndicator" } },
+      hl_mode = "combine",
+    })
+  end)
+end
+
+local function clear_indicator()
+  if indicator_buf and vim.api.nvim_buf_is_valid(indicator_buf) and indicator_extmark then
+    pcall(vim.api.nvim_buf_del_extmark, indicator_buf, IND_NS, indicator_extmark)
+  end
+  indicator_buf = nil
+  indicator_extmark = nil
+end
+
 local function start_indicator()
   if not spinner_timer:is_active() then
-    spinner_timer:start(0, 150, vim.schedule_wrap(refresh_statusline))
+    place_indicator()
+    spinner_timer:start(0, 150, vim.schedule_wrap(function()
+      refresh_statusline()
+      update_indicator()
+    end))
   end
   stall_timer:start(300000, 0, vim.schedule_wrap(function()
     active_requests = 0
@@ -43,6 +97,7 @@ local function start_indicator()
     minuet_finished = 0
     codegen_active = false
     spinner_timer:stop()
+    clear_indicator()
     refresh_statusline()
   end))
 end
@@ -50,6 +105,7 @@ end
 local function stop_indicator()
   spinner_timer:stop()
   stall_timer:stop()
+  clear_indicator()
   vim.schedule(refresh_statusline)
 end
 
