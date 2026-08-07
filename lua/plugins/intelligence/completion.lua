@@ -93,6 +93,13 @@ return {
             },
           },
         },
+        documentation = {
+          window = {
+            border = "rounded",
+            winblend = 0,
+            winhighlight = "Normal:BlinkMenuNormal,FloatBorder:BlinkMenuBorder,EndOfBuffer:BlinkMenuNormal",
+          },
+        },
       },
     },
   },
