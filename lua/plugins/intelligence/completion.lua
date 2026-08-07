@@ -41,14 +41,7 @@ return {
         ["<Esc>"] = { "hide", "fallback" },
       },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "minuet" },
-        providers = {
-          minuet = {
-            name = "minuet",
-            module = "minuet.blink",
-            score_offset = 100,
-          },
-        },
+        default = { "lsp", "path", "snippets", "buffer" },
       },
     },
   },

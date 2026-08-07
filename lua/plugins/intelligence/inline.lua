@@ -2,6 +2,8 @@ local combo_map = {
   default = "oc-flash",
 }
 
+vim.api.nvim_set_hl(0, "MinuetVirtualText", { fg = "#8a8a8a", italic = true })
+
 local endpoint = "http://localhost:20128/v1/chat/completions"
 local api_key = function()
   return require("config.ai_key").get() or ""
@@ -54,6 +56,17 @@ return {
               return transformed_data
             end,
           },
+        },
+      },
+      virtualtext = {
+        auto_trigger_ft = { "*" },
+        show_on_completion_menu = false,
+        keymap = {
+          accept = "<C-y>",
+          accept_line = "<C-l>",
+          next = "<M-]>",
+          prev = "<M-[>",
+          dismiss = "<C-e>",
         },
       },
     },

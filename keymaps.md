@@ -295,14 +295,17 @@ Adapter: python (pytest), jest, vitest.
 - `] ]` = header berikutnya
 - `[ [` = header sebelumnya
 
-#### Inline autocomplete — minuet-ai (localhost:20128/v1, model oc-flash, auto-suggest saat InsertEnter)
+#### AI suggestion (ghost text) — minuet-ai (localhost:20128/v1, model oc-flash)
 
-- `alt + shift + a` = terima semua baris
-- `alt + a` = terima 1 baris
-- `alt + z` = terima N baris
-- `alt + e` = buang saran
-- `alt + [` = saran sebelumnya / pemicu manual
-- `alt + ]` = saran berikutnya / pemicu manual
+Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanpa mengubah kode. Muncul otomatis setelah jeda mengetik; tersembunyi saat menu completion (blink) terbuka.
+
+- `ctrl + y` = terima saran
+- `ctrl + l` = terima 1 baris
+- `ctrl + e` = buang/tolak saran
+- `alt + ]` = saran berikutnya
+- `alt + [` = saran sebelumnya
+
+> Dropdown completion (blink.cmp: LSP, path, snippet, buffer) terpisah dan satu-satunya dropdown — minuet tidak lagi muncul di menu completion.
 
 #### Codegen (insert mode)
 
