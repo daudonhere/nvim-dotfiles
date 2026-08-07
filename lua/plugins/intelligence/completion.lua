@@ -6,12 +6,26 @@ local source_dot_colors = {
 }
 
 local source_dot_hl = {}
-for src, color in pairs(source_dot_colors) do
-  local name = "BlinkSrcDot" .. src
-  source_dot_hl[src] = name
-  vim.api.nvim_set_hl(0, name, { fg = color })
+for src in pairs(source_dot_colors) do
+  source_dot_hl[src] = "BlinkSrcDot" .. src
 end
-vim.api.nvim_set_hl(0, "BlinkSrcDotDefault", { fg = "#8a8a8a" })
+
+local function ensure_hl()
+  for src, color in pairs(source_dot_colors) do
+    vim.api.nvim_set_hl(0, source_dot_hl[src], { fg = color })
+  end
+  vim.api.nvim_set_hl(0, "BlinkSrcDotDefault", { fg = "#8a8a8a" })
+
+  local function link_or(dst, src, fallback)
+    vim.api.nvim_set_hl(0, dst, { link = vim.fn.hlexists(src) == 1 and src or fallback })
+  end
+  link_or("BlinkMenuNormal", "TelescopeNormal", "NormalFloat")
+  link_or("BlinkMenuBorder", "TelescopeBorder", "FloatBorder")
+  link_or("BlinkCmpMenuSelection", "TelescopeSelection", "PmenuSel")
+end
+
+ensure_hl()
+vim.api.nvim_create_autocmd("ColorScheme", { callback = ensure_hl })
 
 return {
   {
@@ -60,6 +74,9 @@ return {
       },
       completion = {
         menu = {
+          border = "rounded",
+          winblend = 0,
+          winhighlight = "Normal:BlinkMenuNormal,FloatBorder:BlinkMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
           draw = {
             columns = { { "kind_icon", "source_dot" }, { "label", "label_description", gap = 1 } },
             components = {

@@ -339,6 +339,8 @@ Minuet meninjau kode di bawah kursor dan menampilkan **ghost text abu-abu** tanp
 
 Sumber: lsp (dot biru ●), path (hijau ●), snippets (kuning ●), buffer (ungu ●) — dot berwarna di kiri label menandai asal item. Snippet: LuaSnip (friendly-snippets + 516 snippet custom, lihat `snippets/`).
 
+Dropdown popup: border rounded + background `TelescopeNormal`/`TelescopeBorder` (sama dengan popup Find & Replace), group hl dibuat ulang lewat autocmd `ColorScheme`.
+
 #### Dashboard (hanya aktif di buffer dashboard)
 
 - `1` = cari file
