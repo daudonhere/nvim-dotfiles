@@ -1,8 +1,8 @@
 local source_dot_colors = {
-  Lsp = "#61afef",
-  Path = "#98c379",
-  Snippets = "#e5c07b",
-  Buffer = "#c678dd",
+  LSP = "#61afef",
+  PATH = "#98c379",
+  SNIPPETS = "#e5c07b",
+  BUFFER = "#c678dd",
 }
 
 local source_dot_hl = {}
@@ -69,7 +69,8 @@ return {
                   return "●"
                 end,
                 highlight = function(ctx)
-                  return { { group = source_dot_hl[ctx.source_name] or "BlinkSrcDotDefault", priority = 20000 } }
+                  local key = (ctx.source_name or ""):upper()
+                  return { { group = source_dot_hl[key] or "BlinkSrcDotDefault", priority = 20000 } }
                 end,
               },
             },
